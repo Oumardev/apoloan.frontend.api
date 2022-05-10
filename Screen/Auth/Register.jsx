@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from "yup";
 
 const Register = ({navigation}) => {
@@ -92,21 +92,6 @@ const Register = ({navigation}) => {
                             password: values.password
                         }
 
-                        fetch('', {
-                            method: 'POST',
-                            body: JSON.stringify(data),
-                            headers: {
-                              'Accept': 'application/json',
-                              'Content-Type': 'application/json'
-                            },
-                          }).then((response) => response.json())
-                            .then((res) => {
-                                console.log(res.error)
-                                if(res.error) setErrorMsg(res.error)
-                                if(res.message) navigation.replace('login');
-                          }).catch((error) => {
-                            console.error(error);
-                        });
                         console.log(data)
                     }}>
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (

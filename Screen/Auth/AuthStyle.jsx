@@ -34,6 +34,7 @@ export const styles = StyleSheet.create({
     inputStyle: {
       fontSize:20,
       fontWeight:'500',
+      padding:10,
       backgroundColor:'white',
       flex:1,
        borderRadius:20
@@ -83,9 +84,23 @@ export const styles = StyleSheet.create({
       marginTop: 20,
       marginBottom: 25,
     },
+
     scrollStyle:{
       flex: 1,
       justifyContent: 'center',
       alignContent: 'center'
-    }
+    },
+
+    errormsg:{
+      color:'red',
+      paddingRight:10
+    },
+
+  errormsgheader:{
+      fontSize:20,
+      fontWeight:'600',
+      color:'red',
+      paddingLeft:10,
+      paddingBottom:5
+  }
 });

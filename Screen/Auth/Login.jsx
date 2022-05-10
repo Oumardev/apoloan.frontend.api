@@ -1,56 +1,33 @@
-import React, {useState, createRef} from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet,
   TextInput,
   View,
   Text,
   ScrollView,
-  Modal,
   Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Button,
   Platform
 } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from "yup";
 import { styles } from './AuthStyle'
 
 
 const Login = ({navigation}) => {
-  
-    const [password, sePassword] = useState('');
-    const [login, setLogin] = useState('');
-    const passwordInputRef = createRef();
-    const [errortext, setErrortext] = useState('');
-  
-    const handleSubmitPress = () => {
-      
-      if (!login || !password) {
-        setErrortext('Veuillez saisir tout les champs');
-        return;
-      }
-     
-      let data = {login: login, password: password};
-      
-      fetch('http://192.168.1.5:19002/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      }).then((response) => response.json())
-        .then((responseJson) => {
 
-            console.log(responseJson)
-        }).catch((error) => {
-          console.error(error);
-        });
-  
-    };
-  
-    const closeModal = ()=>{
-      setModalVisible(false)
-    }
+    const [errormsg, setErrormsg] = useState('');
+
+    const loginSchema = Yup.object().shape({
+
+      numero : Yup.number()
+        .typeError('Format invalide')
+        .required('Champs requis!'),
+
+      password : Yup.string()
+          .min(8,'Minimum 8 caractères')
+          .required('Champs requis')
+    });
   
     return (
     <View style={styles.mainBody}>
@@ -58,54 +35,71 @@ const Login = ({navigation}) => {
         <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle} >
           
           <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={200}>
-          <Text style={{color : 'red', fontSize : 20, fontWeight : 'bold', marginLeft:20}}>{errortext}</Text>
+          <Text  style={styles.errormsgheader}>{errormsg}</Text>
+              <Formik
+                    initialValues={{ 
+                        numero: '', 
+                        password : ''
+                    }}
+                    
+                    validationSchema = {loginSchema}
+                    
+                    onSubmit={(values, { setSubmitting }) => {
+                        const data = {
+                            numero: parseInt(values.numero),
+                            password: values.password
+                        }
+                      console.log(data)
+                    }}>
 
-            <View style={styles.SectionStyle}>
-            
-              <View style={styles.buttonStyle}>
-                <TextInput style={styles.inputStyle} 
-                  placeholder='Login' 
-                  placeholderTextColor="#d0c8c8d6"
-                  onChangeText={(login) =>
-                    setLogin(login)
-                  }
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  onSubmitEditing={() =>
-                    passwordInputRef.current &&
-                    passwordInputRef.current.focus()
-                  }
-                  blurOnSubmit={false}
-                />
-              </View>   
-            </View>
+                    {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
+                      <View>
+                          <View style={styles.SectionStyle}>
+                            <View style={styles.buttonStyle}>
+                                <TextInput
+                                  style={styles.inputStyle} 
+                                  placeholder='Télephone'
+                                  placeholderTextColor="#d0c8c8d6"
+                                  keyboardType="numeric"
+                                  autoCapitalize="sentences"
 
-            <View style={styles.SectionStyle}>
-              <View style={styles.buttonStyle}>
-                <TextInput style={styles.inputStyle} 
-                  onChangeText={(password) =>
-                    sePassword(password)
-                  }
-                  placeholder='Password' 
-                  secureTextEntry={true}
-                  placeholderTextColor="#d0c8c8d6"
-                  keyboardType="default"
-                  ref={passwordInputRef}
-                  onSubmitEditing={Keyboard.dismiss}
-                  blurOnSubmit={false}
-                  returnKeyType="next"
-  
-                />
-              </View>   
-            </View>
+                                  autoCorrect={false}
+                                  onChangeText={handleChange('numero')}
+                                  onBlur={handleBlur('numero')}
+                                  value={values.numero}
+                                  onSubmitEditing={Keyboard.dismiss}
+                                />
+                            </View>   
+                            {errors.numero && touched.numero ? ( <Text style={styles.errormsg}>{errors.numero}</Text> ) : null}
+                          </View>
+
+                        <View style={styles.SectionStyle}>
+                            <View style={styles.buttonStyle}>
+                              <TextInput 
+                                  style={styles.inputStyle} 
+                                  placeholder='Mot de passe' 
+                                  secureTextEntry={true}
+                                  placeholderTextColor="#d0c8c8d6"
+                                        
+                                  autoCorrect={false}
+                                  onChangeText={handleChange('password')}
+                                  onBlur={handleBlur('password')}
+                                  value={values.password}
+                                  onSubmitEditing={Keyboard.dismiss}
+                              />
+                            </View>   
+                          {errors.password && touched.password ? ( <Text style={styles.errormsg} >{errors.password}</Text> ) : null}
+                        </View>
             
-            <TouchableOpacity
-                style={styles.connectButton}
-                activeOpacity={0.8}
-                onPress={handleSubmitPress}>
-                <Text style={styles.buttonTextStyle}>CONNEXION</Text>
-            </TouchableOpacity>
-  
+                        <TouchableOpacity
+                            style={styles.connectButton}
+                            activeOpacity={0.8}
+                            onPress={handleSubmit}>
+                            <Text style={styles.buttonTextStyle}>CONNEXION</Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+              </Formik>
             <Text style={styles.registerTextStyle}
                 onPress={() => navigation.navigate('register')}>
                 Nouveau ici ? Inscrivez-vous

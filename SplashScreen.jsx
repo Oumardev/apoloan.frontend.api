@@ -11,11 +11,11 @@ const SplashScreen = ({navigation}) => {
       setAnimating(false);
       AsyncStorage.getItem('token').then((value) =>{
         console.log(value)
-        // if(value === null){
-        //   navigation.replace('Auth')
-        // }else{
-        //   navigation.replace('ScreenConnected')
-        // }
+        if(value === null){
+          navigation.replace('Auth')
+        }else{
+          navigation.replace('ScreenConnected')
+        }
       }
       );
     }, 5000);
