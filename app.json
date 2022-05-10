@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "apoloan.frontend.mobile",
+    "slug": "apoloan.frontend.mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
