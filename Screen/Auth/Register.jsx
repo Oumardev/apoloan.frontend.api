@@ -92,7 +92,7 @@ const Register = ({navigation}) => {
                             password: values.password
                         }
 
-                        fetch('http://www.oumardev.com:2500/apoloanapi/register', {
+                        fetch('', {
                             method: 'POST',
                             body: JSON.stringify(data),
                             headers: {
@@ -357,7 +357,7 @@ const Register = ({navigation}) => {
       height : 80,
       width : 280
     },
-    
+
     connectButton:{
       backgroundColor: '#0096FF',
       borderWidth: 0,
