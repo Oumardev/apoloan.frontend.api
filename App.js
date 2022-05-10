@@ -2,13 +2,105 @@ import React from 'react';
 import { View, Text, TextInput , StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import SplashScreen from './SplashScreen';
 import Register from './Screen/Auth/Register';
 import Login from './Screen/Auth/Login'
-import { createStackNavigator } from '@react-navigation/stack';
+import Historical from './Screen/Private/Historical'
+import Home from './Screen/Private/Home'
+import Refund from './Screen/Private/Refund'
+import Profile from './Screen/Private/Profile'
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const PrivateScreen = ({navigation}) =>{
+    
+  return (
+    <Tab.Navigator tabBarOptions={{ showLabel : false }} >
+       
+       <Tab.Screen name="Home" component={Home} 
+        options={{
+          tabBarIcon: ({focused}) =>{
+            return(
+            <View style={{alignItems : 'center', justifyContent : 'center'}}>
+              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Réserver</Text>
+            </View>)
+          },
+          headerTitle : ()=>(
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Réserver</Text>
+          ),
+          headerStyle :{
+            backgroundColor : 'rgb(26,53,88)',
+            height : 86
+          }
+        }}
+      />
+
+      <Tab.Screen name="Historical" component={Historical} 
+        options={{
+          tabBarIcon: ({focused}) =>{
+            return(
+            <View style={{alignItems : 'center', justifyContent : 'center'}}>
+              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Historique</Text>
+            </View>)
+          },
+          headerTitle : ()=>(
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Historique</Text>
+          ),
+          headerStyle :{
+            backgroundColor : 'rgb(26,53,88)',
+            height : 86
+          }
+        }}
+      />
+
+      <Tab.Screen name="Refund" component={Refund} 
+        options={{
+          tabBarIcon: ({focused}) =>{
+            return(
+            <View style={{alignItems : 'center', justifyContent : 'center'}}>
+              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Rembourssement</Text>
+            </View>)
+          },
+          headerTitle : ()=>(
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Rembourssement</Text>
+          ),
+          headerStyle :{
+            backgroundColor : 'rgb(26,53,88)',
+            height : 86
+          }
+        }}
+      />
+
+      <Tab.Screen name="Profile" component={Profile} 
+        options={{
+          tabBarIcon: ({focused}) =>{
+            return(
+            <View style={{alignItems : 'center', justifyContent : 'center'}}>
+              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Profile</Text>
+            </View>)
+          },
+          headerTitle : ()=>(
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Profile</Text>
+          ),
+          headerStyle :{
+            backgroundColor : 'rgb(26,53,88)',
+            height : 86
+          }
+        }}
+      />
+
+    </Tab.Navigator>
+  )
+}
+
 
 const Auth = ({navigation}) =>{
   return(
@@ -40,6 +132,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="SplashScreen">
           <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}} />
           <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
+          <Stack.Screen name="PrivateScreen" component={PrivateScreen} options={{headerShown: false}} />
       </Stack.Navigator>
   </NavigationContainer>
   );

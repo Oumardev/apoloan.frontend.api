@@ -2,15 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 /**
- * Cet écrant sera l'écrant d'acceuil 
+ * Cet écrant sera l'écrant ou l'utilisateur devra remboursé 
  * il affichera :
- * - LIST ANNONCE ['EMPRUNT', 'PRET']
+ * - LIST ANNONCE ['EMPRUNT'] avec le status 'en cour'
 */
-export default function Home({navigation}) {
+export default function Refund({navigation}) {
   
     return (
         <View style={styles.container}>
-            <Text>Home page</Text>
+            <Text>Refund page</Text>
         </View>
   );
 }
