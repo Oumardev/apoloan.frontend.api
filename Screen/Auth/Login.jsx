@@ -12,7 +12,8 @@ import {
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { styles } from './AuthStyle'
-
+import apiInstance from '../../axios.config'
+import { LOGIN_URL } from '../../URL_API'
 
 const Login = ({navigation}) => {
 
@@ -44,12 +45,18 @@ const Login = ({navigation}) => {
                     
                     validationSchema = {loginSchema}
                     
-                    onSubmit={(values, { setSubmitting }) => {
+                    onSubmit={ async (values, { setSubmitting }) => {
                         const data = {
                             numero: parseInt(values.numero),
                             password: values.password
                         }
-                      console.log(data)
+                      try {
+                        const response = await apiInstance.post(LOGIN_URL,data)
+                        console.log(response.data)
+                      } catch (error) {
+                        setErrormsg(error.response.data.error)
+                      }
+                     
                     }}>
 
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (

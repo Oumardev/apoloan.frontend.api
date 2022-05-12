@@ -14,7 +14,7 @@ const SplashScreen = ({navigation}) => {
         if(value === null){
           navigation.replace('Auth')
         }else{
-          navigation.replace('ScreenConnected')
+          navigation.replace('PrivateScreen')
         }
       }
       );

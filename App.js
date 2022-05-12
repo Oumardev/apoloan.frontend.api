@@ -3,6 +3,9 @@ import { View, Text, TextInput , StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import SplashScreen from './SplashScreen';
 import Register from './Screen/Auth/Register';
@@ -27,11 +30,11 @@ const PrivateScreen = ({navigation}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
               <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Réserver</Text>
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Acceuil</Text>
             </View>)
           },
           headerTitle : ()=>(
-            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Réserver</Text>
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Acceuil</Text>
           ),
           headerStyle :{
             backgroundColor : 'rgb(26,53,88)',
@@ -45,7 +48,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <MaterialCommunityIcons name={'history'} size={'25'} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Historique</Text>
             </View>)
           },
@@ -64,8 +67,8 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Rembourssement</Text>
+              <MaterialCommunityIcons name={'credit-card-refund'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Remboursser</Text>
             </View>)
           },
           headerTitle : ()=>(
@@ -83,7 +86,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <FontAwesome name={'user'} size={'25'} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Profile</Text>
             </View>)
           },
@@ -100,7 +103,6 @@ const PrivateScreen = ({navigation}) =>{
     </Tab.Navigator>
   )
 }
-
 
 const Auth = ({navigation}) =>{
   return(
