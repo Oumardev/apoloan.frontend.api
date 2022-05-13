@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   TextInput,
   View,
@@ -11,13 +11,15 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { styles } from './AuthStyle'
-import apiInstance from '../../axios.config'
-import { LOGIN_URL } from '../../URL_API'
+import { styles } from './AuthStyle';
+import { login, userSelector } from "../../reduxSlices/UserSlice"
+import { useSelector, useDispatch } from 'react-redux';
 
 const Login = ({navigation}) => {
 
-    const [errormsg, setErrormsg] = useState('');
+    const dispatch = useDispatch()
+
+    const { errorMessage } = useSelector(userSelector);
 
     const loginSchema = Yup.object().shape({
 
@@ -36,7 +38,7 @@ const Login = ({navigation}) => {
         <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle} >
           
           <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={200}>
-          <Text  style={styles.errormsgheader}>{errormsg}</Text>
+          <Text style={styles.errormsgheader}>{errorMessage}</Text>
               <Formik
                     initialValues={{ 
                         numero: '', 
@@ -50,12 +52,18 @@ const Login = ({navigation}) => {
                             numero: parseInt(values.numero),
                             password: values.password
                         }
-                      try {
-                        const response = await apiInstance.post(LOGIN_URL,data)
-                        console.log(response.data)
-                      } catch (error) {
-                        setErrormsg(error.response.data.error)
-                      }
+
+                        dispatch(login(data))
+                      // try {
+                      //   const response = await apiInstance.post(LOGIN_URL,data)
+                      //   if(response.data) {
+                      //     AsyncStorage.setItem('token', response.data.token);
+                      //     AsyncStorage.setItem('isLogin', response.data.isLogin);
+                      //     navigation.replace('PrivateScreen');
+                      //   }
+                      // } catch (error) {
+                      //   if(error.response.data.error) setErrormsg(error.response.data.error)
+                      // }
                      
                     }}>
 
@@ -114,7 +122,7 @@ const Login = ({navigation}) => {
           </KeyboardAvoidingView>
         </ScrollView>
     </View>
-    );
-  };
+  );
+};
 
   export default Login;

@@ -10,11 +10,10 @@ const SplashScreen = ({navigation}) => {
     setTimeout(() => {
       setAnimating(false);
       AsyncStorage.getItem('token').then((value) =>{
-        console.log(value)
         if(value === null){
           navigation.replace('Auth')
         }else{
-          navigation.replace('PrivateScreen')
+          navigation.navigate('PrivateScreen')
         }
       }
       );

@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import store from './store'
+import { Provider } from 'react-redux';
 import SplashScreen from './SplashScreen';
 import Register from './Screen/Auth/Register';
 import Login from './Screen/Auth/Login'
@@ -130,13 +131,15 @@ const Auth = ({navigation}) =>{
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
-          <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}} />
-          <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
-          <Stack.Screen name="PrivateScreen" component={PrivateScreen} options={{headerShown: false}} />
-      </Stack.Navigator>
-  </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="SplashScreen">
+            <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}} />
+            <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
+            <Stack.Screen name="PrivateScreen" component={PrivateScreen} options={{headerShown: false}} />
+        </Stack.Navigator>
+      </NavigationContainer>
+  </Provider>
   );
 }
 
