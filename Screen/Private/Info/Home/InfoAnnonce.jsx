@@ -1,11 +1,13 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { MaterialCommunityIcons, Feather, MaterialIcons  } from 'react-native-vector-icons';
 import { infoStyle } from '../../styles.home/info.style'
+import ConfirmModal from "../../Modal/Home/ConfirmModal";
 
 
 const InfoAnnonce = ({route, navigation}) =>{
     const { data } = route.params;
+    const [visible, setVisible] = useState(false)
 
     function nFormatter(num) {
         if (num >= 1000000000) {
@@ -23,21 +25,22 @@ const InfoAnnonce = ({route, navigation}) =>{
     const showSubmitButton = 
         data.type == "EMPRUNT" ? 
         (
-            <TouchableOpacity style={infoStyle.submit}>
+            <TouchableOpacity style={infoStyle.submit} onPress={()=> setVisible(true)}>
                 <Text style={{...infoStyle.detailsTarget, color: 'white', marginRight: 10}}>Contribuer</Text>
                 <MaterialIcons color={'white'} size={22} name={'payment'} />
             </TouchableOpacity>
         )
         :
         (
-            <TouchableOpacity style={infoStyle.submit}>
+            <TouchableOpacity style={infoStyle.submit} onPress={()=> setVisible(true)}>
                 <Text style={{...infoStyle.detailsTarget, color: 'white', marginRight: 10}}>BENEFICIER</Text>
                 <MaterialCommunityIcons color={'white'} size={22} name={'human-handsup'} />
             </TouchableOpacity>
         )
 
     return(
-        <View style={infoStyle.container}>
+        <View style={infoStyle.container} >
+            <ConfirmModal data={data} visible={visible} setVisible={setVisible} />
             <View style={infoStyle.emptySection}></View>
             <View style={infoStyle.whiteSection}>
                 

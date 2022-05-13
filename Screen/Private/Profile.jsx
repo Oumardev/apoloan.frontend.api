@@ -117,7 +117,7 @@ export default function Profile({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: '#B8E3FF',
   },
 
   header:{

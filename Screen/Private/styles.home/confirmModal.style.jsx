@@ -4,7 +4,7 @@ export const confirmModal = StyleSheet.create({
     modalBackGround : {
         flex : 1,
         backgroundColor : 'rgba(0,0,0,0.5)',
-        justifyContent : 'flex-end',
+        justifyContent : 'center',
         alignItems : 'center'
     },
   
@@ -24,11 +24,21 @@ export const confirmModal = StyleSheet.create({
         justifyContent : 'space-around'
     },
   
-    buttonGo : {
-        backgroundColor : '#448dee',
-        justifyContent : 'center',
-        alignItems : 'center',
-        height : 40,
-        borderRadius : 20
+    button : {
+        display: 'flex',
+        flexDirection : 'row',
+        justifyContent: 'center',
+        backgroundColor : '#F46D76',
+        margin: 10,
+        width: 100,
+        padding:10,
+        borderRadius: 10
+    },
+
+    buttonSection : {
+        display : 'flex',
+        flexDirection : 'row',
+        justifyContent : 'center'
     }
+
 });
