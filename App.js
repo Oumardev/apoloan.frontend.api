@@ -131,10 +131,15 @@ const Auth = ({navigation}) =>{
 
 const headerInfoAnnonce = {
   headerShown: true,
-  headerTitle: "Info Annonce",
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Info Annonce</Text>
+  ,
   headerLeft: () =>(
-    <MaterialIcons name="arrow-back-ios" size={25} style={{paddingLeft : 12}} />
-  )
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : '#B8E3FF',
+    height : 86
+  }
 }
 
 export default function App() {

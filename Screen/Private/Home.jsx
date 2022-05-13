@@ -6,6 +6,7 @@ import { contributeurstyles } from './styles.home/contributeur.style';
 import { userSelector, userget } from '../../reduxSlices/UserSlice'
 import { annonceSelector, annoncelist } from '../../reduxSlices/AnnonceSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Cet écrant sera l'écrant d'acceuil 
