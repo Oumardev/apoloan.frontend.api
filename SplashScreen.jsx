@@ -13,7 +13,7 @@ const SplashScreen = ({navigation}) => {
         if(value === null){
           navigation.replace('Auth')
         }else{
-          navigation.navigate('PrivateScreen')
+          navigation.replace('PrivateScreen')
         }
       }
       );

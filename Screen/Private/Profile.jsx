@@ -1,63 +1,62 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import apiInstance from '../../axios.config'
-import { USER_GET_URL } from '../../URL_API'
+import { userSelector, userget } from '../../reduxSlices/UserSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Profile({navigation}) {
 
-  const [user, setUser] = useState({})
-  
-  useEffect(()=>{
-    async function fetchData(){
-      const token = await AsyncStorage.getItem('token')
-  
-      try{
-          const response = await apiInstance.get(USER_GET_URL,{
-            headers:{
-              'Content-Type': 'application/json',
-              'Authorization': 'Bear '+token
-            }
-          })
-        
-        console.log(response.data.user)
-      }catch(error){
-        console.log('error')
-        AsyncStorage.removeItem('token')
-        navigation.navigate('Auth')
-        console.log('end error')
-      }
+  const dispatch = useDispatch();
+  const { errorMessage , errorHappen, user, isFetching } = useSelector(userSelector);
 
-      console.log('token',token)
+  function nFormatter(num) {
+    if (num >= 1000000000) {
+       return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
     }
+    if (num >= 1000000) {
+       return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    if (num >= 1000) {
+       return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num;
+  }
 
-    fetchData()
+  useEffect(()=>{
+    dispatch(userget())
   },[])
 
   return (
+    isFetching == false &&
     <View style={styles.container}>
      
       <View style={styles.body}>
         <View style={styles.bodyHeader}>
             <View style={styles.follower}>
-              <Text style={{fontSize : 30, fontWeight:'700'}}>400k</Text>
+              <Text style={{fontSize : 23, fontWeight:'700'}}>{nFormatter(user.user.Compte.solde)} F</Text>
               <Text style={{fontSize : 17, fontWeight:'200'}}>Solde</Text>
             </View>
             <View style={styles.pp}>
 
-              <Text style={{fontSize : 30, fontWeight:'700'}}>Oumar CISSE</Text>
-              <Text style={{fontSize : 17, fontWeight:'200'}}>~Oums</Text>
+              <Text style={{fontSize : 30, fontWeight:'700'}}>{user.user.prenom} {user.user.nom}</Text>
+              <Text style={{fontSize : 17, fontWeight:'200'}}>~{user.user.numero}</Text>
               <TouchableOpacity style={styles.editButton} onPress={()=> navigation.navigate('EditPtofile')}>
                 <Text style={{fontSize : 22, fontWeight:'500', color:'white'}}>Modifier</Text>
                 <MaterialIcons name='edit' size={22} color={'white'}/>
               </TouchableOpacity> 
             </View>
             <View style={styles.demande}>
-            <Text style={{fontSize : 30, fontWeight:'700'}}>18</Text>
-            <Text style={{fontSize : 17, fontWeight:'200'}}>demandes</Text>
+            <Text style={{fontSize : 30, fontWeight:'700'}}>
+              <MaterialIcons name='logout' onPress={()=>{
+                  AsyncStorage.removeItem('token')
+                  AsyncStorage.removeItem('isLogin')
+                  navigation.replace('SplashScreen')
+                }} 
+                style={{margin:10}} size={32} color={'#E43D40'}/></Text>
+            <Text style={{fontSize : 17, fontWeight:'200'}}>Logout</Text>
             </View>
         </View>
         <View style={styles.note}>

@@ -30,7 +30,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'calendar-month'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <MaterialCommunityIcons name={'calendar-month'} size={25} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Acceuil</Text>
             </View>)
           },
@@ -49,7 +49,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'history'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <MaterialCommunityIcons name={'history'} size={25} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Historique</Text>
             </View>)
           },
@@ -68,7 +68,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'credit-card-refund'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <MaterialCommunityIcons name={'credit-card-refund'} size={25} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Remboursser</Text>
             </View>)
           },
@@ -87,7 +87,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <FontAwesome name={'user'} size={'25'} color={focused ? 'tomato' : 'gray'} />
+              <FontAwesome name={'user'} size={25} color={focused ? 'tomato' : 'gray'} />
               <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Profile</Text>
             </View>)
           },

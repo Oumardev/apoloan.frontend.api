@@ -1,7 +1,8 @@
-import React, {useState } from 'react';
+import React, {useState , useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from 'react-native-vector-icons';
 import DetailsAnnonce from "./Modal/Acceuil/DetailsAnnonce"
+
 
 /**
  * Cet écrant sera l'écrant d'acceuil 
@@ -70,7 +71,7 @@ export default function Home({navigation}) {
             }
         },
         {
-            "id": 1,
+            "id": 3,
             "type": "EMPRUNT",
             "duree": "3MOIS",
             "pourcentage": 0.3,
@@ -97,7 +98,7 @@ export default function Home({navigation}) {
             }
         },
         {
-            "id": 1,
+            "id": 4,
             "type": "EMPRUNT",
             "duree": "3MOIS",
             "pourcentage": 0.3,
@@ -124,7 +125,7 @@ export default function Home({navigation}) {
             }
         },
         {
-            "id": 1,
+            "id": 5,
             "type": "EMPRUNT",
             "duree": "3MOIS",
             "pourcentage": 0.3,
@@ -163,17 +164,17 @@ export default function Home({navigation}) {
                     {
                       annonce.success.map(item =>(
                         item.type == "PRET" ?
-                        <React.Fragment>
+                        <React.Fragment key={item.id}>
                           <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                           <TouchableOpacity 
                             onPress={()=>{ 
                               setVisible(true)
                               setData(item)
                             }} 
-
+                            key={item.id}
                             style={styles.itemContrib}
                           >
-                            <FontAwesome5 name={'user-tie'} size={'35'} color={'white'}/>
+                            <FontAwesome5 name={'user-tie'} size={35} color={'white'}/>
                             <Text style={{...styles.itemName, color:'#98FB98'}}>{item.User.prenom}</Text>
                             <Text style={{...styles.itemName, color:'#98FB98'}}>{item.User.nom}</Text>
                           </TouchableOpacity>
@@ -195,7 +196,7 @@ export default function Home({navigation}) {
                     {
                       annonce.success.map(item =>(
                         item.type == "EMPRUNT" &&
-                          <React.Fragment>
+                          <React.Fragment key={item.id}>
                             <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                               <TouchableOpacity 
                                 onPress={()=>{ 
@@ -203,9 +204,10 @@ export default function Home({navigation}) {
                                 setData(item)
                                 }} 
                                 style={styles.itemDemand}
+                                key={item.id}
                               >
-                              <View style={styles.leftInfo}>
-                                <MaterialCommunityIcons name={'hand-extended'} size={'35'} color={'orange'}/>
+                              <View style={styles.leftInfo} >
+                                <MaterialCommunityIcons name={'hand-extended'} size={35} color={'orange'}/>
                                 <Text style={styles.itemName}>{item.User.prenom}</Text>
                                 <Text style={styles.itemName}>{item.User.nom}</Text>
                               </View>
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
   },
 
   titleContrib:{
-    fontSize: '30px',
+    fontSize: 30,
     fontWeight: '700'
   },
 
@@ -263,7 +265,7 @@ const styles = StyleSheet.create({
   },
 
   itemName:{
-    fontSize: '18px',
+    fontSize: 18,
     fontWeight : '600',
     color : 'white',
     paddingTop:3
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
   },
 
   titleDemand:{
-    fontSize: '30px',
+    fontSize: 30,
     fontWeight: '700'
   },
 

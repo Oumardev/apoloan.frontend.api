@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   TextInput,
   View,
@@ -18,8 +18,11 @@ import { useSelector, useDispatch } from 'react-redux';
 const Login = ({navigation}) => {
 
     const dispatch = useDispatch()
+    const { errorMessage , loginSuccess} = useSelector(userSelector);
 
-    const { errorMessage } = useSelector(userSelector);
+    useEffect(()=>{
+      if(loginSuccess) navigation.replace('PrivateScreen');
+    },[loginSuccess])
 
     const loginSchema = Yup.object().shape({
 
@@ -38,7 +41,7 @@ const Login = ({navigation}) => {
         <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle} >
           
           <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={200}>
-          <Text style={styles.errormsgheader}>{errorMessage}</Text>
+          <Text style={styles.errormsgheader}>{errorMessage && errorMessage}</Text>
               <Formik
                     initialValues={{ 
                         numero: '', 
@@ -54,17 +57,6 @@ const Login = ({navigation}) => {
                         }
 
                         dispatch(login(data))
-                      // try {
-                      //   const response = await apiInstance.post(LOGIN_URL,data)
-                      //   if(response.data) {
-                      //     AsyncStorage.setItem('token', response.data.token);
-                      //     AsyncStorage.setItem('isLogin', response.data.isLogin);
-                      //     navigation.replace('PrivateScreen');
-                      //   }
-                      // } catch (error) {
-                      //   if(error.response.data.error) setErrormsg(error.response.data.error)
-                      // }
-                     
                     }}>
 
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
