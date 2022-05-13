@@ -15,7 +15,7 @@ import Historical from './Screen/Private/Historical'
 import Home from './Screen/Private/Home'
 import Refund from './Screen/Private/Refund'
 import Profile from './Screen/Private/Profile'
-
+import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -129,6 +129,14 @@ const Auth = ({navigation}) =>{
   )
 }
 
+const headerInfoAnnonce = {
+  headerShown: true,
+  headerTitle: "Info Annonce",
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" size={25} style={{paddingLeft : 12}} />
+  )
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -137,6 +145,9 @@ export default function App() {
             <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}} />
             <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
             <Stack.Screen name="PrivateScreen" component={PrivateScreen} options={{headerShown: false}} />
+
+            {/** Info screen : InfoAnnonce */}
+            <Stack.Screen name="InfoAnnonce" component={InfoAnnonce} options={headerInfoAnnonce} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

@@ -1,7 +1,6 @@
 import React, {useState , useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons, AntDesign } from 'react-native-vector-icons';
-import DetailsAnnonce from "./Modal/Acceuil/DetailsAnnonce"
 import { demandestyles } from './styles.home/demande.style';
 import { contributeurstyles } from './styles.home/contributeur.style';
 import { userSelector, userget } from '../../reduxSlices/UserSlice'
@@ -50,8 +49,6 @@ export default function Home({navigation}) {
    if(errorHappen == true)  logOut()
   },[errorHappen])
 
-
-  console.log(annonce.emprunt)
     return (
       isFetching == false &&
         <View style={contributeurstyles.container}>
@@ -63,12 +60,8 @@ export default function Home({navigation}) {
                     {
                       annonce.pret && annonce.pret.map(item =>(
                         <React.Fragment key={item.id}>
-                          <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                           <TouchableOpacity 
-                            onPress={()=>{ 
-                              setVisible(true)
-                              setData(item)
-                            }} 
+                            onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                             key={item.id}
                             style={contributeurstyles.item}
                           >
@@ -90,12 +83,8 @@ export default function Home({navigation}) {
                     {
                       annonce.emprunt && annonce.emprunt.map(item =>(
                           <React.Fragment key={item.id}>
-                            <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                               <TouchableOpacity 
-                                onPress={()=>{ 
-                                setVisible(true)
-                                setData(item)
-                                }} 
+                                onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                                 style={demandestyles.item}
                                 key={item.id}
                               >

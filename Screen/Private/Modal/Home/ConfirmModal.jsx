@@ -1,32 +1,31 @@
-import React,{ useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Modal, Image} from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Fontisto, MaterialIcons,  } from 'react-native-vector-icons';
+import React from "react";
+import { Text, View, TouchableOpacity, Modal } from 'react-native';
+import { AntDesign, MaterialCommunityIcons, Fontisto  } from 'react-native-vector-icons';
+import { confirmModal } from '../../styles.home/confirmModal.style'
 
 const ModalPoup = ({visible, children}) =>{
     return ( 
       <Modal transparent visible={visible}>
-        <View style={styles.modalBackGround}>
-          <View style={styles.modalContainer}>{children}</View>
+        <View style={confirmModal.modalBackGround}>
+          <View style={confirmModal.modalContainer}>{children}</View>
         </View>
       </Modal>
       )
 }
 
-const DetailsAnnonce = ({data, visible, setVisible}) =>{
-    
-console.log(data)
+const ConfirmModal = ({data, visible, setVisible}) =>{
 
     return(
         <View>
           <ModalPoup visible={visible}>
-              <View style={{}}>
-                <View style={styles.header}>
+              <View>
+                <View style={confirmModal.header}>
                   <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>{data.type == "EMPRUNT" ? "Voulez vous vraiment financer cette annonce ?" : "Voulez vous vraiment effectuer cet pret ?"}</Text>
-                  <AntDesign onPress={() => setVisible(false) } style={{ width :30}} name="close" size={15}/>
+                  <AntDesign onPress={() => setVisible(false) } color={'red'} name="close" size={25}/>
                 </View>
 
-                <View style={{}}>
-                  <View style={styles.poupBody}>
+                <View>
+                  <View style={confirmModal.poupBody}>
                     <View style={{flexDirection:'row', justifyContent:"space-around"}}>
                       <View>
                         <MaterialCommunityIcons name="percent" size={20} style={{margin:8}}/>
@@ -39,7 +38,7 @@ console.log(data)
                         <Text style={{fontSize : 20, fontWeight :'500', color: '#08313A',margin:8}}>{data.duree}</Text>
                       </View>
                     </View>
-                    <TouchableOpacity style={styles.buttonGo}>
+                    <TouchableOpacity style={confirmModal.buttonGo}>
                       <Text style={{fontSize : 26, fontWeight :'600', color : 'white', position : 'absolute'}}>{data.type == "EMPRUNT" ? "FINANCER" : "PRET"}</Text>
                     </TouchableOpacity>
                   </View>
@@ -49,40 +48,4 @@ console.log(data)
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-
-  modalBackGround : {
-    flex : 1,
-    backgroundColor : 'rgba(0,0,0,0.5)',
-    justifyContent : 'flex-end',
-    alignItems : 'center'
-  },
-
-  modalContainer : {
-    width : '100%',
-    backgroundColor : 'white',
-    paddingHorizontal : 20,
-    paddingVertical : 30,
-    borderRadius :20, 
-    elevation : 20
-  },
-
-  header : {
-    width : '100%',
-    height : 40,
-    flexDirection : 'row',
-    justifyContent : 'space-around'
-  },
-
-  buttonGo : {
-    backgroundColor : '#448dee',
-    justifyContent : 'center',
-    alignItems : 'center',
-    height : 40,
-    
-    borderRadius : 20
-  }
-});
-
-export default DetailsAnnonce
+export default ConfirmModal
