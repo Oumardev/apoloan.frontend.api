@@ -23,15 +23,15 @@ export const contributeurstyles = StyleSheet.create({
       display: 'flex',
       justifyContent:'center',
       alignItems:'center',
-      backgroundColor : 'black',
+      backgroundColor : '#F0ECE3',
       padding: 10,
-      borderRadius : '18px',
+      borderRadius : '30px',
       width : 80
     },
   
     itemName:{
       fontSize: 18,
-      fontWeight : '600',
+      fontWeight : '300',
       color : 'black',
       paddingTop:3
     },

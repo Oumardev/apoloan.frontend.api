@@ -1,9 +1,12 @@
 import React, {useState , useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { FontAwesome5, MaterialCommunityIcons } from 'react-native-vector-icons';
+import { FontAwesome5, MaterialCommunityIcons, AntDesign } from 'react-native-vector-icons';
 import DetailsAnnonce from "./Modal/Acceuil/DetailsAnnonce"
 import { demandestyles } from './styles.home/demande.style';
 import { contributeurstyles } from './styles.home/contributeur.style';
+import { userSelector, userget } from '../../reduxSlices/UserSlice'
+import { annonceSelector, annoncelist } from '../../reduxSlices/AnnonceSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * Cet écrant sera l'écrant d'acceuil 
@@ -12,159 +15,53 @@ import { contributeurstyles } from './styles.home/contributeur.style';
 */
 export default function Home({navigation}) {
 
+  function nFormatter(num) {
+    if (num >= 1000000000) {
+       return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+    }
+    if (num >= 1000000) {
+       return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    if (num >= 1000) {
+       return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num;
+  }
+  
+  const dispatch = useDispatch();
+  const { errorMessage , errorHappen, user } = useSelector(userSelector);
+  const { isFetching ,annonce } = useSelector(annonceSelector);
+
   const [visible , setVisible] = useState(false)
   const [data , setData] = useState(false)
 
-  const annonce = {
-    "success": [
-        {
-            "id": 2,
-            "type": "EMPRUNT",
-            "duree": "5MOIS",
-            "pourcentage": 0.38,
-            "montant": 1580000,
-            "isBooster": false,
-            "isVisible": true,
-            "codeUser": 11,
-            "createdAt": "2022-05-10T15:10:08.000Z",
-            "updatedAt": "2022-05-10T15:10:08.000Z",
-            "User": {
-                "id": 11,
-                "nom": "GATES",
-                "prenom": "Henry",
-                "numero": 712571212,
-                "age": 22,
-                "sexe": "M",
-                "adresse": "UKR, Kiev",
-                "fonction": "Combatant",
-                "numeroCNI": 288392,
-                "password": "$2b$10$i7aEQLKFC7JC0rsGfG68henbj7PgKwO0ZTxRqFHfgOjEe3qIttGp2",
-                "idCompte": 11,
-                "createdAt": "2022-05-10T14:55:44.000Z",
-                "updatedAt": "2022-05-10T14:55:44.000Z"
-            }
-        },
-        {
-            "id": 1,
-            "type": "EMPRUNT",
-            "duree": "3MOIS",
-            "pourcentage": 0.3,
-            "montant": 200000,
-            "isBooster": false,
-            "isVisible": true,
-            "codeUser": 13,
-            "createdAt": "2022-05-10T15:03:49.000Z",
-            "updatedAt": "2022-05-10T15:03:49.000Z",
-            "User": {
-                "id": 13,
-                "nom": "DIAZ",
-                "prenom": "Michelle",
-                "numero": 784563425,
-                "age": 28,
-                "sexe": "F",
-                "adresse": "ANG, United",
-                "fonction": "Directrice",
-                "numeroCNI": 653838,
-                "password": "$2b$10$C0jmCTUveEFIbMaf3R.X/.LSULW30pVj5CBlYFCGGdAsiN8wLOSEC",
-                "idCompte": 13,
-                "createdAt": "2022-05-10T14:57:18.000Z",
-                "updatedAt": "2022-05-10T14:57:18.000Z"
-            }
-        },
-        {
-            "id": 3,
-            "type": "EMPRUNT",
-            "duree": "3MOIS",
-            "pourcentage": 0.3,
-            "montant": 200000,
-            "isBooster": false,
-            "isVisible": true,
-            "codeUser": 13,
-            "createdAt": "2022-05-10T15:03:49.000Z",
-            "updatedAt": "2022-05-10T15:03:49.000Z",
-            "User": {
-                "id": 13,
-                "nom": "DIAZ",
-                "prenom": "Michelle",
-                "numero": 784563425,
-                "age": 28,
-                "sexe": "F",
-                "adresse": "ANG, United",
-                "fonction": "Directrice",
-                "numeroCNI": 653838,
-                "password": "$2b$10$C0jmCTUveEFIbMaf3R.X/.LSULW30pVj5CBlYFCGGdAsiN8wLOSEC",
-                "idCompte": 13,
-                "createdAt": "2022-05-10T14:57:18.000Z",
-                "updatedAt": "2022-05-10T14:57:18.000Z"
-            }
-        },
-        {
-            "id": 4,
-            "type": "EMPRUNT",
-            "duree": "3MOIS",
-            "pourcentage": 0.3,
-            "montant": 200000,
-            "isBooster": false,
-            "isVisible": true,
-            "codeUser": 13,
-            "createdAt": "2022-05-10T15:03:49.000Z",
-            "updatedAt": "2022-05-10T15:03:49.000Z",
-            "User": {
-                "id": 13,
-                "nom": "DIAZ",
-                "prenom": "Michelle",
-                "numero": 784563425,
-                "age": 28,
-                "sexe": "F",
-                "adresse": "ANG, United",
-                "fonction": "Directrice",
-                "numeroCNI": 653838,
-                "password": "$2b$10$C0jmCTUveEFIbMaf3R.X/.LSULW30pVj5CBlYFCGGdAsiN8wLOSEC",
-                "idCompte": 13,
-                "createdAt": "2022-05-10T14:57:18.000Z",
-                "updatedAt": "2022-05-10T14:57:18.000Z"
-            }
-        },
-        {
-            "id": 5,
-            "type": "EMPRUNT",
-            "duree": "3MOIS",
-            "pourcentage": 0.3,
-            "montant": 200000,
-            "isBooster": false,
-            "isVisible": true,
-            "codeUser": 13,
-            "createdAt": "2022-05-10T15:03:49.000Z",
-            "updatedAt": "2022-05-10T15:03:49.000Z",
-            "User": {
-                "id": 13,
-                "nom": "DIAZ",
-                "prenom": "Michelle",
-                "numero": 784563425,
-                "age": 28,
-                "sexe": "F",
-                "adresse": "ANG, United",
-                "fonction": "Directrice",
-                "numeroCNI": 653838,
-                "password": "$2b$10$C0jmCTUveEFIbMaf3R.X/.LSULW30pVj5CBlYFCGGdAsiN8wLOSEC",
-                "idCompte": 13,
-                "createdAt": "2022-05-10T14:57:18.000Z",
-                "updatedAt": "2022-05-10T14:57:18.000Z"
-            }
-        }
-    ]
-}
+  const logOut = () =>{
+    AsyncStorage.removeItem('token')
+    AsyncStorage.removeItem('isLogin')
+    navigation.replace('Auth')
+  }
 
+  useEffect(()=>{
+    dispatch(userget())
+    dispatch(annoncelist())
+  },[])
+
+  useEffect(()=>{
+   if(errorHappen == true)  logOut()
+  },[errorHappen])
+
+
+  console.log(annonce.emprunt)
     return (
+      isFetching == false &&
         <View style={contributeurstyles.container}>
 
             <View style={contributeurstyles.view}>
-              <Text style={contributeurstyles.title}>Contributeurs de la semaine</Text>
+              <Text style={contributeurstyles.title}>Contributeurs</Text>
                 <View style={contributeurstyles.scroll}>
                   <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
                     {
-                      annonce.success.map(item =>(
-                        item.type == "PRET" ?
+                      annonce.pret && annonce.pret.map(item =>(
                         <React.Fragment key={item.id}>
                           <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                           <TouchableOpacity 
@@ -175,14 +72,10 @@ export default function Home({navigation}) {
                             key={item.id}
                             style={contributeurstyles.item}
                           >
-                            <FontAwesome5 name={'user-tie'} size={35} color={'white'}/>
-                            <Text style={{...contributeurstyles.itemName, color:'#98FB98'}}>{item.User.prenom}</Text>
-                            <Text style={{...contributeurstyles.itemName, color:'#98FB98'}}>{item.User.nom}</Text>
+                            <FontAwesome5 name={'user-tie'} size={35} color={'black'}/>
+                            <Text style={{...contributeurstyles.itemName, color:'black'}}>{item.User.prenom}</Text>
+                            <Text style={{...contributeurstyles.itemName, color:'black'}}>{item.User.nom}</Text>
                           </TouchableOpacity>
-                        </React.Fragment>
-                        :
-                        <React.Fragment>
-                          <Text></Text>
                         </React.Fragment>
                       ))
                     }
@@ -191,12 +84,11 @@ export default function Home({navigation}) {
             </View>
 
             <View style={demandestyles.view}>
-              <Text style={demandestyles.title}>Les dernières demandes</Text>
+              <Text style={demandestyles.title}>Annonces demandes</Text>
                 <View style={demandestyles.scroll}>
                   <ScrollView  horizontal={false} showsHorizontalScrollIndicator={false}>
                     {
-                      annonce.success.map(item =>(
-                        item.type == "EMPRUNT" &&
+                      annonce.emprunt && annonce.emprunt.map(item =>(
                           <React.Fragment key={item.id}>
                             <DetailsAnnonce data={data} visible={visible} setVisible={setVisible}/>
                               <TouchableOpacity 
@@ -210,14 +102,15 @@ export default function Home({navigation}) {
                               <View style={demandestyles.leftInfo} >
                                 <MaterialCommunityIcons name={'hand-extended'} size={35} color={'black'}/>
                                 <View style={demandestyles.info}>
-                                  <Text style={demandestyles.itemName}>Demande de 150K</Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de 0.38</Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>pour une durée de 3 MOIS</Text>
+                                  <Text style={demandestyles.itemName}>Demande de {nFormatter(item.montant)}</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de {item.pourcentage}</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>pour une durée de {item.duree}</Text>
                                 </View>
                               </View>
 
                               <View style={demandestyles.date}>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'300',fontSize:15}}>12/11/2000</Text>
+                                <AntDesign size={30} name={'pushpino'} />
                               </View>
                             </TouchableOpacity>
                           </React.Fragment>

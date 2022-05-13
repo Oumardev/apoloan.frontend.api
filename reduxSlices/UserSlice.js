@@ -96,7 +96,7 @@ export const userSlice = createSlice({
             return state;
         },
         [userget.rejected]: (state, { payload }) => {
-            state.isFetching = false;
+            state.isFetching = true;
             state.errorHappen = true
             state.errorMessage = payload ? payload.error: '';
         },

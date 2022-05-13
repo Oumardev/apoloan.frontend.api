@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { annoncelist } from './reduxSlices/AnnonceSlice';
+import { useDispatch } from 'react-redux';
 
 const SplashScreen = ({navigation}) => {
   
   const [animating, setAnimating] = useState(true);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setTimeout(() => {
@@ -18,6 +21,7 @@ const SplashScreen = ({navigation}) => {
       }
       );
     }, 5000);
+    dispatch(annoncelist)
   }, []);
 
   return (

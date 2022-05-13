@@ -47,5 +47,10 @@ export const demandestyles = StyleSheet.create({
       display: 'flex',
       marginLeft:20,
       justifyContent: 'center',
+    },
+
+    date: {
+        display: 'flex',
+        alignItems : 'center'
     }
 });

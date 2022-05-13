@@ -25,13 +25,23 @@ export default function Profile({navigation}) {
     return num;
   }
 
+  const logOut = () =>{
+    AsyncStorage.removeItem('token')
+    AsyncStorage.removeItem('isLogin')
+    navigation.replace('Auth')
+  }
+
   useEffect(()=>{
     dispatch(userget())
   },[])
 
-  console.log('error happen',errorHappen)
+  useEffect(()=>{
+   if(errorHappen == true)  logOut()
+  },[errorHappen])
+
+  console.log(user)
   return (
-    isFetching == false &&
+    (isFetching == false) &&
     <View style={styles.container}>
      
       <View style={styles.body}>
@@ -51,11 +61,7 @@ export default function Profile({navigation}) {
             </View>
             <View style={styles.demande}>
             <Text style={{fontSize : 30, fontWeight:'700'}}>
-              <MaterialIcons name='logout' onPress={()=>{
-                  AsyncStorage.removeItem('token')
-                  AsyncStorage.removeItem('isLogin')
-                  navigation.replace('SplashScreen')
-                }} 
+              <MaterialIcons name='logout' onPress={()=> logOut()} 
                 style={{margin:10}} size={32} color={'#E43D40'}/></Text>
             <Text style={{fontSize : 17, fontWeight:'200'}}>Logout</Text>
             </View>
