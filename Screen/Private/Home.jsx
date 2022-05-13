@@ -1,8 +1,9 @@
 import React, {useState , useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from 'react-native-vector-icons';
 import DetailsAnnonce from "./Modal/Acceuil/DetailsAnnonce"
-
+import { demandestyles } from './styles.home/demande.style';
+import { contributeurstyles } from './styles.home/contributeur.style';
 
 /**
  * Cet écrant sera l'écrant d'acceuil 
@@ -155,11 +156,11 @@ export default function Home({navigation}) {
 }
 
     return (
-        <View style={styles.container}>
+        <View style={contributeurstyles.container}>
 
-            <View style={styles.viewContrib}>
-              <Text style={styles.titleContrib}>Contributeurs de la semaine</Text>
-                <View style={styles.scrollContrib}>
+            <View style={contributeurstyles.view}>
+              <Text style={contributeurstyles.title}>Contributeurs de la semaine</Text>
+                <View style={contributeurstyles.scroll}>
                   <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
                     {
                       annonce.success.map(item =>(
@@ -172,11 +173,11 @@ export default function Home({navigation}) {
                               setData(item)
                             }} 
                             key={item.id}
-                            style={styles.itemContrib}
+                            style={contributeurstyles.item}
                           >
                             <FontAwesome5 name={'user-tie'} size={35} color={'white'}/>
-                            <Text style={{...styles.itemName, color:'#98FB98'}}>{item.User.prenom}</Text>
-                            <Text style={{...styles.itemName, color:'#98FB98'}}>{item.User.nom}</Text>
+                            <Text style={{...contributeurstyles.itemName, color:'#98FB98'}}>{item.User.prenom}</Text>
+                            <Text style={{...contributeurstyles.itemName, color:'#98FB98'}}>{item.User.nom}</Text>
                           </TouchableOpacity>
                         </React.Fragment>
                         :
@@ -189,9 +190,9 @@ export default function Home({navigation}) {
               </View>
             </View>
 
-            <View style={styles.viewDemand}>
-              <Text style={styles.titleDemand}>Les dernières demandes</Text>
-                <View style={styles.scrollDemand}>
+            <View style={demandestyles.view}>
+              <Text style={demandestyles.title}>Les dernières demandes</Text>
+                <View style={demandestyles.scroll}>
                   <ScrollView  horizontal={false} showsHorizontalScrollIndicator={false}>
                     {
                       annonce.success.map(item =>(
@@ -203,25 +204,20 @@ export default function Home({navigation}) {
                                 setVisible(true)
                                 setData(item)
                                 }} 
-                                style={styles.itemDemand}
+                                style={demandestyles.item}
                                 key={item.id}
                               >
-                              <View style={styles.leftInfo} >
-                                <MaterialCommunityIcons name={'hand-extended'} size={35} color={'orange'}/>
-                                <Text style={styles.itemName}>{item.User.prenom}</Text>
-                                <Text style={styles.itemName}>{item.User.nom}</Text>
+                              <View style={demandestyles.leftInfo} >
+                                <MaterialCommunityIcons name={'hand-extended'} size={35} color={'black'}/>
+                                <View style={demandestyles.info}>
+                                  <Text style={demandestyles.itemName}>Demande de 150K</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de 0.38</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>pour une durée de 3 MOIS</Text>
+                                </View>
                               </View>
 
-                              <View style={styles.info}>
-                                <Text style={styles.itemName}>Demande</Text>
-                                <Text style={styles.itemName}>Pourcentage</Text>
-                                <Text style={styles.itemName}>Echéance</Text>
-                              </View>
-
-                              <View style={styles.info}>
-                                <Text style={{...styles.itemName, color:'black',fontWeight:'900'}}>{item.montant}</Text>
-                                <Text style={{...styles.itemName, color:'black',fontWeight:'900'}}>{item.pourcentage}</Text>
-                                <Text style={{...styles.itemName, color:'black',fontWeight:'900'}}>{item.duree}</Text>
+                              <View style={demandestyles.date}>
+                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'300',fontSize:15}}>12/11/2000</Text>
                               </View>
                             </TouchableOpacity>
                           </React.Fragment>
@@ -233,77 +229,3 @@ export default function Home({navigation}) {
         </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-
-  viewContrib:{
-    margin: 10
-
-  },
-
-  titleContrib:{
-    fontSize: 30,
-    fontWeight: '700'
-  },
-
-  scrollContrib: {
-    flexDirection: 'row'
-  },
-
-  itemContrib:{
-    margin: 5,
-    display: 'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor : 'black',
-    padding: 10,
-    borderRadius : '18px',
-    width : 80
-  },
-
-  itemName:{
-    fontSize: 18,
-    fontWeight : '600',
-    color : 'white',
-    paddingTop:3
-  },
-
-  viewDemand:{
-    margin: 10,
-    maxHeight: 440
-  },
-
-  titleDemand:{
-    fontSize: 30,
-    fontWeight: '700'
-  },
-
-  scrollDemand: {
-    flexDirection: 'column',
-  },
-
-  itemDemand:{
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexDirection : 'row',
-    margin: 5,
-    padding: 10,
-    borderRadius : '18px',
-    backgroundColor : '#A9A9A9',
-  },
-
-  leftInfo:{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  info:{
-    display: 'flex',
-    justifyContent: 'center',
-  }
-
-});

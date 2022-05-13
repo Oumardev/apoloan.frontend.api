@@ -29,6 +29,7 @@ export default function Profile({navigation}) {
     dispatch(userget())
   },[])
 
+  console.log('error happen',errorHappen)
   return (
     isFetching == false &&
     <View style={styles.container}>
