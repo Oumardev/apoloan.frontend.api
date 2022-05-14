@@ -1,12 +1,19 @@
-import React,{ useState } from "react";
+import React,{ useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { MaterialCommunityIcons, Feather, MaterialIcons  } from 'react-native-vector-icons';
 import { infoStyle } from '../../styles.home/info.style'
 import ConfirmModal from "../../Modal/Home/ConfirmModal";
+import StatusModal from "../../Modal/Home/StatusModal";
+import { annonceSelector, annoncedebit, annoncelist } from "../../../../reduxSlices/AnnonceSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const InfoAnnonce = ({route, navigation}) =>{
     const { data } = route.params;
-    const [visible, setVisible] = useState(false)
+    const [ visible, setVisible ] = useState(false)
+    const [ response, setResponse ] = useState(false)
+
+    const { isFetching , errorHappened, errorMessage } = useSelector(annonceSelector);
+    const dispatch = useDispatch()
 
     function nFormatter(num) {
         if (num >= 1000000000) {
@@ -20,6 +27,14 @@ const InfoAnnonce = ({route, navigation}) =>{
         }
         return num;
     }
+
+    useEffect(()=>{
+        if(response){
+            const senddata = { IDANNONCE : data.id }
+            dispatch(annoncedebit(senddata))
+            dispatch(annoncelist())
+        }
+    },[response])
 
     const showSubmitButton = 
         data.type == "EMPRUNT" ? 
@@ -39,8 +54,12 @@ const InfoAnnonce = ({route, navigation}) =>{
 
     return(
         <View style={infoStyle.container} >
-            <ConfirmModal data={data} visible={visible} setVisible={setVisible} navigation={navigation} />
-            <View style={infoStyle.emptySection}></View>
+            <ConfirmModal data={data} visible={visible} setVisible={setVisible} navigation={navigation} setResponse={setResponse} />
+
+            <View style={infoStyle.emptySection}>
+               { (visible == false && response == true ) && <StatusModal errorHappened={errorHappened} errorMsg={errorMessage} /> }
+            </View>
+
             <View style={infoStyle.whiteSection}>
                 
                 <View style={infoStyle.price}>

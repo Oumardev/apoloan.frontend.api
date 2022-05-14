@@ -3,9 +3,6 @@ import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import { confirmModal } from '../../styles.home/confirmModal.style'
-import { annonceSelector, annoncedebit } from '../../../../reduxSlices/AnnonceSlice'
-import FailedModal from "./FailedModal";
-import SuccessModal from './SuccessModal';
 
 const ModalPoup = ({visible, children}) =>{
     return ( 
@@ -17,31 +14,23 @@ const ModalPoup = ({visible, children}) =>{
       )
 }
 
-const ConfirmModal = ({data, visible, setVisible, navigation}) =>{
-    const id = data.id
-    const dispatch = useDispatch()
-    const { isFetching , errorHappened, errorMessage } = useSelector(annonceSelector);
-
-    useEffect(()=>{
-      if(errorHappened){ 
-        console.log(errorMessage)
-        setVisible(false)
-      }
-    },[errorHappened])
+const ConfirmModal = ({data, visible, setVisible, setResponse}) =>{
 
     const handleSendRequest = ()=>{
-      const data = { IDANNONCE : id }
-      dispatch(annoncedebit(data))
+      setResponse(true)
+      setVisible(false)
     }
 
     return(
         <View>
-          <FailedModal visible={errorHappened} setVisible={setVisible} errorMsg={errorMessage} navigation={navigation} />
           <ModalPoup visible={visible}>
               <View>
                 <View style={confirmModal.header}>
                   <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>{data.type == "EMPRUNT" ? "Voulez vous vraiment financer cette annonce ?" : "Voulez vous vraiment effectuer cet pret ?"}</Text>
-                  <AntDesign onPress={() => setVisible(false) } color={'red'} name="close" size={25}/>
+                  <AntDesign onPress={() => {
+                    setVisible(false)
+                    setResponse(false)
+                  } } color={'red'} name="close" size={25}/>
                 </View>
                 <Text style={confirmModal.textInfo}>NB: Après confirmation vous n'aurez que 38H pour l'annuler</Text>
                 <View style={confirmModal.buttonSection}>

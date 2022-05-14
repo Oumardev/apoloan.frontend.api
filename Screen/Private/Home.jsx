@@ -1,4 +1,4 @@
-import React, {useState , useEffect } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons, AntDesign } from 'react-native-vector-icons';
 import { demandestyles } from './styles.home/demande.style';
@@ -29,11 +29,8 @@ export default function Home({navigation}) {
   }
   
   const dispatch = useDispatch();
-  const { errorMessage , errorHappen, user } = useSelector(userSelector);
+  const { errorHappen } = useSelector(userSelector);
   const { isFetching ,annonce } = useSelector(annonceSelector);
-
-  const [visible , setVisible] = useState(false)
-  const [data , setData] = useState(false)
 
   const logOut = () =>{
     AsyncStorage.removeItem('token')
@@ -45,6 +42,7 @@ export default function Home({navigation}) {
     dispatch(userget())
     dispatch(annoncelist())
   },[])
+
 
   useEffect(()=>{
    if(errorHappen == true)  logOut()

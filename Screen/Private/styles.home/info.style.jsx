@@ -8,6 +8,12 @@ export const infoStyle = StyleSheet.create({
 
     emptySection:{
         flex:1,
+        backgroundColor: 'white',
+        justifyContent:'center',
+        alignItems:'center',
+        padding:20,
+        margin : 10,
+        borderRadius: 7
     },  
 
     whiteSection:{

@@ -21,7 +21,7 @@ const SplashScreen = ({navigation}) => {
       }
       );
     }, 5000);
-    dispatch(annoncelist)
+    //dispatch(annoncelist)
   }, []);
 
   return (

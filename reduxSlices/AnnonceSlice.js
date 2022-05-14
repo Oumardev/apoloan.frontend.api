@@ -31,7 +31,7 @@ export const annoncedebit = createAsyncThunk(
     'annonce/debit',
     async (values,thunkAPI) => {
         const token = await AsyncStorage.getItem('token')
-
+    
     try {
         const response = await apiInstance.post(ACCOUNT_DEBIT_URL,values,{ 
             headers: { Authorization: `Bear ${token}` },
@@ -86,18 +86,15 @@ export const annonceSlice = createSlice({
         },
 
         [annoncedebit.fulfilled]: (state, { payload }) => {
-            state.isFetching = false;
-            state.errorHappened = false;
             return state;
         },
+        
         [annoncedebit.rejected]: (state, { payload }) => {
-            state.isFetching = true;
             state.errorHappened = true;
             state.errorMessage = payload ? payload.error: '';
         },
         [annoncedebit.pending]: (state) => {
-            state.isFetching = true;
-            state.errorHappened = false;
+           
         },
     },
 })
