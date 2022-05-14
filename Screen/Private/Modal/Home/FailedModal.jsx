@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, Modal, Image } from 'react-native';
 import { AntDesign } from 'react-native-vector-icons';
 import { failedModal } from '../../styles.home/failedModal.style'
@@ -14,16 +14,21 @@ const ModalPoup = ({visible, children}) =>{
     )
 }
 
-const FailedModal = ({visible, setVisible,navigation}) =>{
+const FailedModal = ({visible, setVisible,errorMsg,navigation}) =>{
 
+    const [watch, setWatch] = useState(visible)
+
+    useEffect(()=>{
+      setWatch(visible)
+    },[visible])
+    
     const handleClose =()=>{
-        setVisible(false)
-        navigation.navigate('Home')
+      setWatch(false)
     }
 
     return(
         <View>
-          <ModalPoup visible={visible}>
+          <ModalPoup visible={watch}>
               <View>
                 <View style={failedModal.header}>
                   <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>ECHEC</Text>
@@ -31,7 +36,7 @@ const FailedModal = ({visible, setVisible,navigation}) =>{
                 </View>
                 <View style={failedModal.imgView}>
                   <Image source={Errorimg} style={failedModal.img} />
-                  <Text style={failedModal.textInfo}>La tansaction s'est mal passé veuillez ressayer.</Text>
+                  <Text style={failedModal.textInfo}>{errorMsg}</Text>
                 </View>
               </View>
         </ModalPoup>

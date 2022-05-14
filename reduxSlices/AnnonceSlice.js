@@ -27,12 +27,36 @@ export const annoncelist = createAsyncThunk(
     }
 );
 
+export const annoncedebit = createAsyncThunk(
+    'annonce/debit',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.post(ACCOUNT_DEBIT_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
 export const annonceSlice = createSlice({
     name: "annonce",
   
         initialState: {
             isFetching: false,
             errorMessage: '',
+            errorHappened : false,
             annonce: {}
         },
   
@@ -41,6 +65,7 @@ export const annonceSlice = createSlice({
                 state.isFetching = false;
                 state.errorMessage = '';
                 state.annonce = {};
+                state.errorHappened = false;
 
                 return state;
             },
@@ -49,7 +74,6 @@ export const annonceSlice = createSlice({
     extraReducers: {
         [annoncelist.fulfilled]: (state, { payload }) => {
             state.isFetching = false;
-            console.log(payload)
             state.annonce = payload;
             return state;
         },
@@ -59,6 +83,21 @@ export const annonceSlice = createSlice({
         },
         [annoncelist.pending]: (state) => {
             state.isFetching = true;
+        },
+
+        [annoncedebit.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.errorHappened = false;
+            return state;
+        },
+        [annoncedebit.rejected]: (state, { payload }) => {
+            state.isFetching = true;
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [annoncedebit.pending]: (state) => {
+            state.isFetching = true;
+            state.errorHappened = false;
         },
     },
 })
