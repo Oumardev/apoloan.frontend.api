@@ -50,6 +50,7 @@ export const infoStyle = StyleSheet.create({
     },
 
     detailsTarget:{
+        textAlign: 'center',
         fontSize : 20,
         fontWeight : '600'
     },
@@ -58,6 +59,7 @@ export const infoStyle = StyleSheet.create({
         display: 'flex',
         flexDirection : 'row',
         justifyContent: 'center',
+        alignItems:'center',
         backgroundColor : '#F46D76',
         margin: 60,
         width: 200,

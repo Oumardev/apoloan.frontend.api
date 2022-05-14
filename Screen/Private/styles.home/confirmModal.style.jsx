@@ -30,8 +30,8 @@ export const confirmModal = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor : '#F46D76',
         margin: 10,
-        width: 100,
-        padding:10,
+        width: 140,
+        padding:15,
         borderRadius: 10
     },
 
@@ -39,6 +39,19 @@ export const confirmModal = StyleSheet.create({
         display : 'flex',
         flexDirection : 'row',
         justifyContent : 'center'
+    },
+
+    buttonText:{
+        color : 'white',
+        fontSize: 20,
+        fontWeight:'600',
+        marginRight:10
+    },
+
+    textInfo:{
+        fontSize:17,
+        fontWeight:'200',
+        margin:10
     }
 
 });

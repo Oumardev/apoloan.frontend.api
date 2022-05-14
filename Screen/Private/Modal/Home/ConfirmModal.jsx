@@ -23,16 +23,16 @@ const ConfirmModal = ({data, visible, setVisible}) =>{
                   <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>{data.type == "EMPRUNT" ? "Voulez vous vraiment financer cette annonce ?" : "Voulez vous vraiment effectuer cet pret ?"}</Text>
                   <AntDesign onPress={() => setVisible(false) } color={'red'} name="close" size={25}/>
                 </View>
-                
-                <Text>Après confirmation vous n'aurez que 38h pour annuler l'emprunt</Text>
-                
+                <Text style={confirmModal.textInfo}>NB: Après confirmation vous n'aurez que 38H pour l'annuler</Text>
                 <View style={confirmModal.buttonSection}>
                   <TouchableOpacity style={confirmModal.button}>
                     <Text style={confirmModal.buttonText}>Confirmer</Text>
+                    <MaterialCommunityIcons color={'white'} size={22} name="page-next"/>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={confirmModal.button}>
-                    <Text style={confirmModal.buttonText}>Annuler</Text>
+                  <TouchableOpacity style={{...confirmModal.button, backgroundColor:'gray'}} onPress={() => setVisible(false) }>
+                    <Text style={{...confirmModal.buttonText}}>Annuler</Text>
+                    <MaterialCommunityIcons color={'white'} size={23} name="delete-circle-outline"/>
                   </TouchableOpacity>
                 </View>
               </View>

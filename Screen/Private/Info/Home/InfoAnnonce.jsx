@@ -33,8 +33,8 @@ const InfoAnnonce = ({route, navigation}) =>{
         :
         (
             <TouchableOpacity style={infoStyle.submit} onPress={()=> setVisible(true)}>
-                <Text style={{...infoStyle.detailsTarget, color: 'white', marginRight: 10}}>BENEFICIER</Text>
-                <MaterialCommunityIcons color={'white'} size={22} name={'human-handsup'} />
+                <Text style={{...infoStyle.detailsTarget, color: 'white', marginRight: 10}}>BENEFICIER DU PRET</Text>
+                 <MaterialCommunityIcons color={'white'} size={22} name={'human-handsup'} />
             </TouchableOpacity>
         )
 
