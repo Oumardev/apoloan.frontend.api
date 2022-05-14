@@ -4,7 +4,6 @@ import { MaterialCommunityIcons, Feather, MaterialIcons  } from 'react-native-ve
 import { infoStyle } from '../../styles.home/info.style'
 import ConfirmModal from "../../Modal/Home/ConfirmModal";
 
-
 const InfoAnnonce = ({route, navigation}) =>{
     const { data } = route.params;
     const [visible, setVisible] = useState(false)
@@ -40,7 +39,7 @@ const InfoAnnonce = ({route, navigation}) =>{
 
     return(
         <View style={infoStyle.container} >
-            <ConfirmModal data={data} visible={visible} setVisible={setVisible} />
+            <ConfirmModal data={data} visible={visible} setVisible={setVisible} navigation={navigation} />
             <View style={infoStyle.emptySection}></View>
             <View style={infoStyle.whiteSection}>
                 

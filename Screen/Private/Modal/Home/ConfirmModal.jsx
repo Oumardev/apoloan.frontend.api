@@ -1,7 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Fontisto  } from 'react-native-vector-icons';
+import { Text, View, TouchableOpacity, Modal } from 'react-native';
+import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
 import { confirmModal } from '../../styles.home/confirmModal.style'
+import FailedModal from "./FailedModal";
+import SuccessModal from './SuccessModal';
 
 const ModalPoup = ({visible, children}) =>{
     return ( 
@@ -13,7 +15,7 @@ const ModalPoup = ({visible, children}) =>{
       )
 }
 
-const ConfirmModal = ({data, visible, setVisible}) =>{
+const ConfirmModal = ({data, visible, setVisible, navigation}) =>{
 
     return(
         <View>
