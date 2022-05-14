@@ -2,20 +2,24 @@ import { StyleSheet } from 'react-native';
 
 export const contributeurstyles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+      backgroundColor : 'white',
+      display : 'flex',
+      alignItems : 'center'
     },
   
     view:{
-      margin: 10
+      margin: 10,
     },
   
     title:{
-      fontSize: 30,
-      fontWeight: '700'
+      fontSize: 20,
+      fontWeight: '600'
     },
   
     scroll: {
-      flexDirection: 'row'
+      flexDirection: 'row',
+      width : '100%'
     },
   
     item:{
@@ -25,8 +29,9 @@ export const contributeurstyles = StyleSheet.create({
       alignItems:'center',
       backgroundColor : '#F0ECE3',
       padding: 10,
-      borderRadius : '30px',
-      width : 80
+      borderRadius : 40,
+      width : 80,
+      height: 80
     },
   
     itemName:{
@@ -47,5 +52,12 @@ export const contributeurstyles = StyleSheet.create({
       display: 'flex',
       marginLeft:20,
       justifyContent: 'center',
+    },
+
+    wrapItem:{
+      display: 'flex',
+      flexDirection : 'column',
+      justifyContent : 'center',
+      alignItems : 'center'
     }
 });

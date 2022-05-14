@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 export const statusModal = StyleSheet.create({
     modalBackGround : {
         flex : 1,
-        backgroundColor : 'white',
+        backgroundColor : '#001429',
         justifyContent : 'center',
         alignItems : 'center'
     },
   
     modalContainer : {
-        backgroundColor : 'white',
+        backgroundColor : '#001429',
         borderRadius :20, 
         justifyContent: 'center',
         alignItems:'center',

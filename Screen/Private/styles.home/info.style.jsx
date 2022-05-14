@@ -3,12 +3,12 @@ import { StyleSheet } from 'react-native';
 export const infoStyle = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#B8E3FF'
+        backgroundColor: 'black'
     },
 
     emptySection:{
         flex:1,
-        backgroundColor: 'white',
+        backgroundColor: '#001429',
         justifyContent:'center',
         alignItems:'center',
         padding:20,

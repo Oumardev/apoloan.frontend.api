@@ -18,12 +18,13 @@ export const demandestyles = StyleSheet.create({
     },
   
     title:{
-      fontSize: 30,
-      fontWeight: '700'
+      fontSize: 20,
+      fontWeight: '600'
     },
   
     scroll: {
       flexDirection: 'column',
+      maxHeight : 380
     },
   
     item:{
@@ -52,5 +53,23 @@ export const demandestyles = StyleSheet.create({
     date: {
         display: 'flex',
         alignItems : 'center'
+    },
+
+    buttonAdd:{
+      display: 'flex',
+      flexDirection : 'row',
+      justifyContent : 'center',
+      alignItems: 'center',
+      backgroundColor : '#001429',
+      height : 60,
+      width : 230,
+      padding : 20,
+      borderRadius : 10
+    },
+
+    addText : {
+      color : 'white',
+      fontSize : 22,
+      fontWeight : '600'
     }
 });

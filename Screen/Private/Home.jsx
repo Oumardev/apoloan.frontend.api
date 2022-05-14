@@ -1,6 +1,6 @@
-import React, { useState , useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { FontAwesome5, MaterialCommunityIcons, AntDesign } from 'react-native-vector-icons';
+import { FontAwesome5, MaterialCommunityIcons, AntDesign, Ionicons } from 'react-native-vector-icons';
 import { demandestyles } from './styles.home/demande.style';
 import { contributeurstyles } from './styles.home/contributeur.style';
 import { userSelector, userget } from '../../reduxSlices/UserSlice'
@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * il affichera :
  * - LIST ANNONCE ['EMPRUNT', 'PRET']
 */
-export default function Home({navigation}) {
+export default function Home({navigation}){
 
   function nFormatter(num) {
     if (num >= 1000000000) {
@@ -45,7 +45,7 @@ export default function Home({navigation}) {
 
 
   useEffect(()=>{
-   if(errorHappen == true)  logOut()
+    if(errorHappen == true)  logOut()
   },[errorHappen])
 
     return (
@@ -58,17 +58,16 @@ export default function Home({navigation}) {
                   <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
                     {
                       annonce.pret && annonce.pret.map(item =>(
-                        <React.Fragment key={item.id}>
+                        <View key={item.id} style={contributeurstyles.wrapItem}>
                           <TouchableOpacity 
                             onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                             key={item.id}
                             style={contributeurstyles.item}
                           >
                             <FontAwesome5 name={'user-tie'} size={35} color={'black'}/>
-                            <Text style={{...contributeurstyles.itemName, color:'black'}}>{item.User.prenom}</Text>
-                            <Text style={{...contributeurstyles.itemName, color:'black'}}>{item.User.nom}</Text>
                           </TouchableOpacity>
-                        </React.Fragment>
+                            <Text style={{...contributeurstyles.itemName, color:'black', fontWeight:'600'}}>{item.User.prenom}</Text>
+                        </View>
                       ))
                     }
                   </ScrollView>
@@ -76,7 +75,7 @@ export default function Home({navigation}) {
             </View>
 
             <View style={demandestyles.view}>
-              <Text style={demandestyles.title}>Annonces demandes</Text>
+              <Text style={demandestyles.title}>Demandes récente</Text>
                 <View style={demandestyles.scroll}>
                   <ScrollView  horizontal={false} showsHorizontalScrollIndicator={false}>
                     {
@@ -107,6 +106,11 @@ export default function Home({navigation}) {
                   </ScrollView>
               </View>
             </View>
+            
+            <TouchableOpacity style={demandestyles.buttonAdd}>
+              <Ionicons size={22} color={'white'} name="add"/>
+              <Text style={demandestyles.addText}>Ajouter une annonce</Text>
+            </TouchableOpacity>
         </View>
   );
 }

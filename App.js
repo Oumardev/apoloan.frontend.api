@@ -38,7 +38,7 @@ const PrivateScreen = ({navigation}) =>{
             <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Acceuil</Text>
           ),
           headerStyle :{
-            backgroundColor : 'rgb(26,53,88)',
+            backgroundColor : 'black',
             height : 86
           }
         }}
@@ -131,14 +131,13 @@ const Auth = ({navigation}) =>{
 
 const headerInfoAnnonce = {
   headerShown: true,
-  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Info Annonce</Text>
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Information</Text>
   ,
   headerLeft: () =>(
     <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
   ),
   headerStyle :{
-    backgroundColor : '#B8E3FF',
-    height : 86
+    backgroundColor : 'black'
   }
 }
 
