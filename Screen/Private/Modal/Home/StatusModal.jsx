@@ -22,11 +22,11 @@ const StatusModal = ({errorHappened, errorMsg, transactStatus}) =>{
             <ModalPoup>
                 <View>
                   <View style={statusModal.header}>
-                    <Text style={ errorHappened ? statusModal.headerError : statusModal.headerSuccess }>{errorHappened ? `ECHEC` : `SUCCESS`}</Text>
+                    <Text style={ statusModal.headerSuccess }>SUCCESS</Text>
                   </View>
                   <View style={statusModal.imgView}>
-                    <Image source={errorHappened ? Errorimg : Successimg } style={statusModal.img} />
-                    <Text style={statusModal.textInfo}>{ errorHappened ? errorMsg : `La tansaction a été éffectué vous n'aurez que 38H pour l'annuler.`}</Text>
+                    <Image source={Successimg} style={statusModal.img} />
+                    <Text style={statusModal.textInfo}>La tansaction a été éffectué vous n'aurez que 38H pour l'annuler.</Text>
                   </View>
                 </View>
             </ModalPoup>

@@ -120,6 +120,7 @@ export const annonceSlice = createSlice({
         [annoncedebit.rejected]: (state, { payload }) => {
             state.errorHappened = true;
             state.errorMessage = payload ? payload.error: '';
+            console.log('rejected', payload)
             state.transactStatus = 'rejected'
         },
         [annoncedebit.pending]: (state) => {

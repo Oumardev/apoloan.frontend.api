@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons, AntDesign, Ionicons } from 'react-native-vector-icons';
 import { demandestyles } from './styles.home/demande.style';
 import { contributeurstyles } from './styles.home/contributeur.style';
@@ -27,10 +27,22 @@ export default function Home({navigation}){
     }
     return num;
   }
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
   
   const dispatch = useDispatch();
   const { errorHappen } = useSelector(userSelector);
   const { isFetching ,annonce } = useSelector(annonceSelector);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    dispatch(annoncelist())
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const logOut = () =>{
     AsyncStorage.removeItem('token')
@@ -77,7 +89,16 @@ export default function Home({navigation}){
             <View style={demandestyles.view}>
               <Text style={demandestyles.title}>Demandes récente</Text>
                 <View style={demandestyles.scroll}>
-                  <ScrollView  horizontal={false} showsHorizontalScrollIndicator={false}>
+                  <ScrollView 
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                  horizontal={false} 
+                  showsHorizontalScrollIndicator={false}
+                  >
                     {
                       annonce.emprunt && annonce.emprunt.map(item =>(
                           <React.Fragment key={item.id}>
