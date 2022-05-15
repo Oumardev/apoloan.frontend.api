@@ -56,6 +56,7 @@ export const annonceSlice = createSlice({
         initialState: {
             isFetching: false,
             errorMessage: '',
+            transactStatus : 'none',
             errorHappened : false,
             annonce: {}
         },
@@ -64,6 +65,7 @@ export const annonceSlice = createSlice({
             clearState: (state) => {
                 state.isFetching = false;
                 state.errorMessage = '';
+                state.transactStatus = 'none'
                 state.annonce = {};
                 state.errorHappened = false;
 
@@ -86,15 +88,17 @@ export const annonceSlice = createSlice({
         },
 
         [annoncedebit.fulfilled]: (state, { payload }) => {
+            state.transactStatus = 'success'
             return state;
         },
         
         [annoncedebit.rejected]: (state, { payload }) => {
             state.errorHappened = true;
             state.errorMessage = payload ? payload.error: '';
+            state.transactStatus = 'rejected'
         },
         [annoncedebit.pending]: (state) => {
-           
+            state.transactStatus = 'pending'
         },
     },
 })

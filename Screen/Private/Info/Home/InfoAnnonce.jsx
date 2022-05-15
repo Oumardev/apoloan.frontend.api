@@ -12,7 +12,7 @@ const InfoAnnonce = ({route, navigation}) =>{
     const [ visible, setVisible ] = useState(false)
     const [ response, setResponse ] = useState(false)
 
-    const { isFetching , errorHappened, errorMessage } = useSelector(annonceSelector);
+    const { isFetching , errorHappened, errorMessage, transactStatus } = useSelector(annonceSelector);
     const dispatch = useDispatch()
 
     function nFormatter(num) {
@@ -57,7 +57,7 @@ const InfoAnnonce = ({route, navigation}) =>{
             <ConfirmModal data={data} visible={visible} setVisible={setVisible} navigation={navigation} setResponse={setResponse} />
 
             <View style={infoStyle.emptySection}>
-               { (visible == false && response == true ) && <StatusModal errorHappened={errorHappened} errorMsg={errorMessage} /> }
+               { (visible == false && response == true ) && <StatusModal errorHappened={errorHappened} errorMsg={errorMessage} transactStatus={transactStatus} /> }
             </View>
 
             <View style={infoStyle.whiteSection}>

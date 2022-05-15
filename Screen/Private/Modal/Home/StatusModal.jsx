@@ -12,22 +12,42 @@ const ModalPoup = ({children}) =>{
     )
 }
 
-const StatusModal = ({errorHappened, errorMsg}) =>{
+const StatusModal = ({errorHappened, errorMsg, transactStatus}) =>{
 
     return(
-        <View>
-          <ModalPoup>
-              <View>
-                <View style={statusModal.header}>
-                  <Text style={ errorHappened ? statusModal.headerError : statusModal.headerSuccess }>{errorHappened ? `ECHEC` : `SUCCESS`}</Text>
+      <>
+        { transactStatus == 'pending' && <Text style={{fontSize: 20, color: 'white', fontWeight: '700'}}>Chargement...</Text> }
+        { transactStatus == 'success' && (
+          <View>
+            <ModalPoup>
+                <View>
+                  <View style={statusModal.header}>
+                    <Text style={ errorHappened ? statusModal.headerError : statusModal.headerSuccess }>{errorHappened ? `ECHEC` : `SUCCESS`}</Text>
+                  </View>
+                  <View style={statusModal.imgView}>
+                    <Image source={errorHappened ? Errorimg : Successimg } style={statusModal.img} />
+                    <Text style={statusModal.textInfo}>{ errorHappened ? errorMsg : `La tansaction a été éffectué vous n'aurez que 38H pour l'annuler.`}</Text>
+                  </View>
                 </View>
-                <View style={statusModal.imgView}>
-                  <Image source={errorHappened ? Errorimg : Successimg } style={statusModal.img} />
-                  <Text style={statusModal.textInfo}>{ errorHappened ? errorMsg : `La tansaction a été éffectué vous n'aurez que 38H pour l'annuler.`}</Text>
+            </ModalPoup>
+          </View>
+        )}
+        { transactStatus == 'rejected' && (
+          <View>
+            <ModalPoup>
+                <View>
+                  <View style={statusModal.header}>
+                    <Text style={ errorHappened ? statusModal.headerError : statusModal.headerSuccess }>{errorHappened ? `ECHEC` : `SUCCESS`}</Text>
+                  </View>
+                  <View style={statusModal.imgView}>
+                    <Image source={errorHappened ? Errorimg : Successimg } style={statusModal.img} />
+                    <Text style={statusModal.textInfo}>{ errorHappened ? errorMsg : `La tansaction a été éffectué vous n'aurez que 38H pour l'annuler.`}</Text>
+                  </View>
                 </View>
-              </View>
-        </ModalPoup>
-        </View>
+            </ModalPoup>
+          </View>
+        )}
+      </>
     )
 }
 export default StatusModal
