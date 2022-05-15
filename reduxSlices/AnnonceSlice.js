@@ -50,6 +50,29 @@ export const annoncedebit = createAsyncThunk(
     }
 );
 
+export const annoncecreate = createAsyncThunk(
+    'annonce/create',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+    
+    try {
+        const response = await apiInstance.post(ANNONCE_CREATE_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
 export const annonceSlice = createSlice({
     name: "annonce",
   
@@ -57,6 +80,7 @@ export const annonceSlice = createSlice({
             isFetching: false,
             errorMessage: '',
             transactStatus : 'none',
+            addStatus : 'none',
             errorHappened : false,
             annonce: {}
         },
@@ -66,6 +90,7 @@ export const annonceSlice = createSlice({
                 state.isFetching = false;
                 state.errorMessage = '';
                 state.transactStatus = 'none'
+                state.addStatus = 'none'
                 state.annonce = {};
                 state.errorHappened = false;
 
@@ -99,6 +124,20 @@ export const annonceSlice = createSlice({
         },
         [annoncedebit.pending]: (state) => {
             state.transactStatus = 'pending'
+        },
+
+        [annoncecreate.fulfilled]: (state, { payload }) => {
+            state.addStatus = 'success'
+            return state;
+        },
+        
+        [annoncecreate.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+            state.addStatus = 'rejected'
+        },
+        [annoncecreate.pending]: (state) => {
+            state.addStatus = 'pending'
         },
     },
 })

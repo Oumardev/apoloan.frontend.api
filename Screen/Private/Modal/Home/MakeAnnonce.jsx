@@ -2,10 +2,11 @@ import React,{ useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Modal, TextInput, Keyboard } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
 import { makeAnnonceStyle } from '../../styles.home/makeAnnonce.style'
-import { annonceSelector, annoncedebit, annoncelist } from "../../../../reduxSlices/AnnonceSlice";
+import { annonceSelector, annoncecreate } from "../../../../reduxSlices/AnnonceSlice";
 import { Picker } from '@react-native-picker/picker'
 import { useDispatch, useSelector } from "react-redux";
 import CheckBox from "../../../../customComponent/CheckBox";
+import AddAnnonceStatus from './AddAnnonceStatus'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
@@ -13,10 +14,11 @@ const MakeAnnonce = ({route, navigation}) =>{
     
     const [ type, setType ] = useState("");
     const [ selectedDuree, setSelectedDuree ] = useState("3 MOIS");
-    const [ checkPret, setCheckPret ] = React.useState(false);
-    const [ checkEmprunt, setCheckEmprunt ] = React.useState(false);
+    const [ checkPret, setCheckPret ] = useState(false);
+    const [ checkEmprunt, setCheckEmprunt ] = useState(false);
+    const [ visible, setVisible ] = useState(false)
 
-    const { isFetching , errorHappened, errorMessage } = useSelector(annonceSelector);
+    const { addStatus } = useSelector(annonceSelector);
     const dispatch = useDispatch();
 
     const makeAnnonceSchema = Yup.object().shape({
@@ -43,19 +45,19 @@ const MakeAnnonce = ({route, navigation}) =>{
                     
                     onSubmit={ async (values, { setSubmitting }) => {
                         const data = {
-                            types : type,
+                            type : type,
                             duree : selectedDuree,
                             pourcentage: (values.pourcentage/100),
-                            montant: values.montant
+                            montant: parseInt(values.montant)
                         }
 
                         // make annonce
-                       // dispatch(login(data))
+                      dispatch(annoncecreate(data))
                     }}>
                     
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
                       <View style={makeAnnonceStyle.main}>
-                        
+                        <AddAnnonceStatus visible={visible} setVisible={setVisible} status={addStatus} />
                         <View  style={makeAnnonceStyle.SectionCheckBox}>
                           <CheckBox isChecked={checkPret} setIsChecked={setCheckPret} text={'PRET'} setType={setType} checkPrev={checkEmprunt} setCheckPrev={setCheckEmprunt} />
                           <CheckBox isChecked={checkEmprunt} setIsChecked={setCheckEmprunt} text={'EMPRUNT'} setType={setType} checkPrev={checkPret} setCheckPrev={setCheckPret} />
@@ -117,7 +119,10 @@ const MakeAnnonce = ({route, navigation}) =>{
                             </Picker>
                         </View>
             
-                        <TouchableOpacity style={makeAnnonceStyle.buttonAdd} onPress={() => navigation.navigate('MakeAnnonce')}>
+                        <TouchableOpacity style={makeAnnonceStyle.buttonAdd} onPress={() =>{ 
+                          handleSubmit()
+                          setVisible(true)
+                        }}>
                             <Ionicons size={22} color={'white'} name="add"/>
                             <Text style={makeAnnonceStyle.addText}>AJOUTER</Text>
                         </TouchableOpacity>

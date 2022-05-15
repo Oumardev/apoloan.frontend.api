@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, ActivityIndicator } from 'react-native';
 import { statusModal } from '../../styles.home/statusModal.style'
 import Successimg from '../../../../assets/success-24.png'
 import Errorimg from '../../../../assets/error.png'
@@ -16,7 +16,7 @@ const StatusModal = ({errorHappened, errorMsg, transactStatus}) =>{
 
     return(
       <>
-        { transactStatus == 'pending' && <Text style={{fontSize: 20, color: 'white', fontWeight: '700'}}>Chargement...</Text> }
+        { transactStatus == 'pending' && <ActivityIndicator size="large" color="#00ff00" />  }
         { transactStatus == 'success' && (
           <View>
             <ModalPoup>
