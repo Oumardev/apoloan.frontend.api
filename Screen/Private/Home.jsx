@@ -107,7 +107,7 @@ export default function Home({navigation}){
               </View>
             </View>
             
-            <TouchableOpacity style={demandestyles.buttonAdd}>
+            <TouchableOpacity style={demandestyles.buttonAdd} onPress={() => navigation.navigate('MakeAnnonce')}>
               <Ionicons size={22} color={'white'} name="add"/>
               <Text style={demandestyles.addText}>Ajouter une annonce</Text>
             </TouchableOpacity>

@@ -16,6 +16,7 @@ import Home from './Screen/Private/Home'
 import Refund from './Screen/Private/Refund'
 import Profile from './Screen/Private/Profile'
 import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
+import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -141,6 +142,18 @@ const headerInfoAnnonce = {
   }
 }
 
+const headerMakeAnnonce = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Faire une annonce</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -152,6 +165,8 @@ export default function App() {
 
             {/** Info screen : InfoAnnonce */}
             <Stack.Screen name="InfoAnnonce" component={InfoAnnonce} options={headerInfoAnnonce} />
+            {/** Info screen : makeAnnonce */}
+            <Stack.Screen name="MakeAnnonce" component={MakeAnnonce} options={headerMakeAnnonce} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Axios instance
 const apiInstance = axios.create({
-    baseURL:  `http://www.oumardev.com:2000`,
+    baseURL:  `http://www.oumardev.com:1000`,
     timeout: 11000,
 });
 
