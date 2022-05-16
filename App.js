@@ -17,6 +17,7 @@ import Refund from './Screen/Private/Refund'
 import Profile from './Screen/Private/Profile'
 import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
+import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -154,6 +155,18 @@ const headerMakeAnnonce = {
   }
 }
 
+const headerEditProfile = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'black'}}>Modifier profile</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'black'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'white'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -167,6 +180,8 @@ export default function App() {
             <Stack.Screen name="InfoAnnonce" component={InfoAnnonce} options={headerInfoAnnonce} />
             {/** Info screen : makeAnnonce */}
             <Stack.Screen name="MakeAnnonce" component={MakeAnnonce} options={headerMakeAnnonce} />
+            {/** Info screen : makeAnnonce */}
+            <Stack.Screen name="EditProfile" component={EditProfile} options={headerEditProfile} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

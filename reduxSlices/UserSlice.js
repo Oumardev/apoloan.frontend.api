@@ -49,6 +49,30 @@ export const userget = createAsyncThunk(
     }
 );
 
+export const useredit = createAsyncThunk(
+    'users/edit',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.patch(USER_EDIT_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
 export const userSlice = createSlice({
     name: "user",
   
@@ -57,7 +81,9 @@ export const userSlice = createSlice({
             errorMessage: '',
             user: {},
             loginSuccess: false,
-            errorHappen: false
+            errorHappen: false,
+
+            edited : false
         },
   
         reducers: {
@@ -66,9 +92,10 @@ export const userSlice = createSlice({
                 state.errorMessage = "";
                 state.loginSuccess = false;
                 state.errorHappen = false;
+                state.edited = false;
                 state.user = {}
                 return state;
-            },
+            }
         },
   
     extraReducers: {
@@ -99,6 +126,21 @@ export const userSlice = createSlice({
             state.errorMessage = payload ? payload.error: '';
         },
         [userget.pending]: (state) => {
+            state.isFetching = true;
+        },
+
+        [useredit.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.edited = true;
+            return state;
+        },
+        [useredit.rejected]: (state, { payload }) => {
+            state.isFetching = true;
+            state.errorHappen = true;
+            state.edited = false;
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [useredit.pending]: (state) => {
             state.isFetching = true;
         },
     },
