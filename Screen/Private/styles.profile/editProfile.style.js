@@ -141,5 +141,11 @@ export const editstyle = StyleSheet.create({
       color: 'green',
       fontSize : 20,
       fontWeight : '600'
+    },
+
+    error:{
+      color: 'red',
+      fontSize : 20,
+      fontWeight : '600'
     }
 });

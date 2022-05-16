@@ -18,6 +18,7 @@ import Profile from './Screen/Private/Profile'
 import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
+import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -180,8 +181,10 @@ export default function App() {
             <Stack.Screen name="InfoAnnonce" component={InfoAnnonce} options={headerInfoAnnonce} />
             {/** Info screen : makeAnnonce */}
             <Stack.Screen name="MakeAnnonce" component={MakeAnnonce} options={headerMakeAnnonce} />
-            {/** Info screen : makeAnnonce */}
+            {/** Info screen : EditProfile */}
             <Stack.Screen name="EditProfile" component={EditProfile} options={headerEditProfile} />
+            {/** Info screen : EditPassword */}
+            <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

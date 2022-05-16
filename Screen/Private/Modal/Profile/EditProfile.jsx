@@ -12,14 +12,11 @@ export default function EditProfile({route,navigation}) {
     const { data } = route.params;
     const dispatch = useDispatch()
 
-    const { edited } = useSelector(userSelector);
+    const { edited, pwdedited, errorMessage } = useSelector(userSelector);
 
     useEffect(()=>{
-        if(edited){ 
-            dispatch(userget())
-            dispatch(clearState())
-        }
-    },[edited])
+        dispatch(userget())
+    },[edited,pwdedited, errorMessage])
 
     const editProfileSchema = Yup.object().shape({
         nom : Yup.string() 
@@ -39,7 +36,7 @@ export default function EditProfile({route,navigation}) {
             <Image style={editstyle.image} source={profileimg} />
             <View style={editstyle.edit}>
                 <Text style={editstyle.fullname}>{data.user.prenom} {data.user.nom}</Text>
-                <TouchableOpacity style={editstyle.edtitpwd}>
+                <TouchableOpacity style={editstyle.edtitpwd} onPress={()=> navigation.navigate('EditPassword')}>
                     <Text style={editstyle.edtitpwdText}>Modifier le mot de passe</Text>
                     <Fontisto size={20} name="key"/>
                 </TouchableOpacity>

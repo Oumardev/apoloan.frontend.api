@@ -9,4 +9,4 @@ export const EMPRUNT_LIST_URL = "/apoloanapi/emprunt/list";
 export const ACCOUNT_REFOUND = "/apoloanapi/useraccount/refound";
 export const USER_EDIT_URL = "/apoloanapi/user";
 export const USER_GET_URL = "/apoloanapi/user";
-export const EDIT_PASSWORD_URL = "/apoloanapi/password/edit";
+export const EDIT_PASSWORD_URL = "/apoloanapi/password";

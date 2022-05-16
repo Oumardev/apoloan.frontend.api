@@ -73,6 +73,29 @@ export const useredit = createAsyncThunk(
     }
 );
 
+export const userpassword = createAsyncThunk(
+    'users/edit',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+    try {
+        const response = await apiInstance.patch(EDIT_PASSWORD_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+
 export const userSlice = createSlice({
     name: "user",
   
@@ -83,7 +106,8 @@ export const userSlice = createSlice({
             loginSuccess: false,
             errorHappen: false,
 
-            edited : false
+            edited : false,
+            pwdedited: false
         },
   
         reducers: {
@@ -93,6 +117,7 @@ export const userSlice = createSlice({
                 state.loginSuccess = false;
                 state.errorHappen = false;
                 state.edited = false;
+                state.pwdedited = false;
                 state.user = {}
                 return state;
             }
@@ -141,6 +166,20 @@ export const userSlice = createSlice({
             state.errorMessage = payload ? payload.error: '';
         },
         [useredit.pending]: (state) => {
+            state.isFetching = true;
+        },
+
+        [userpassword.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.pwdedited = true;
+            return state;
+        },
+        [userpassword.rejected]: (state, { payload }) => {
+            state.isFetching = true;
+            state.pwdedited = false;
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [userpassword.pending]: (state) => {
             state.isFetching = true;
         },
     },
