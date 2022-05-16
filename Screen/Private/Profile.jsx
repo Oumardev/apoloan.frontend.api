@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { AntDesign } from 'react-native-vector-icons';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userSelector, userget } from '../../reduxSlices/UserSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import profileimg from '../../assets/profileimg.jpg'
+import refilimg from '../../assets/refil.png'
 
 export default function Profile({navigation}) {
 
@@ -43,40 +44,37 @@ export default function Profile({navigation}) {
   return (
     (isFetching == false) &&
     <View style={styles.container}>
-     
-      <View style={styles.body}>
-        <View style={styles.bodyHeader}>
-            <View style={styles.follower}>
-              <Text style={{fontSize : 23, fontWeight:'700'}}>{nFormatter(user.user.Compte.solde)} F</Text>
-              <Text style={{fontSize : 17, fontWeight:'200'}}>Solde</Text>
-            </View>
-            <View style={styles.pp}>
-
-              <Text style={{fontSize : 30, fontWeight:'700'}}>{user.user.prenom} {user.user.nom}</Text>
-              <Text style={{fontSize : 17, fontWeight:'200'}}>~{user.user.numero}</Text>
-              <TouchableOpacity style={styles.editButton} onPress={()=> navigation.navigate('EditPtofile')}>
-                <Text style={{fontSize : 22, fontWeight:'500', color:'white'}}>Modifier</Text>
-                <MaterialIcons name='edit' size={22} color={'white'}/>
-              </TouchableOpacity> 
-            </View>
-            <View style={styles.demande}>
-            <Text style={{fontSize : 30, fontWeight:'700'}}>
-              <MaterialIcons name='logout' onPress={()=> logOut()} 
-                style={{margin:10}} size={32} color={'#E43D40'}/></Text>
-            <Text style={{fontSize : 17, fontWeight:'200'}}>Logout</Text>
-            </View>
+      <View style={styles.head}>
+        <Image style={styles.image} source={profileimg} />
+        <View style={styles.edit}>
+          <Text style={styles.fullname}>{user.user.prenom} {user.user.nom}</Text>
+          <Text style={styles.job}>{user.user.fonction}</Text>
         </View>
-        <View style={styles.note}>
+        <AntDesign name="edit" color={'gray'} size={27}/>
+      </View>
+
+      <View style={styles.solde}>
+        <Text style={styles.title}>Solde</Text>
+        <Text style={styles.montant}>{user.user.Compte.solde} F</Text>
+        <TouchableOpacity style={styles.refil}>
+          <Image style={styles.refilimg} source={refilimg} />
+          <Text style={styles.refiltext}>Se recharger</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.dashbord}>
+        <Text style={styles.title}>Dashbord</Text>
+        <View style={styles.stats}>
           <View style={{ alignItems:'center' }}>
-            <Text style={{fontSize: 20, fontWeight:'500'}}>Pret remboursé</Text>
+            <Text style={{fontSize: 20, fontWeight:'500'}}>Pret</Text>
             <AnimatedCircularProgress
-              size={180}
-              width={10}
+              size={150}
+              width={4}
               fill={60}
               tintColor="#8AFF8A"
               onAnimationComplete={() => console.log('onAnimationComplete')}
               backgroundColor="#3d5875" 
-              padding={8}
+              padding={5}
             >
               {
                 (fill) => (
@@ -89,15 +87,15 @@ export default function Profile({navigation}) {
           </View>
 
           <View style={{  alignItems:'center' }}>
-            <Text style={{fontSize: 20, fontWeight:'500'}}>Emprunt</Text>
+            <Text style={{fontSize: 20, fontWeight:'500'}}>Non rembousé</Text>
             <AnimatedCircularProgress
-              size={180}
-              width={10}
+              size={150}
+              width={4}
               fill={12}
-              tintColor="#8AFF8A"
+              tintColor="red"
               onAnimationComplete={() => console.log('onAnimationComplete')}
               backgroundColor="#3d5875" 
-              padding={8}
+              padding={5}
             >
               {
                 (fill) => (
@@ -117,56 +115,80 @@ export default function Profile({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B8E3FF',
+    backgroundColor: 'white',
   },
 
-  header:{
-    backgroundColor:'green',
-    height: 80
-  },
-
-  body:{
-    backgroundColor:'white',
-    flex:1,
-    borderTopLeftRadius: 35,
-    borderTopRightRadius : 35
-  },
-
-  bodyHeader:{
+  head:{
+    display : 'flex',
     flexDirection : 'row',
-    margin: 10,
-    justifyContent: 'space-around',
-    alignItems:'center'
-    
+    alignItems : 'center'
   },
 
-  follower :{
-    alignItems:'center'
+  image :{
+    height : 130,
+    width : 130,
+    borderRadius : 30
   },
 
-  pp :{
-    alignItems:'center'
+  fullname:{
+    fontSize : 30,
+    fontWeight : '700'
   },
 
-  demande :{
-    alignItems:'center'
+  edit:{
+    marginRight : 20
   },
 
-  editButton:{
-    width: 130,
-    backgroundColor : '#76B947',
-    height:40,
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius: 30,
-    marginTop: 5,
-    flexDirection:'row'
+  job:{
+    fontSize : 18,
+    fontWeight : '200'
   },
 
-  note:{
-    margin : 10,
-    flexDirection:'row',
-    flexWrap : 'wrap',
-    justifyContent:'center'
+  solde:{
+    margin : 20
+  },
+
+  title:{
+    fontSize : 24,
+    fontWeight : '400',
+    color:'gray'
+  },
+
+  montant:{
+    fontSize : 28,
+    fontWeight : '700',
+    margin : 8
+  },
+
+  dashbord:{
+    margin : 20,
+  },
+
+  refilimg:{
+    height : 60,
+    width : 60
+  },
+
+  refil:{
+    display : 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'whitesmoke',
+    borderRadius: 20,
+    padding : 5
+  },
+
+  refiltext:{
+    fontSize : 28,
+    fontWeight : '500',
+    margin : 8
+  },
+
+  stats:{
+    display:'flex',
+    flexDirection : 'row',
+    justifyContent : 'center',
+    alignItems : 'center',
+    margin: 30
   }
 });
