@@ -36,7 +36,12 @@ const InfoAnnonce = ({route, navigation}) =>{
             dispatch(annoncelist())
             dispatch(userget())
         }
+        
     },[response])
+
+    useEffect(()=>{
+        dispatch(userget())
+    },[transactStatus])
 
     const showSubmitButton = 
         data.type == "EMPRUNT" ? 

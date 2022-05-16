@@ -34,7 +34,7 @@ export const demandestyles = StyleSheet.create({
       margin: 5,
       padding: 10,
       borderRadius : '18px',
-      backgroundColor : 'white',
+      backgroundColor : 'whitesmoke',
     },
   
     leftInfo:{
