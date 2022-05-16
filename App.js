@@ -93,10 +93,10 @@ const PrivateScreen = ({navigation}) =>{
             </View>)
           },
           headerTitle : ()=>(
-            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Profile</Text>
+            <Text style={{color : 'black', fontSize: 20, fontWeight : '500'}}>Profile</Text>
           ),
           headerStyle :{
-            backgroundColor : 'rgb(26,53,88)',
+            backgroundColor : 'white',
             height : 86
           }
         }}

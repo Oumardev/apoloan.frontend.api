@@ -53,6 +53,7 @@ export default function Home({navigation}){
   useEffect(()=>{
     dispatch(userget())
     dispatch(annoncelist())
+    if(errorHappen == true)  logOut()
   },[])
 
 
