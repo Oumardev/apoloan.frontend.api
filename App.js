@@ -61,7 +61,7 @@ const PrivateScreen = ({navigation}) =>{
             <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Historique</Text>
           ),
           headerStyle :{
-            backgroundColor : 'rgb(26,53,88)',
+            backgroundColor : 'black',
             height : 86
           }
         }}
