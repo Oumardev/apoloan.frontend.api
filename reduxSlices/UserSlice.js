@@ -74,11 +74,33 @@ export const useredit = createAsyncThunk(
 );
 
 export const userpassword = createAsyncThunk(
-    'users/edit',
+    'users/password',
     async (values,thunkAPI) => {
         const token = await AsyncStorage.getItem('token')
     try {
         const response = await apiInstance.patch(EDIT_PASSWORD_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+export const refil = createAsyncThunk(
+    'users/refil',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+    try {
+        const response = await apiInstance.post(ACCOUNT_REFIL_URL,values,{ 
             headers: { Authorization: `Bear ${token}` },
         });
 
@@ -107,7 +129,8 @@ export const userSlice = createSlice({
             errorHappen: false,
 
             edited : false,
-            pwdedited: false
+            pwdedited: false,
+            refiled: false
         },
   
         reducers: {
@@ -118,6 +141,7 @@ export const userSlice = createSlice({
                 state.errorHappen = false;
                 state.edited = false;
                 state.pwdedited = false;
+                state.refiled = false;
                 state.user = {}
                 return state;
             }
@@ -180,6 +204,20 @@ export const userSlice = createSlice({
             state.errorMessage = payload ? payload.error: '';
         },
         [userpassword.pending]: (state) => {
+            state.isFetching = true;
+        },
+
+        [refil.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.refiled = true;
+            return state;
+        },
+        [refil.rejected]: (state, { payload }) => {
+            state.isFetching = true;
+            state.refiled = false;
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [refil.pending]: (state) => {
             state.isFetching = true;
         },
     },

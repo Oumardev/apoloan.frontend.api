@@ -125,7 +125,7 @@ export const editstyle = StyleSheet.create({
         justifyContent: 'center',
         alignContent:'center',
         backgroundColor : '#F46D76',
-        margin: 30,
+        margin: 50,
         width: 200,
         padding:20,
         borderRadius: 10
@@ -147,5 +147,10 @@ export const editstyle = StyleSheet.create({
       color: 'red',
       fontSize : 20,
       fontWeight : '600'
+    },
+
+    creditcard:{
+      width : '100%',
+      height : 200
     }
 });

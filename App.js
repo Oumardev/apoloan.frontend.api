@@ -19,6 +19,7 @@ import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
+import Refil from './Screen/Private/Modal/Profile/Refil';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -168,6 +169,18 @@ const headerEditProfile = {
   }
 }
 
+const headerRefil = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'black'}}>Rechargement</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'black'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'white'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -185,6 +198,8 @@ export default function App() {
             <Stack.Screen name="EditProfile" component={EditProfile} options={headerEditProfile} />
             {/** Info screen : EditPassword */}
             <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
+            {/** Info screen : Refil */}
+            <Stack.Screen name="Refil" component={Refil} options={headerRefil} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

@@ -44,7 +44,7 @@ export default function Profile({navigation}) {
       <View style={profilestyle.solde}>
         <Text style={profilestyle.title}>Solde</Text>
         <Text style={profilestyle.montant}>{user.user.Compte.solde} F</Text>
-        <TouchableOpacity style={profilestyle.refil}>
+        <TouchableOpacity style={profilestyle.refil} onPress={()=> navigation.navigate('Refil')}>
           <Image style={profilestyle.refilimg} source={refilimg} />
           <Text style={profilestyle.refiltext}>Se recharger</Text>
         </TouchableOpacity>

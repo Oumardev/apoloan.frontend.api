@@ -12,11 +12,11 @@ export default function EditProfile({route,navigation}) {
     const { data } = route.params;
     const dispatch = useDispatch()
 
-    const { edited, pwdedited, errorMessage } = useSelector(userSelector);
+    const { edited, pwdedited, errorMessage , refiled} = useSelector(userSelector);
 
     useEffect(()=>{
         dispatch(userget())
-    },[edited,pwdedited, errorMessage])
+    },[edited,pwdedited, errorMessage, refiled])
 
     const editProfileSchema = Yup.object().shape({
         nom : Yup.string() 

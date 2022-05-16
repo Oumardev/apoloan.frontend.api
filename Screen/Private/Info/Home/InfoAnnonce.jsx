@@ -5,6 +5,7 @@ import { infoStyle } from '../../styles.home/info.style'
 import ConfirmModal from "../../Modal/Home/ConfirmModal";
 import StatusModal from "../../Modal/Home/StatusModal";
 import { annonceSelector, annoncedebit, annoncelist } from "../../../../reduxSlices/AnnonceSlice";
+import { userget } from "../../../../reduxSlices/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const InfoAnnonce = ({route, navigation}) =>{
@@ -33,6 +34,7 @@ const InfoAnnonce = ({route, navigation}) =>{
             const senddata = { IDANNONCE : data.id }
             dispatch(annoncedebit(senddata))
             dispatch(annoncelist())
+            dispatch(userget())
         }
     },[response])
 
