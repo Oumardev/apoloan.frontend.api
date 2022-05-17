@@ -10,7 +10,7 @@ export default function Refund({navigation}) {
   
     return (
         <View style={styles.container}>
-            <Text>Refund page</Text>
+            <Text>Page du code promo</Text>
         </View>
   );
 }

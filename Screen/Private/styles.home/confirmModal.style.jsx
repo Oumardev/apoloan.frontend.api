@@ -30,7 +30,7 @@ export const confirmModal = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor : '#F46D76',
         margin: 10,
-        width: 140,
+        width: 160,
         padding:15,
         borderRadius: 10
     },

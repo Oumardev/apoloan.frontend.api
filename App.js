@@ -20,6 +20,7 @@ import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 import Refil from './Screen/Private/Modal/Profile/Refil';
+import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -73,14 +74,14 @@ const PrivateScreen = ({navigation}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
               <MaterialCommunityIcons name={'credit-card-refund'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Remboursser</Text>
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Code promo</Text>
             </View>)
           },
           headerTitle : ()=>(
-            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Rembourssement</Text>
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Code promo</Text>
           ),
           headerStyle :{
-            backgroundColor : 'rgb(26,53,88)',
+            backgroundColor : 'black',
             height : 86
           }
         }}
@@ -181,6 +182,18 @@ const headerRefil = {
   }
 }
 
+const headerInfoHistorique = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Remboursser</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -200,6 +213,8 @@ export default function App() {
             <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
             {/** Info screen : Refil */}
             <Stack.Screen name="Refil" component={Refil} options={headerRefil} />
+            {/** Info screen : Refil */}
+            <Stack.Screen name="InfoHistorique" component={InfoHistorique} options={headerInfoHistorique} />
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>

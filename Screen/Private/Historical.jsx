@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from 'react-native-vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { empruntSelector, empruntlist } from '../../reduxSlices/EmpruntSlice'
+import { userget } from '../../reduxSlices/UserSlice'
 import { pretSelector, pretlist } from '../../reduxSlices/PretSlice'
 import { historiquestyles } from './styles.historique/historique.style';
 
@@ -14,20 +15,12 @@ export default function Historical({navigation}) {
     const dispatch = useDispatch();
     const { emprunt } = useSelector(empruntSelector);
     const { pret, isFetching } = useSelector(pretSelector);
+   
+    const [men1, setMen1] = useState(true)
+    const [men2, setMen2] = useState(false)
+    const [mode, setMode] = useState('PRET')
+    
     const [refreshing, setRefreshing] = React.useState(false);
-
-    function nFormatter(num) {
-      if (num >= 1000000000) {
-         return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
-      }
-      if (num >= 1000000) {
-         return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-      }
-      if (num >= 1000) {
-         return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-      }
-      return num;
-    }
 
     const wait = (timeout) => {
       return new Promise(resolve => setTimeout(resolve, timeout));
@@ -36,94 +29,119 @@ export default function Historical({navigation}) {
     useEffect(()=>{
       dispatch(empruntlist())
       dispatch(pretlist())
+      dispatch(userget())
     },[])
 
     const onRefresh = React.useCallback(() => {
-      //dispatch(annoncelist())
+      dispatch(empruntlist())
+      dispatch(pretlist())
+      dispatch(userget())
       setRefreshing(true);
       wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    //console.log('emprunt', emprunt)
-    //console.log('pret', pret)
+    const listPret = () =>{
+      return(
+        pret.success && pret.success.map((item,key)=>(
+            <React.Fragment key={key}>
+              <TouchableOpacity style={historiquestyles.item}>
+                <View style={historiquestyles.leftInfo} >
+                  <View style={historiquestyles.pret}>
+                    <MaterialCommunityIcons name={'arrow-collapse-up'} size={35} color={'green'}/> 
+                  </View>
+    
+                    <View style={historiquestyles.info}>
+                      <Text style={historiquestyles.itemName}>{item.Annonce.montant} F</Text>
+                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {item.Annonce.pourcentage}</Text>
+                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {(item.Annonce.montant*item.Annonce.pourcentage) +item.Annonce.montant } F</Text>
+                    </View>
+                  </View>
+    
+                <View style={historiquestyles.date}>
+                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
+                  <Text style={{color:'gray'}}>{ item.statut } ...</Text>
+                </View>
+              </TouchableOpacity>
+            </React.Fragment>
+        ))
+      )
+    }
+
+    const listEmprunt = () =>{
+      return(
+        emprunt.success && emprunt.success.map((item,key)=>(
+            <React.Fragment key={key}>
+              <TouchableOpacity style={historiquestyles.item} onPress={() => item.statut == 'en cour' && navigation.navigate('InfoHistorique', {data: item})}>
+                <View style={historiquestyles.leftInfo} >
+                  <View style={historiquestyles.pret}>
+                    <MaterialCommunityIcons name={'arrow-collapse-down'} size={35} color={'red'}/> 
+                  </View>
+    
+                    <View style={historiquestyles.info}>
+                      <Text style={historiquestyles.itemName}>{item.Annonce.montant} F</Text>
+                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {item.Annonce.pourcentage}</Text>
+                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {(item.Annonce.montant*item.Annonce.pourcentage) +item.Annonce.montant } F</Text>
+                    </View>
+                  </View>
+    
+                <View style={historiquestyles.date}>
+                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
+                  <Text style={{color:'gray'}}>{ item.statut } ...</Text>
+                </View>
+              </TouchableOpacity>
+            </React.Fragment>
+        ))
+      )
+    }
 
     return (
         <View style={styles.container}>
-            <View style={historiquestyles.view}>
-              <Text style={historiquestyles.title}>Pret</Text>
-                <View style={historiquestyles.scroll}>
-                  <ScrollView 
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                    />
-                  }
-                  horizontal={false} 
-                  showsHorizontalScrollIndicator={false}
-                  >
-                    {
-                          <React.Fragment>
-                              <TouchableOpacity style={historiquestyles.item}>
-                                <View style={historiquestyles.leftInfo} >
-                                  <View style={historiquestyles.pret}>
-                                    <MaterialCommunityIcons name={'arrow-collapse-up'} size={35} color={'green'}/> 
-                                  </View>
-                                  <View style={historiquestyles.info}>
-                                    <Text style={historiquestyles.itemName}>580000 F</Text>
-                                    <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: 0.48</Text>
-                                    <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: 67000 F</Text>
-                                  </View>
-                                </View>
+              <View style={historiquestyles.view}>
+              
+              <View style={historiquestyles.menu}>
+                <TouchableOpacity 
+                  style={men1 ? historiquestyles.buttonActive : historiquestyles.button}
+                  onPress={ () =>{
+                    setMode('PRET')
+                    setMen1(true)
+                    setMen2(false)
+                  }}
+                >
+                  <Text style={men1 ? historiquestyles.titleactive : historiquestyles.title}>Pret</Text>
+                </TouchableOpacity>
 
-                                <View style={historiquestyles.date}>
-                                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
-                                  <Text style={{color:'gray'}}>En cour ...</Text>
-                                </View>
-                              </TouchableOpacity>
-                          </React.Fragment>
-                    }
-                  </ScrollView>
+                <TouchableOpacity 
+                  style={men2 ? historiquestyles.buttonActive : historiquestyles.button}
+                  onPress={ () =>{
+                    setMode('EMPRUNT')
+                    setMen1(false)
+                    setMen2(true)
+                  }}
+                >
+                  <Text style={men2 ? historiquestyles.titleactive : historiquestyles.title}>Emprunt</Text>
+                </TouchableOpacity>
               </View>
-            </View>
 
-            <View style={historiquestyles.view}>
-              <Text style={historiquestyles.title}>Emprunt</Text>
-                <View style={historiquestyles.scroll}>
-                  <ScrollView 
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                    />
-                  }
-                  horizontal={false} 
-                  showsHorizontalScrollIndicator={false}
-                  >
-                    {
-                          <React.Fragment>
-                              <TouchableOpacity style={historiquestyles.item}>
-                                <View style={historiquestyles.leftInfo} >
-                                  <View style={historiquestyles.pret}>
-                                    <MaterialCommunityIcons name={'arrow-collapse-down'} size={35} color={'red'}/> 
-                                  </View>
-                                  <View style={historiquestyles.info}>
-                                    <Text style={historiquestyles.itemName}>580000 F</Text>
-                                    <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: 0.48</Text>
-                                    <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: 67000 F</Text>
-                                  </View>
-                                </View>
-
-                                <View style={historiquestyles.date}>
-                                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
-                                  <Text style={{color:'gray'}}>En cour ...</Text>
-                                </View>
-                              </TouchableOpacity>
-                          </React.Fragment>
-                    }
-                  </ScrollView>
-              </View>
+              <View style={historiquestyles.scroll}>
+            
+              <ScrollView 
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+              }
+                horizontal={false} 
+                showsHorizontalScrollIndicator={false}
+              > 
+              
+              {
+                mode === 'PRET' ? listPret() : listEmprunt()
+              }
+              </ScrollView>
+                </View>
             </View>
+              
         </View>
     );
 }
@@ -131,7 +149,7 @@ export default function Historical({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems : 'center'
+    alignItems : 'center',
+    backgroundColor:'white'
   }
-
 });

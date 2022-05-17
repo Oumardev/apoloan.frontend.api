@@ -14,7 +14,6 @@ export const empruntlist = createAsyncThunk(
         });
 
         let data = response.data
-
         if(response.status === 200){
             return data;
         } else {
@@ -52,7 +51,7 @@ export const empruntSlice = createSlice({
     extraReducers: {
         [empruntlist.fulfilled]: (state, { payload }) => {
             state.isFetching = false;
-            state.pret = payload;
+            state.emprunt = payload;
             return state;
         },
         [empruntlist.rejected]: (state, { payload }) => {

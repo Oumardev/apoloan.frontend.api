@@ -60,7 +60,6 @@ export default function Profile({navigation}) {
               width={4}
               fill={60}
               tintColor="#8AFF8A"
-              onAnimationComplete={() => console.log('onAnimationComplete')}
               backgroundColor="#3d5875" 
               padding={5}
             >
@@ -81,7 +80,6 @@ export default function Profile({navigation}) {
               width={4}
               fill={12}
               tintColor="red"
-              onAnimationComplete={() => console.log('onAnimationComplete')}
               backgroundColor="#3d5875" 
               padding={5}
             >

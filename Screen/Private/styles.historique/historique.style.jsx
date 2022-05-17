@@ -11,7 +11,7 @@ export const historiquestyles = StyleSheet.create({
   
     view:{
       margin: 10,
-      maxHeight: 480
+      maxHeight: 540
     },
   
     title:{
@@ -21,14 +21,14 @@ export const historiquestyles = StyleSheet.create({
   
     scroll: {
       flexDirection: 'column',
-      maxHeight : 220
+      maxHeight : 540
     },
   
     item:{
       display: 'flex',
       justifyContent: 'space-between',
       flexDirection : 'row',
-      margin: 10,
+      margin: 3,
       padding: 10,
       borderRadius : 18,
       backgroundColor : 'whitesmoke',
@@ -51,6 +51,40 @@ export const historiquestyles = StyleSheet.create({
     pret:{
         display: 'flex',
         alignItems : 'center'
-    }
+    },
+
+    menu:{
+      display : 'flex',
+      flexDirection : 'row',
+      backgroundColor : '#bbb6b6cc',
+      borderRadius: 16
+    },
+
+    button:{
+      padding : 10,
+      margin : 10,
+      borderRadius: 16,
+      width: 100,
+      justifyContent : 'center',
+      alignItems:'center'
+    },
+
+    buttonActive: {
+      padding : 10,
+      borderColor: 'whitesmoke',
+      borderWidth: 2,
+      margin : 10,
+      borderRadius: 16,
+      width: 100,
+      justifyContent : 'center',
+      alignItems:'center',
+      backgroundColor : 'whitesmoke'
+    },
+
+    titleactive:{
+      fontSize: 20,
+      fontWeight: '600',
+      color:'black'
+    },
 
 });

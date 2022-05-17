@@ -73,6 +73,30 @@ export const annoncecreate = createAsyncThunk(
     }
 );
 
+export const annoncerefund = createAsyncThunk(
+    'annonce/refund',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+    
+    try {
+        const response = await apiInstance.post(ACCOUNT_REFOUND,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+
 export const annonceSlice = createSlice({
     name: "annonce",
   
@@ -120,10 +144,23 @@ export const annonceSlice = createSlice({
         [annoncedebit.rejected]: (state, { payload }) => {
             state.errorHappened = true;
             state.errorMessage = payload ? payload.error: '';
-            console.log('rejected', payload)
             state.transactStatus = 'rejected'
         },
         [annoncedebit.pending]: (state) => {
+            state.transactStatus = 'pending'
+        },
+
+        [annoncerefund.fulfilled]: (state, { payload }) => {
+            state.transactStatus = 'success'
+            return state;
+        },
+        
+        [annoncerefund.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+            state.transactStatus = 'rejected'
+        },
+        [annoncerefund.pending]: (state) => {
             state.transactStatus = 'pending'
         },
 
