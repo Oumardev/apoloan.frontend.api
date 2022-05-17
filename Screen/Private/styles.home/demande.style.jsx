@@ -33,7 +33,7 @@ export const demandestyles = StyleSheet.create({
       flexDirection : 'row',
       margin: 5,
       padding: 10,
-      borderRadius : '18px',
+      borderRadius : 18,
       backgroundColor : 'whitesmoke',
     },
   
