@@ -17,7 +17,7 @@ export const makeAnnonceStyle = StyleSheet.create({
         height: 50,
         margin:10,
         borderRadius:20,
-        width :'100%',
+        width : '100%',
         borderBottomColor : 'gray',
         borderBottomWidth : 2
     },
@@ -111,15 +111,14 @@ export const makeAnnonceStyle = StyleSheet.create({
         justifyContent : 'center',
         alignItems: 'center',
         backgroundColor : '#001429',
-        height : 60,
+        height : 50,
         width : 230,
-        padding : 20,
         borderRadius : 10
     },
     
     addText : {
         color : 'white',
-        fontSize : 22,
+        fontSize : 20,
         fontWeight : '600'
     },
 

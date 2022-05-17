@@ -61,15 +61,14 @@ export const demandestyles = StyleSheet.create({
       justifyContent : 'center',
       alignItems: 'center',
       backgroundColor : '#001429',
-      height : 60,
+      height : 50,
       width : 230,
-      padding : 20,
       borderRadius : 10
     },
 
     addText : {
       color : 'white',
-      fontSize : 22,
+      fontSize : 20,
       fontWeight : '600'
     }
 });

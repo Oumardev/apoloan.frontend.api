@@ -67,9 +67,10 @@ export const infoStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         backgroundColor : '#F46D76',
-        margin: 60,
+        margin: 15,
+        height : 50,
         width: 200,
-        padding:20,
-        borderRadius: 10
+        borderRadius: 10,
+        padding : 15
     },
 });
