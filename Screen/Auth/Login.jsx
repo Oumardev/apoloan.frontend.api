@@ -9,10 +9,9 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { styles } from './AuthStyle';
+import { loginsty } from './AuthStyle';
 import { login, userSelector } from "../../reduxSlices/UserSlice"
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -37,10 +36,10 @@ const Login = ({navigation}) => {
     });
   
     return (
-    <View style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle}>
+    <View style={loginsty.container}>
+      <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={loginsty.scrollStyle}>
       <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={20}>
-      <Text style={styles.errormsgheader}>{errorMessage && errorMessage}</Text>
+      <Text style={{color:'red'}}>{errorMessage && errorMessage}</Text>
           <Formik
             initialValues={{ 
               numero: '', 
@@ -58,11 +57,11 @@ const Login = ({navigation}) => {
             }}>
 
           {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
-        <View style={styles.formulaire}>
-          <View style={styles.inputview}>
-            <Text style={styles.description}>Téléphone</Text>
+        <View style={loginsty.formulaire}>
+          <View style={loginsty.inputview}>
+            <Text style={loginsty.description}>Téléphone</Text>
               <TextInput 
-                  style={styles.input} 
+                  style={loginsty.input} 
                   placeholder={'778881155'}
                   autoCorrect={false}
                   onChangeText={handleChange('numero')}
@@ -70,14 +69,14 @@ const Login = ({navigation}) => {
                   value={values.numero}
                   onSubmitEditing={Keyboard.dismiss}
                 />
-              {errors.numero && touched.numero ? ( <Text style={styles.errormsg}>{errors.numero}</Text> ) : null}
+              {errors.numero && touched.numero ? ( <Text style={loginsty.errormsg}>{errors.numero}</Text> ) : null}
           </View>
 
-          <View style={styles.inputview}>
-            <Text style={styles.description}>Mot de passe</Text>
+          <View style={loginsty.inputview}>
+            <Text style={loginsty.description}>Mot de passe</Text>
               <TextInput 
                   secureTextEntry={true}
-                  style={styles.input} 
+                  style={loginsty.input} 
                   placeholder={'*******'}                    
                   autoCorrect={false}
                   onChangeText={handleChange('password')}
@@ -85,17 +84,16 @@ const Login = ({navigation}) => {
                   value={values.password}
                   onSubmitEditing={Keyboard.dismiss}
                 />
-              {errors.password && touched.password ? ( <Text style={styles.errormsg} >{errors.password}</Text> ) : null}
+              {errors.password && touched.password ? ( <Text style={loginsty.errormsg} >{errors.password}</Text> ) : null}
           </View>
 
-          <TouchableOpacity style={styles.connectButton} activeOpacity={0.2} onPress={handleSubmit} >
-            <Text style={styles.buttonTextStyle}>Se connecter</Text>
+          <TouchableOpacity style={loginsty.connectButton} activeOpacity={0.2} onPress={handleSubmit} >
+            <Text style={loginsty.buttonTextStyle}>Se connecter</Text>
           </TouchableOpacity>
-          
         </View>
         )}
       </Formik>
-      <Text style={styles.registerTextStyle}
+      <Text style={loginsty.registerTextStyle}
         onPress={() => navigation.navigate('register')}>
         Nouveau ici ? Inscrivez-vous
       </Text>

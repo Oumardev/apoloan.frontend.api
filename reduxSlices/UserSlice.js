@@ -25,6 +25,27 @@ export const login = createAsyncThunk(
     }
 );
 
+export const register = createAsyncThunk(
+    'users/login',
+    async (values,thunkAPI) => {
+    
+    try {
+        const response = await apiInstance.post(REGISTER_URL,values);
+        let data = response.data
+         
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+
 export const userget = createAsyncThunk(
     'users/user',
     async (thunkAPI) => {
@@ -127,7 +148,7 @@ export const userSlice = createSlice({
             user: {},
             loginSuccess: false,
             errorHappen: false,
-
+            msgregister : '',
             edited : false,
             pwdedited: false,
             refiled: false
@@ -142,7 +163,9 @@ export const userSlice = createSlice({
                 state.edited = false;
                 state.pwdedited = false;
                 state.refiled = false;
-                state.user = {}
+                state.user = {};
+                state.msgregister = ""
+
                 return state;
             }
         },
@@ -160,6 +183,21 @@ export const userSlice = createSlice({
             state.errorMessage = payload ? payload.error: '';
         },
         [login.pending]: (state) => {
+            state.isFetching = true;
+        },
+
+        [register.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.msgregister = payload.success;
+            state.errorHappen = false
+            return state;
+        },
+        [register.rejected]: (state, { payload }) => {
+            state.isFetching = false;
+            state.errorHappen = true
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [register.pending]: (state) => {
             state.isFetching = true;
         },
 
