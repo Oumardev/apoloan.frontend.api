@@ -6,5 +6,4 @@ const apiInstance = axios.create({
     timeout: 11000,
 });
 
-
 export default apiInstance

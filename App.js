@@ -110,13 +110,17 @@ const PrivateScreen = ({navigation}) =>{
   )
 }
 
+const headerLogin = {
+  headerShown: false
+}
+
 const Auth = ({navigation}) =>{
   return(
     <Stack.Navigator initialRouteName="login">
       <Stack.Screen
         name = "login"
         component = {Login}
-        options = {{headerShown : false}}
+        options = {headerLogin}
       />
 
       <Stack.Screen

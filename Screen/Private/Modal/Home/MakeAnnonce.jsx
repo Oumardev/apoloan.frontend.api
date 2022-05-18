@@ -50,7 +50,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                             pourcentage: (values.pourcentage/100),
                             montant: parseInt(values.montant)
                         }
-
+                        console.log(data)
                         // make annonce
                       dispatch(annoncecreate(data))
                     }}>
@@ -59,8 +59,8 @@ const MakeAnnonce = ({route, navigation}) =>{
                       <View style={makeAnnonceStyle.main}>
                         <AddAnnonceStatus visible={visible} setVisible={setVisible} status={addStatus} />
                         <View  style={makeAnnonceStyle.SectionCheckBox}>
-                          <CheckBox isChecked={checkPret} setIsChecked={setCheckPret} text={'PRET'} setType={setType} checkPrev={checkEmprunt} setCheckPrev={setCheckEmprunt} />
-                          <CheckBox isChecked={checkEmprunt} setIsChecked={setCheckEmprunt} text={'EMPRUNT'} setType={setType} checkPrev={checkPret} setCheckPrev={setCheckPret} />
+                          <CheckBox isChecked={checkPret} setIsChecked={setCheckPret} text={"PRET"} setType={setType} checkPrev={checkEmprunt} setCheckPrev={setCheckEmprunt} />
+                          <CheckBox isChecked={checkEmprunt} setIsChecked={setCheckEmprunt} text={"EMPRUNT"} setType={setType} checkPrev={checkPret} setCheckPrev={setCheckPret} />
                         </View>
 
                           <View style={makeAnnonceStyle.SectionStyle}>

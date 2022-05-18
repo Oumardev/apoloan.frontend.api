@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { styles } from './AuthStyle';
@@ -36,85 +37,72 @@ const Login = ({navigation}) => {
     });
   
     return (
-    <View style={styles.mainBody}>
-          
-        <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle} >
-          
-          <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={200}>
-          <Text style={styles.errormsgheader}>{errorMessage && errorMessage}</Text>
-              <Formik
-                    initialValues={{ 
-                        numero: '', 
-                        password : ''
-                    }}
-                    
-                    validationSchema = {loginSchema}
-                    
-                    onSubmit={ async (values, { setSubmitting }) => {
-                        const data = {
-                            numero: parseInt(values.numero),
-                            password: values.password
-                        }
-
-                        dispatch(login(data))
-                    }}>
-
-                    {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
-                      <View>
-                          <View style={styles.SectionStyle}>
-                            <View style={styles.buttonStyle}>
-                                <TextInput
-                                  style={styles.inputStyle} 
-                                  placeholder='Télephone'
-                                  placeholderTextColor="#d0c8c8d6"
-                                  keyboardType="numeric"
-                                  autoCapitalize="sentences"
-
-                                  autoCorrect={false}
-                                  onChangeText={handleChange('numero')}
-                                  onBlur={handleBlur('numero')}
-                                  value={values.numero}
-                                  onSubmitEditing={Keyboard.dismiss}
-                                />
-                            </View>   
-                            {errors.numero && touched.numero ? ( <Text style={styles.errormsg}>{errors.numero}</Text> ) : null}
-                          </View>
-
-                        <View style={styles.SectionStyle}>
-                            <View style={styles.buttonStyle}>
-                              <TextInput 
-                                  style={styles.inputStyle} 
-                                  placeholder='Mot de passe' 
-                                  secureTextEntry={true}
-                                  placeholderTextColor="#d0c8c8d6"
-                                        
-                                  autoCorrect={false}
-                                  onChangeText={handleChange('password')}
-                                  onBlur={handleBlur('password')}
-                                  value={values.password}
-                                  onSubmitEditing={Keyboard.dismiss}
-                              />
-                            </View>   
-                          {errors.password && touched.password ? ( <Text style={styles.errormsg} >{errors.password}</Text> ) : null}
-                        </View>
+    <View style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={styles.scrollStyle}>
+      <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={20}>
+      <Text style={styles.errormsgheader}>{errorMessage && errorMessage}</Text>
+          <Formik
+            initialValues={{ 
+              numero: '', 
+              password : ''
+            }}
+            validationSchema = {loginSchema}
             
-                        <TouchableOpacity
-                            style={styles.connectButton}
-                            activeOpacity={0.8}
-                            onPress={handleSubmit}>
-                            <Text style={styles.buttonTextStyle}>CONNEXION</Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-              </Formik>
-            <Text style={styles.registerTextStyle}
-                onPress={() => navigation.navigate('register')}>
-                Nouveau ici ? Inscrivez-vous
-            </Text>
-          </KeyboardAvoidingView>
-        </ScrollView>
+            onSubmit={ async (values, { setSubmitting }) => {
+                const data = {
+                  numero: parseInt(values.numero),
+                  password: values.password
+                }
+
+                dispatch(login(data))
+            }}>
+
+          {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
+        <View style={styles.formulaire}>
+          <View style={styles.inputview}>
+            <Text style={styles.description}>Téléphone</Text>
+              <TextInput 
+                  style={styles.input} 
+                  placeholder={'778881155'}
+                  autoCorrect={false}
+                  onChangeText={handleChange('numero')}
+                  onBlur={handleBlur('numero')}
+                  value={values.numero}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+              {errors.numero && touched.numero ? ( <Text style={styles.errormsg}>{errors.numero}</Text> ) : null}
+          </View>
+
+          <View style={styles.inputview}>
+            <Text style={styles.description}>Mot de passe</Text>
+              <TextInput 
+                  secureTextEntry={true}
+                  style={styles.input} 
+                  placeholder={'*******'}                    
+                  autoCorrect={false}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+              {errors.password && touched.password ? ( <Text style={styles.errormsg} >{errors.password}</Text> ) : null}
+          </View>
+
+          <TouchableOpacity style={styles.connectButton} activeOpacity={0.2} onPress={handleSubmit} >
+            <Text style={styles.buttonTextStyle}>Se connecter</Text>
+          </TouchableOpacity>
+          
+        </View>
+        )}
+      </Formik>
+      <Text style={styles.registerTextStyle}
+        onPress={() => navigation.navigate('register')}>
+        Nouveau ici ? Inscrivez-vous
+      </Text>
+      </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 };
 
-  export default Login;
+export default Login;
