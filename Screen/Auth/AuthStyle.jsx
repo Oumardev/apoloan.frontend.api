@@ -345,3 +345,65 @@ errormsgheader:{
     marginRight :8
   }
 });
+
+export const activationStyle = StyleSheet.create({
+  container: {
+    flex: 1, 
+    padding:50  
+  },
+
+  titledesc:{
+    fontSize: 17,
+    fontWeight:'200',
+    textAlign:'center'
+  },
+
+  fielddesc:{
+    marginBottom : 5,
+    fontSize: 17,
+    fontWeight : '600'
+  },
+
+  field:{
+    width : '100%',
+    marginTop : 18
+  },
+
+  input:{
+    height : 50,
+    borderWidth : 2,
+    borderColor : '#dcdfe6',
+    borderRadius : 7,
+    paddingLeft : 14,
+    fontSize: 17
+  },
+
+  expsec:{
+    width : '100%',
+    marginTop : 18,
+    flexDirection : 'row',
+    justifyContent : 'space-around'
+  },
+
+  bfield:{
+    width : '48%',
+    marginTop : 18
+  },
+
+  activatetxt:{
+    color: 'white',
+    fontSize: 22,
+    fontWeight:'600'
+  },
+
+  activatebtn:{
+    height :50,
+    width : 240,
+    backgroundColor : 'black',
+    justifyContent : 'center',
+    alignItems:'center',
+    marginTop:20,
+    borderRadius : 10
+  }
+
+});

@@ -21,6 +21,7 @@ import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
+import Payment from "./Screen/Auth/Payment"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -219,6 +220,7 @@ export default function App() {
             <Stack.Screen name="Refil" component={Refil} options={headerRefil} />
             {/** Info screen : Refil */}
             <Stack.Screen name="InfoHistorique" component={InfoHistorique} options={headerInfoHistorique} />
+
         </Stack.Navigator>
       </NavigationContainer>
   </Provider>
