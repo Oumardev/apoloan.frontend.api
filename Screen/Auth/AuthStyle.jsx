@@ -404,6 +404,10 @@ export const activationStyle = StyleSheet.create({
     alignItems:'center',
     marginTop:20,
     borderRadius : 10
-  }
+  },
+
+  errormsg:{
+    color:'red'
+  },
 
 });
