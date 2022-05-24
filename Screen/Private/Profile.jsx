@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { AntDesign } from 'react-native-vector-icons';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userSelector, userget } from '../../reduxSlices/UserSlice'
+import { userSelector, userget, clearState } from '../../reduxSlices/UserSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import profileimg from '../../assets/profileimg.jpg'
 import refilimg from '../../assets/refil.png'
@@ -14,7 +14,6 @@ export default function Profile({navigation}) {
   const dispatch = useDispatch();
   const { errorHappen, user, isFetching } = useSelector(userSelector);
 
-
   const logOut = () =>{
     AsyncStorage.removeItem('token')
     AsyncStorage.removeItem('isLogin')
@@ -23,6 +22,7 @@ export default function Profile({navigation}) {
 
   useEffect(()=>{
     dispatch(userget())
+    dispatch(clearState())
   },[])
 
   useEffect(()=>{
@@ -93,6 +93,9 @@ export default function Profile({navigation}) {
             </AnimatedCircularProgress>
           </View>
         </View>
+        <TouchableOpacity onPress={()=> logOut()}>
+              <Text style={{color:'red',textAlign:'center',fontWeight:'500',fontSize:19}}>Se déconnecter</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

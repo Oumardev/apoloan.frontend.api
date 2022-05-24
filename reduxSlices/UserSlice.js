@@ -26,7 +26,7 @@ export const login = createAsyncThunk(
 );
 
 export const register = createAsyncThunk(
-    'users/login',
+    'users/register',
     async (values,thunkAPI) => {
     
     try {

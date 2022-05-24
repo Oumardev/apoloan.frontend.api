@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'; 
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import store from './store'
 import { Provider } from 'react-redux';
 import SplashScreen from './SplashScreen';
@@ -74,8 +75,8 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'credit-card-refund'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Code promo</Text>
+              <Ionicons name={'ios-chatbubbles-outline'} size={25} color={focused ? 'tomato' : 'gray'} />
+              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Discussion</Text>
             </View>)
           },
           headerTitle : ()=>(

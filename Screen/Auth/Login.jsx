@@ -21,7 +21,7 @@ const Login = ({navigation}) => {
     const { errorMessage , loginSuccess} = useSelector(userSelector);
 
     useEffect(()=>{
-      if(loginSuccess) navigation.replace('PrivateScreen');
+      if(loginSuccess) navigation.replace('SplashScreen');
     },[loginSuccess])
 
     const loginSchema = Yup.object().shape({
