@@ -16,7 +16,7 @@ export const loginsty = StyleSheet.create({
     },
 
     description:{
-      fontSize : 22,
+      fontSize : 17,
       fontWeight : '600',
       color:'black',
       opacity: 0.5
@@ -27,7 +27,7 @@ export const loginsty = StyleSheet.create({
       backgroundColor : 'whitesmoke',
       padding: 30,
       borderRadius : 10,
-      shadowOpacity: 0.1
+      shadowOpacity: 0.1,
     },
 
     input:{
@@ -63,7 +63,6 @@ export const loginsty = StyleSheet.create({
 
     buttonTextStyle: {
       color: 'white',
-      paddingVertical: 10,
       fontSize: 23,
       fontWeight : '700'
     },
@@ -95,27 +94,28 @@ export const registersty = StyleSheet.create({
   container: {
     flex: 1,
     display : 'flex',
-    backgroundColor: 'white',
-    borderColor : 'green',
     alignItems : 'center',
-    justifyContent : 'center'
+    justifyContent : 'center',
+    backgroundColor: 'white',
+    borderColor : 'green'
   },
 
   inputview:{
     height : 80,
-    marginTop : 20
+    marginTop : 20,
   },
 
   formulaire:{
-    width: '100%',
     backgroundColor : 'whitesmoke',
-    padding: 10,
+    padding: 30,
     borderRadius : 10,
-    shadowOpacity: 0.1
+    shadowOpacity: 0.1,
+    justifyContent: 'center',
+    alignItems : 'center'
   },
 
   description:{
-    fontSize : 18,
+    fontSize : 15,
     fontWeight : '600',
     color:'black',
     opacity: 0.5
@@ -123,13 +123,13 @@ export const registersty = StyleSheet.create({
 
   input:{
     borderColor : 'gray',
-    borderBottomWidth : 2,
-    height : 50,
-    padding :15,
-    fontSize : 20,
+    borderBottomWidth : 1,
+    height : 33,
+    padding :10,
+    fontSize : 18,
     fontWeight : '600',
     width : 300,
-    color:'white',
+    color:'black',
     marginTop:10,
     borderRadius : 12
   },
@@ -144,15 +144,12 @@ export const registersty = StyleSheet.create({
     backgroundColor: '#413df7',
     borderWidth: 0,
     color: '#FFFFFF',
-    borderColor: '#7DE24E',
-    height: 44, 
-    width: 130,
+    height: 50, 
+    width: 300,
     alignItems: 'center',
     justifyContent:'center',
     borderRadius: 10,
-    marginTop: 40,
-    display : 'flex',
-    flexDirection : 'row'
+    marginTop: 20,
   },
 
   backButton:{
@@ -212,15 +209,14 @@ errormsgheader:{
   inputboth:{
     borderColor : 'gray',
     borderBottomWidth : 1,
-    height : 50,
-    padding :15,
-    fontSize : 20,
+    height : 33,
+    padding :10,
+    fontSize : 18,
     fontWeight : '600',
-    width : 160,
+    width : 150,
     color:'black',
     marginTop:10,
-    borderRadius : 12,
-    marginRight :8
+    borderRadius : 12
   }
 });
 

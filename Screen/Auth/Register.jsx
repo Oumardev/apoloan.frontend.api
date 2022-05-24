@@ -18,7 +18,11 @@ import { register, userSelector } from "../../reduxSlices/UserSlice"
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from "yup";
 
-const Step1 = ({setStep,data,setData,error}) =>{
+const Step1 = ({setStep}) =>{
+
+  const dispatch = useDispatch()
+  const { errorMessage , msgregister } = useSelector(userSelector);
+
   const registerSchema = Yup.object().shape({
     nom: Yup.string()
       .min(1, 'Trop court!')
@@ -45,41 +49,48 @@ const Step1 = ({setStep,data,setData,error}) =>{
 
     numeroCNI : Yup.number()
         .typeError('Format invalide')
-        .required('Champs requis!')
+        .required('Champs requis!'),
+
+    password : Yup.string()
+      .min(8,'Minimum 8 caractères')
+      .required('Champs requis'),
 });
 
 return (
   <View style={registersty.container}>
     <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={registersty.scrollStyle}>
       <KeyboardAvoidingView behavior={'position'}>
-      <Text style={registersty.errormsgheader}>{error && error}</Text>
+      <Text style={registersty.errormsgheader}>{errorMessage && errorMessage}</Text>
           <Formik
             initialValues={{ 
-              nom: data ? data.nom : '', 
-              prenom: data ? data.prenom : '', 
-              numero: data ? data.numero : '', 
+              nom: '', 
+              prenom: '', 
+              numero: '', 
               sexe: 'M', 
-              adresse: data ? data.adresse : '', 
-              fonction: data ? data.fonction : '',
-              numeroCNI: data ? data.numeroCNI : ''
+              adresse: '', 
+              fonction: '',
+              numeroCNI: '',
+              password : ''
             }}
             
             enableReinitialize={true}
             validationSchema = {registerSchema}
             
             onSubmit={(values, { setSubmitting }) => {
-
             const data = {
               nom: values.nom,
               prenom: values.prenom,
-              numero: values.numero,
+              numero: parseInt(data.numero),
               sexe: values.sexe,
               age: 10,
               adresse: values.adresse,
               fonction: values.fonction,
-              numeroCNI: values.numeroCNI
+              numeroCNI:  parseInt(data.numeroCNI),
+              password : values.password
             }
-              setData(data)
+                          
+              console.log(data)
+              dispatch(register(data))
               setStep(2)
             }}>
             
@@ -116,11 +127,10 @@ return (
                 </View>
               </View>
 
-              <View style={registersty.viewbothinput}>
                 <View style={registersty.inputview}>
                   <Text style={registersty.description}>Numéro</Text>
                     <TextInput 
-                        style={registersty.inputboth} 
+                        style={registersty.input} 
                         placeholder={'778887711'}                    
                         autoCorrect={false}
                         onChangeText={handleChange('numero')}
@@ -132,151 +142,22 @@ return (
                 </View>
 
                 <View style={registersty.inputview}>
-                  <Text style={registersty.description}>Adresse</Text>
+                  <Text style={registersty.description}>Mot de passe</Text>
                     <TextInput 
-                        style={registersty.inputboth} 
-                        placeholder={'Dakar, Fass'}                    
+                        style={registersty.input} 
+                        placeholder={'******'}                    
                         autoCorrect={false}
-                        onChangeText={handleChange('adresse')}
-                        onBlur={handleBlur('adresse')}
-                        value={values.adresse}
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        value={values.password}
                         onSubmitEditing={Keyboard.dismiss}
                       />
-                    {errors.adresse && touched.adresse ? ( <Text style={registersty.errormsg} >{errors.adresse}</Text> ) : null}
+                    {errors.password && touched.password ? ( <Text style={registersty.errormsg} >{errors.password}</Text> ) : null}
                 </View>
-              </View>
-
-              <View style={registersty.viewbothinput}>
-                <View style={registersty.inputview}>
-                  <Text style={registersty.description}>Fonction</Text>
-                    <TextInput 
-                        style={registersty.inputboth} 
-                        placeholder={'Responsable ...'}                    
-                        autoCorrect={false}
-                        onChangeText={handleChange('fonction')}
-                        onBlur={handleBlur('fonction')}
-                        value={values.fonction}
-                        onSubmitEditing={Keyboard.dismiss}
-                      />
-                    {errors.fonction && touched.fonction ? ( <Text style={registersty.errormsg} >{errors.fonction}</Text> ) : null}
-                </View>
-
-                <View style={registersty.inputview}>
-                  <Text style={registersty.description}>CNI</Text>
-                    <TextInput 
-                        style={registersty.inputboth} 
-                        placeholder={'234-838'}                    
-                        autoCorrect={false}
-                        onChangeText={handleChange('numeroCNI')}
-                        onBlur={handleBlur('numeroCNI')}
-                        value={values.numeroCNI}
-                        onSubmitEditing={Keyboard.dismiss}
-                      />
-                    {errors.numeroCNI && touched.numeroCNI ? ( <Text style={registersty.errormsg} >{errors.numeroCNI}</Text> ) : null}
-                </View>
-              </View>
+              
                 <TouchableOpacity style={registersty.connectButton} activeOpacity={0.2} onPress={handleSubmit} >
-                  <Text style={registersty.buttonTextStyle}>Suivant</Text>
-                  <MaterialIcons name='navigate-next' color={'white'} size={35} />
+                  <Text style={registersty.buttonTextStyle}>S'inscrire</Text>
                 </TouchableOpacity>
-            </View>
-          )}
-          </Formik>
-      </KeyboardAvoidingView>
-    </ScrollView>
-  </View>
-);
-}
-
-const Step2 = ({setStep,data,setError}) =>{
-
-  const dispatch = useDispatch()
-  const { errorMessage , msgregister } = useSelector(userSelector);
-
-  useEffect(()=>{
-    if(errorMessage){
-      setStep(1)
-      setError(errorMessage)
-    }
-  },[errorMessage])
-
-  const registerSchema = Yup.object().shape({
-
-    password : Yup.string()
-        .min(8,'Minimum 8 caractères')
-        .required('Champs requis'),
-
-    passwordConfirm : Yup.string()
-        .oneOf([Yup.ref('password'), null], "Mot de passe différent")
-        .required('Champs requis'),
-});
-
-return (
-  <View style={registersty.container}>
-    <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={registersty.scrollStyle}>
-      <KeyboardAvoidingView behavior={'position'}>
-       
-          <Formik
-            initialValues={{ 
-              password : '',
-              passwordConfirm: ''
-            }}
-
-            validationSchema = {registerSchema}
-
-            onSubmit={(values, { setSubmitting }) => {
-
-            const senddata = {...data , password : values.password, numero: parseInt(data.numero), numeroCNI : parseInt(data.numeroCNI)}
-            
-            console.log(senddata)
-            dispatch(register(senddata))
-            }}>
-            
-            {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
-
-            <View style={registersty.formulaire}>
-              <View style={registersty.inputview}>
-                <Text style={registersty.description}>Mot de passe</Text>
-                  <TextInput 
-                    secureTextEntry={true}
-                    style={registersty.input} 
-                    placeholder={'*******'}                    
-                    autoCorrect={false}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    onSubmitEditing={Keyboard.dismiss}
-                  />
-                {errors.password && touched.password ? ( <Text style={registersty.errormsg} >{errors.password}</Text> ) : null}
-              </View>
-
-                    <View style={registersty.inputview}>
-                      <Text style={registersty.description}>Confirmer le mot de passe</Text>
-                        <TextInput 
-                            secureTextEntry={true}
-                            style={registersty.input} 
-                            placeholder={'*******'}                    
-                            autoCorrect={false}
-                            onChangeText={handleChange('passwordConfirm')}
-                            onBlur={handleBlur('passwordConfirm')}
-                            value={values.passwordConfirm}
-                            onSubmitEditing={Keyboard.dismiss}
-                          />
-                        {errors.passwordConfirm && touched.passwordConfirm ? ( <Text style={registersty.errormsg} >{errors.passwordConfirm}</Text> ) : null}
-                    </View>
-
-                <View style={registersty.buttonView}>
-                  <TouchableOpacity style={registersty.connectButton} activeOpacity={0.2} onPress={handleSubmit} >
-                    <Text style={registersty.buttonTextStyle}>S'inscrire</Text>
-                    <FontAwesome name='sign-in' color={'black'} size={35} />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={registersty.backButton} activeOpacity={0.2} onPress={()=> setStep(1)} >
-                    <Text style={registersty.buttonTextStyle}>Revenir</Text>
-                    <Ionicons name='ios-arrow-back-circle-sharp' color={'black'} size={35} />
-                  </TouchableOpacity>
-                </View>
-                
             </View>
           )}
           </Formik>
@@ -453,12 +334,9 @@ return (
 const Register = ({navigation}) => {
 
     const [ step, setStep ] = useState(1)
-    const [ data, setData ] = useState(null)
-    const [ error, setError ] = useState('')
 
     return(
-      //<PaymentStep />
-      step === 1 ? <Step1 setStep={setStep} data={data} setData={setData} error={error} /> : <Step2 setStep={setStep} data={data} setError={setError} />
+      step === 1 ? <Step1 setStep={setStep} /> : <PaymentStep />
     )
 };
 
