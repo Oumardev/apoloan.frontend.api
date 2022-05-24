@@ -198,7 +198,9 @@ errormsgheader:{
   fontWeight:'600',
   color:'red',
   paddingLeft:10,
-  paddingBottom:5
+  paddingBottom:5,
+  textAlign:'center',
+  margin : 10
 },
 
   viewbothinput : {
@@ -321,7 +323,7 @@ errormsgheader:{
   fontWeight:'600',
   color:'red',
   paddingLeft:10,
-  paddingBottom:5
+  paddingBottom:5,
 },
 
   viewbothinput : {

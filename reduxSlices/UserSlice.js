@@ -148,7 +148,7 @@ export const userSlice = createSlice({
             user: {},
             loginSuccess: false,
             errorHappen: false,
-            msgregister : '',
+            isRegister : false,
             edited : false,
             pwdedited: false,
             refiled: false
@@ -164,7 +164,7 @@ export const userSlice = createSlice({
                 state.pwdedited = false;
                 state.refiled = false;
                 state.user = {};
-                state.msgregister = ""
+                state.isRegister = false
 
                 return state;
             }
@@ -188,7 +188,7 @@ export const userSlice = createSlice({
 
         [register.fulfilled]: (state, { payload }) => {
             state.isFetching = false;
-            state.msgregister = payload.success;
+            state.isRegister = true;
             state.errorHappen = false
             return state;
         },
@@ -196,6 +196,7 @@ export const userSlice = createSlice({
             state.isFetching = false;
             state.errorHappen = true
             state.errorMessage = payload ? payload.error: '';
+            state.isRegister = false;
         },
         [register.pending]: (state) => {
             state.isFetching = true;
