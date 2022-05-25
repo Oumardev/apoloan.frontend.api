@@ -23,6 +23,7 @@ import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
 import Payment from "./Screen/Auth/Payment"
+import Boot from './bootScreen/Boot'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -219,8 +220,12 @@ export default function App() {
             <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
             {/** Info screen : Refil */}
             <Stack.Screen name="Refil" component={Refil} options={headerRefil} />
-            {/** Info screen : Refil */}
+            {/** Info screen : InfoHistory */}
             <Stack.Screen name="InfoHistorique" component={InfoHistorique} options={headerInfoHistorique} />
+            {/** Info screen : Payment */}
+            <Stack.Screen name="Payment" options={{headerShown : false}} component={Payment}/>
+            {/** Info screen : Payment */}
+            <Stack.Screen name="Boot" options={{headerShown : false}} component={Boot}/>
 
         </Stack.Navigator>
       </NavigationContainer>

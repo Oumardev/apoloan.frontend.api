@@ -1,34 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userget, userSelector } from './reduxSlices/UserSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { userSelector } from '../reduxSlices/UserSlice';
+import { useSelector } from 'react-redux';
 
-const SplashScreen = ({navigation}) => {
+const Boot = ({navigation}) => {
   
+  const { errorHappen, user } = useSelector(userSelector);
   const [animating, setAnimating] = useState(true);
-  const dispatch = useDispatch() 
 
+  console.log('error happen ',errorHappen)
   useEffect(() => {
     setTimeout(() => {
       setAnimating(false);
-      AsyncStorage.getItem('token').then((value) =>{
-        if(value === null) {
+        if(errorHappen){
+          AsyncStorage.removeItem('token')
+          AsyncStorage.removeItem('isLogin')
           navigation.replace('Auth')
         }else{
-          navigation.replace('Boot')
+          
+          if(user.user.isActivated)
+              navigation.replace('PrivateScreen') 
+          else
+            navigation.replace('Payment')
+            
         }
-      }
-      );
     }, 2500);
-
-    dispatch(userget())
-  }, []);
+  },[]);
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('./assets/icon.png')}
+        source={require('../assets/icon.png')}
         style={{width: '90%', resizeMode: 'contain', margin: 30}}
       />
       <ActivityIndicator
@@ -41,7 +44,7 @@ const SplashScreen = ({navigation}) => {
   );
 };
 
-export default SplashScreen;
+export default Boot;
 
 const styles = StyleSheet.create({
   container: {

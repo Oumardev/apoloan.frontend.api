@@ -9,12 +9,23 @@ import {
 import { activationStyle } from './AuthStyle';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userSelector } from '../../reduxSlices/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const buttonTextStyle = {
     color: 'red'
 };
 
 const Payment = ({navigation}) => {
+    const { user } = useSelector(userSelector);
+
+    console.log(user)
+    const logOut = () =>{
+        AsyncStorage.removeItem('token')
+        AsyncStorage.removeItem('isLogin')
+        navigation.replace('Auth')
+    }
 
     const paymentSchema = Yup.object().shape({
         cardname: Yup.string()
@@ -43,7 +54,7 @@ const Payment = ({navigation}) => {
                 <ProgressStep label="Inscription">
                     <View style={{ alignItems: 'center' }}></View>
                 </ProgressStep>
-                <ProgressStep label="Activation" previousBtnDisabled={true} nextBtnTextStyle={buttonTextStyle} previousBtnText={''} finishBtnText={'Déconnection'} >
+                <ProgressStep label="Activation" previousBtnDisabled={true} nextBtnTextStyle={buttonTextStyle} previousBtnText={''} finishBtnText={'Déconnection'} onSubmit={()=> logOut()}>
                     <View style={{ alignItems: 'center' }}>
                         <Text style={activationStyle.titledesc}>Pour commencer a utuliser votre compte vous devez faire un premier rechargement d'au moins 2000F.L'activation de votre compte entrainera un prélèvement de cette somme sur votre compte bancaire</Text>
                         

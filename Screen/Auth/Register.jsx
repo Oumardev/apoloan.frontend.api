@@ -158,8 +158,8 @@ const Register = ({navigation}) => {
     const [ step, setStep ] = useState(1)
 
     return(
-      <Payment />
-      // step === 1 ? <Step1 setStep={setStep} /> : <Payment />
+      //<Payment />
+      step === 1 ? <Step1 setStep={setStep} /> : <Payment />
     )
 };
 

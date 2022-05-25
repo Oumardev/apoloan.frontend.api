@@ -47,7 +47,7 @@ export const register = createAsyncThunk(
 
 
 export const userget = createAsyncThunk(
-    'users/user',
+    'users/userget',
     async (thunkAPI) => {
         const token = await AsyncStorage.getItem('token')
 
@@ -57,7 +57,6 @@ export const userget = createAsyncThunk(
         });
 
         let data = response.data
-
         if(response.status === 200){
             return data;
         } else {
@@ -65,6 +64,7 @@ export const userget = createAsyncThunk(
         }
 
     } catch(e){
+        console.log('error: ',e.response.data)
         return thunkAPI.rejectWithValue(e.response.data);
       }
     }
@@ -211,6 +211,7 @@ export const userSlice = createSlice({
         [userget.rejected]: (state, { payload }) => {
             state.isFetching = true;
             state.errorHappen = true
+            console.log('in error happen')
             state.errorMessage = payload ? payload.error: '';
         },
         [userget.pending]: (state) => {
