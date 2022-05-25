@@ -10,25 +10,18 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 import { registersty, cardstyle } from './AuthStyle';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { register, userSelector } from "../../reduxSlices/UserSlice"
-import Payment from "./Payment"
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from "yup";
 
-const Step1 = ({setStep}) =>{
+const Step1 = ({navigation}) =>{
 
   const dispatch = useDispatch()
-  const { errorMessage , isRegister } = useSelector(userSelector);
+  const { errorMessageRegister , registerSuccess } = useSelector(userSelector);
 
   useEffect(()=>{
-    if(isRegister){
-      setStep(2)
-    } 
-  },[isRegister])
+    if(registerSuccess) navigation.replace('SplashScreen');
+  },[registerSuccess])
 
   const registerSchema = Yup.object().shape({
     nom: Yup.string()
@@ -54,7 +47,7 @@ return (
   <View style={registersty.container}>
     <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={registersty.scrollStyle}>
       <KeyboardAvoidingView behavior={'position'}>
-      <Text style={registersty.errormsgheader}>{errorMessage && errorMessage}</Text>
+      <Text style={registersty.errormsgheader}>{errorMessageRegister && errorMessageRegister}</Text>
           <Formik
             initialValues={{ 
               nom: '', 
@@ -155,11 +148,8 @@ return (
 
 const Register = ({navigation}) => {
 
-    const [ step, setStep ] = useState(1)
-
     return(
-      //<Payment />
-      step === 1 ? <Step1 setStep={setStep} /> : <Payment />
+      <Step1 navigation={navigation} />
     )
 };
 

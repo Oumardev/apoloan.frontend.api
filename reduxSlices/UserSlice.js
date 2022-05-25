@@ -34,6 +34,8 @@ export const register = createAsyncThunk(
         let data = response.data
          
         if(response.status === 200){
+            AsyncStorage.setItem('token', response.data.token);
+            AsyncStorage.setItem('isLogin', String(response.data.isLogin));
             return data;
         } else {
             return thunkAPI.rejectWithValue(data);
@@ -44,7 +46,6 @@ export const register = createAsyncThunk(
       }
     }
 );
-
 
 export const userget = createAsyncThunk(
     'users/userget',
@@ -145,8 +146,10 @@ export const userSlice = createSlice({
         initialState: {
             token : "",
             errorMessage: '',
+            errorMessageRegister: '',
             user: {},
             loginSuccess: false,
+            registerSuccess: false,
             errorHappen: false,
             isRegister : false,
             edited : false,
@@ -158,7 +161,9 @@ export const userSlice = createSlice({
             clearState: (state) => {
                 state.token = "";
                 state.errorMessage = "";
+                state.errorMessageRegister = "";
                 state.loginSuccess = false;
+                state.registerSuccess = false;
                 state.errorHappen = false;
                 state.edited = false;
                 state.pwdedited = false;
@@ -189,13 +194,14 @@ export const userSlice = createSlice({
         [register.fulfilled]: (state, { payload }) => {
             state.isFetching = false;
             state.isRegister = true;
+            state.registerSuccess = true;
             state.errorHappen = false
             return state;
         },
         [register.rejected]: (state, { payload }) => {
             state.isFetching = false;
-            state.errorHappen = true
-            state.errorMessage = payload ? payload.error: '';
+            state.errorHappen = true;
+            state.errorMessageRegister = payload ? payload.error: '';
             state.isRegister = false;
         },
         [register.pending]: (state) => {
