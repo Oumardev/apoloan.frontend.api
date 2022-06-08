@@ -3,10 +3,7 @@ import { View, Text, TextInput , StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'; 
-import Ionicons from 'react-native-vector-icons/Ionicons'; 
+import {MaterialCommunityIcons, AntDesign, MaterialIcons,FontAwesome,Ionicons } from 'react-native-vector-icons';
 import store from './store'
 import { Provider } from 'react-redux';
 import SplashScreen from './SplashScreen';
@@ -31,15 +28,22 @@ const Stack = createStackNavigator();
 const PrivateScreen = ({navigation}) =>{
     
   return (
-    <Tab.Navigator tabBarOptions={{ showLabel : false }} >
+    <Tab.Navigator tabBarOptions={
+      { 
+        showLabel : false,
+        tabStyle: {
+          width: 100,    
+        },
+      }
+    }>
        
        <Tab.Screen name="Home" component={Home} 
         options={{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'calendar-month'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Acceuil</Text>
+              <AntDesign name={'home'} size={25} color={focused ? 'blue' : 'gray'} />
+              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Acceuil</Text>
             </View>)
           },
           headerTitle : ()=>(
@@ -57,12 +61,31 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <MaterialCommunityIcons name={'history'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Historique</Text>
+              <MaterialCommunityIcons name={'history'} size={25} color={focused ? 'blue' : 'gray'} />
+              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Historique</Text>
             </View>)
           },
           headerTitle : ()=>(
             <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Historique</Text>
+          ),
+          headerStyle :{
+            backgroundColor : 'black',
+            height : 86
+          }
+        }}
+      />
+
+      <Tab.Screen name="Add" component={MakeAnnonce} 
+        options={{
+          tabBarIcon: ({focused}) =>{
+            return(
+            <View style={{alignItems : 'center', justifyContent : 'center'}}>
+              <Ionicons name={'add-circle-sharp'} size={50} color={focused ? 'black' : 'black'} />
+            
+            </View>)
+          },
+          headerTitle : ()=>(
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Faire une annonce</Text>
           ),
           headerStyle :{
             backgroundColor : 'black',
@@ -76,8 +99,8 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <Ionicons name={'ios-chatbubbles-outline'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Discussion</Text>
+              <Ionicons name={'ios-chatbubbles-outline'} size={25} color={focused ? 'blue' : 'gray'} />
+              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Remb</Text>
             </View>)
           },
           headerTitle : ()=>(
@@ -95,8 +118,8 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <FontAwesome name={'user'} size={25} color={focused ? 'tomato' : 'gray'} />
-              <Text style={{color :  focused ? 'tomato' : 'gray', fontSize : 15, fontWeight : '500'}} >Profile</Text>
+              <FontAwesome name={'user'} size={25} color={focused ? 'blue' : 'gray'} />
+              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Profile</Text>
             </View>)
           },
           headerTitle : ()=>(

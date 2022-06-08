@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const contributeurstyles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor : 'white',
+      backgroundColor : 'whitesmoke',
       display : 'flex',
       alignItems : 'center'
     },

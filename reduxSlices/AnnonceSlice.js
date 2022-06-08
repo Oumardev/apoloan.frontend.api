@@ -1,5 +1,5 @@
 import apiInstance from "../axios.config";
-import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_REFIL_URL, ACCOUNT_DEBIT_URL, PRET_LIST_URL, EMPRUNT_LIST_URL, ACCOUNT_REFOUND, USER_EDIT_URL, USER_GET_URL, EDIT_PASSWORD_URL} from '../URL_API'
+import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND } from '../URL_API'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

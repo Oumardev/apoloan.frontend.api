@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const demandestyles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
     },
   
     itemName:{
@@ -14,7 +14,7 @@ export const demandestyles = StyleSheet.create({
   
     view:{
       margin: 10,
-      maxHeight: 480
+      alignItems : 'center'
     },
   
     title:{
@@ -23,8 +23,7 @@ export const demandestyles = StyleSheet.create({
     },
   
     scroll: {
-      flexDirection: 'column',
-      maxHeight : 380
+      flexDirection: 'column'
     },
   
     item:{
@@ -33,8 +32,11 @@ export const demandestyles = StyleSheet.create({
       flexDirection : 'row',
       margin: 5,
       padding: 10,
+      width:'98%',
       borderRadius : 18,
-      backgroundColor : 'whitesmoke',
+      backgroundColor : 'white',
+      borderColor: 'gray',
+      borderWidth: 0.3
     },
   
     leftInfo:{
@@ -55,20 +57,4 @@ export const demandestyles = StyleSheet.create({
         alignItems : 'center'
     },
 
-    buttonAdd:{
-      display: 'flex',
-      flexDirection : 'row',
-      justifyContent : 'center',
-      alignItems: 'center',
-      backgroundColor : '#001429',
-      height : 50,
-      width : 230,
-      borderRadius : 10
-    },
-
-    addText : {
-      color : 'white',
-      fontSize : 20,
-      fontWeight : '600'
-    }
 });

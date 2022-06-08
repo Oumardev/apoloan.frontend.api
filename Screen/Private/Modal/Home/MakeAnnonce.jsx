@@ -9,17 +9,41 @@ import CheckBox from "../../../../customComponent/CheckBox";
 import AddAnnonceStatus from './AddAnnonceStatus'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeAnnonce = ({route, navigation}) =>{
-    
-    const [ type, setType ] = useState("");
-    const [ selectedDuree, setSelectedDuree ] = useState("3 MOIS");
-    const [ checkPret, setCheckPret ] = useState(false);
-    const [ checkEmprunt, setCheckEmprunt ] = useState(false);
-    const [ visible, setVisible ] = useState(false)
 
     const { addStatus } = useSelector(annonceSelector);
     const dispatch = useDispatch();
+
+    const [openType, setOpenType] = useState(false);
+    const [valueType, setValueType] = useState(null);
+    const [type, setType] = useState([ {label: 'PRET', value: 'PRET'}, {label: 'EMPRUNT', value: 'EMPRUNT'}]);
+
+    const [openDuree, setOpenDuree] = useState(false);
+    const [valueDuree, setValueDuree] = useState(null);
+    const [duree, setDuree] = useState([ 
+      {label: '1 Mois', value: 1}, 
+      {label: '2 Mois', value: 2}, 
+      {label: '3 Mois', value: 3},
+      {label: '4 Mois', value: 4},
+      {label: '5 Mois', value: 5},
+      {label: '6 Mois', value: 6},
+      {label: '7 Mois', value: 7},
+      {label: '8 Mois', value: 8},
+      {label: '9 Mois', value: 9},
+      {label: '10 Mois', value: 10},
+      {label: '11 Mois', value: 11},
+      {label: '12 Mois', value: 12}
+    ]);
+
+    const [openModa, setOpenModa] = useState(false);
+    const [valueModa, setValueModa] = useState(null);
+    const [modalite, setModa] = useState([ 
+      {label: 'Chaque 1 mois', value: 1}, 
+      {label: 'Chaque 2 mois', value: 2}, 
+      {label: 'Chaque 3 mois', value: 3},
+    ]);
 
     const makeAnnonceSchema = Yup.object().shape({
         pourcentage : Yup.number() // dont forget take percent to divided by 100 before send data to API
@@ -52,80 +76,95 @@ const MakeAnnonce = ({route, navigation}) =>{
                         }
                         console.log(data)
                         // make annonce
-                      dispatch(annoncecreate(data))
+                      // dispatch(annoncecreate(data))
                     }}>
                     
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
                       <View style={makeAnnonceStyle.main}>
-                        <AddAnnonceStatus visible={visible} setVisible={setVisible} status={addStatus} />
-                        <View  style={makeAnnonceStyle.SectionCheckBox}>
-                          <CheckBox isChecked={checkPret} setIsChecked={setCheckPret} text={"PRET"} setType={setType} checkPrev={checkEmprunt} setCheckPrev={setCheckEmprunt} />
-                          <CheckBox isChecked={checkEmprunt} setIsChecked={setCheckEmprunt} text={"EMPRUNT"} setType={setType} checkPrev={checkPret} setCheckPrev={setCheckPret} />
-                        </View>
-
-                          <View style={makeAnnonceStyle.SectionStyle}>
-                            <View style={makeAnnonceStyle.buttonStyle}>
-                                <TextInput
-                                  style={makeAnnonceStyle.inputStyle} 
-                                  placeholder='Pourcentage'
-                                  placeholderTextColor="#d0c8c8d6"
-                                  keyboardType="numeric"
-                                  autoCapitalize="sentences"
-                                  autoCorrect={false}
-                                  onChangeText={handleChange('pourcentage')}
-                                  onBlur={handleBlur('pourcentage')}
-                                  value={values.pourcentage}
-                                  onSubmitEditing={Keyboard.dismiss}
-                                />
-                            </View>   
-                            {errors.pourcentage && touched.pourcentage ? ( <Text style={makeAnnonceStyle.errormsg}>{errors.pourcentage}</Text> ) : null}
-                          </View>
-
-                          <View style={makeAnnonceStyle.SectionStyle}>
-                            <View style={makeAnnonceStyle.buttonStyle}>
-                                <TextInput
-                                  style={makeAnnonceStyle.inputStyle} 
-                                  placeholder='Montant'
-                                  placeholderTextColor="#d0c8c8d6"
-                                  keyboardType="numeric"
-                                  autoCapitalize="sentences"
-
-                                  autoCorrect={false}
-                                  onChangeText={handleChange('montant')}
-                                  onBlur={handleBlur('montant')}
-                                  value={values.montant}
-                                  onSubmitEditing={Keyboard.dismiss}
-                                />
-                            </View>   
-                            {errors.montant && touched.montant ? ( <Text style={makeAnnonceStyle.errormsg}>{errors.montant}</Text> ) : null}
-                          </View>
                         
-                        <View style={makeAnnonceStyle.dureeContainer}>
-                            <Text style={makeAnnonceStyle.duree}>Durée</Text>
-                            <Picker itemStyle={{color:'black', fontWeight:'600',fontSize:17}} mode="dialog" selectedValue={selectedDuree} style={{ width: '80%', backgroundColor : 'whitesmoke'}}
-                                onValueChange={(itemValue) => {
-                                  Keyboard.dismiss()
-                                  setSelectedDuree(itemValue)
-                                }}
-                            >
-                                <Picker.Item style={makeAnnonceStyle.dureeText} label="1 MOIS" value="1 MOIS" />
-                                <Picker.Item label="2 MOIS" value="2 MOIS" />
-                                <Picker.Item label="3 MOIS" value="3 MOIS" />
-                                <Picker.Item label="4 MOIS" value="4 MOIS" />
-                                <Picker.Item label="5 MOIS" value="5 MOIS" />
-                                <Picker.Item label="6 MOIS" value="6 MOIS" />
-                                <Picker.Item label="7 MOIS" value="7 MOIS" />
-                                <Picker.Item label="8 MOIS" value="8 MOIS" />
-                            </Picker>
+                        <DropDownPicker open={openType} value={valueType}
+                          zIndex={2000}
+                          placeholder="Type d'annonce"
+                          placeholderStyle={{
+                            color: "grey",
+                            fontWeight: "bold",
+                            fontSize: 18
+                          }}
+                          labelStyle={{
+                            fontWeight: "bold"
+                          }}
+                          style={{
+                            backgroundColor: "white",
+                            borderColor : 'grey',
+                            borderWidth : 2,
+                            marginBottom : 20
+                          }}
+                          containerStyle={{
+                             borderColor : 'grey',
+                          }}
+                          items={type} setOpen={setOpenType} setValue={setValueType}
+                          setItems={setType}
+                        />
+
+                        <DropDownPicker open={openDuree} value={valueDuree}
+                          zIndex={1000}
+                          placeholder="Durée"
+                          placeholderStyle={{
+                            color: "grey",
+                            fontWeight: "bold",
+                            fontSize: 18
+                          }}
+                          labelStyle={{
+                            fontWeight: "bold"
+                          }}
+                          style={{
+                            backgroundColor: "white",
+                            borderColor : 'grey',
+                            borderWidth : 2,
+                            marginBottom : 20
+                          }}
+                          items={duree} setOpen={setOpenDuree} setValue={setValueDuree}
+                          setItems={setDuree}
+                        />
+
+                        <DropDownPicker open={openModa} value={valueModa}
+                          zIndex={500}
+                          placeholder="Modalité de rembourssement"
+                          placeholderStyle={{
+                            color: "grey",
+                            fontWeight: "bold",
+                            fontSize: 18
+                          }}
+                          labelStyle={{
+                            fontWeight: "bold"
+                          }}
+                          style={{
+                            backgroundColor: "white",
+                            borderColor : 'grey',
+                            borderWidth : 2,
+                            marginBottom : 20
+                          }}
+                          items={modalite} setOpen={setOpenModa} setValue={setValueModa}
+                          setItems={setModa}
+                        />
+
+                        <View style={{display:'flex', flexDirection:'row', alignItems: 'center',width:'100%'}}>
+                          <TextInput
+                            placeholder="Montant"
+                            style={{
+                              height : 50,
+                              borderColor : 'black',
+                              borderWidth : 2,
+                              borderRadius : 12,
+                              borderRightWidth : 0,
+                              fontSize : 20,
+                              paddingLeft : 15,
+                              fontWeight : '600',
+                              width:'90%'
+                            }}
+                          />
+                          <Text style={{fontSize : 20,fontWeight : '600'}}>FCFA</Text>
                         </View>
-            
-                        <TouchableOpacity style={makeAnnonceStyle.buttonAdd} onPress={() =>{ 
-                          handleSubmit()
-                          setVisible(true)
-                        }}>
-                            <Ionicons size={22} color={'white'} name="add"/>
-                            <Text style={makeAnnonceStyle.addText}>AJOUTER</Text>
-                        </TouchableOpacity>
                       </View>
                     )}
               </Formik>

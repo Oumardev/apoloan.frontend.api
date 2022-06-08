@@ -18,12 +18,16 @@ const Boot = ({navigation}) => {
           AsyncStorage.removeItem('isLogin')
           navigation.replace('Auth')
         }else{
-          
-          if(user.user.isActivated)
-              navigation.replace('PrivateScreen') 
-          else
-            navigation.replace('Payment')
-            
+            try {
+              if(user.user.isActivated)
+                navigation.replace('PrivateScreen') 
+              else
+                navigation.replace('Payment')
+            } catch (error) {
+              AsyncStorage.removeItem('token')
+              AsyncStorage.removeItem('isLogin')
+              navigation.replace('Auth')
+            }
         }
     }, 2500);
   },[]);

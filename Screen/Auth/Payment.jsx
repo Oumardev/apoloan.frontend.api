@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import {
   TextInput,
@@ -10,7 +10,7 @@ import { activationStyle } from './AuthStyle';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userSelector } from '../../reduxSlices/UserSlice';
+import { bankSelector, fetchtoecobank } from '../../reduxSlices/BankSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const buttonTextStyle = {
@@ -18,9 +18,25 @@ const buttonTextStyle = {
 };
 
 const Payment = ({navigation}) => {
-    const { user } = useSelector(userSelector);
+    const { errorMessage, errorHappen, activated } = useSelector(bankSelector);
+    const dispatch = useDispatch()
 
-    console.log(user)
+    useEffect(()=>{
+        if(activated)
+            navigation.replace('SplashScreen')
+    },[activated])
+
+    function chunk(str, n) {
+        var ret = [];
+        var i;
+        var len;
+    
+        for(i = 0, len = str.length; i < len; i += n) {
+           ret.push(str.substr(i, n))
+        }
+        return ret
+    };
+
     const logOut = () =>{
         AsyncStorage.removeItem('token')
         AsyncStorage.removeItem('isLogin')
@@ -39,7 +55,7 @@ const Payment = ({navigation}) => {
     
         expdate : Yup.string()
             .min(1,'Trop court!')
-            .max(4,'Maximul 4 caractères')
+            .max(7,'Maximum 7 caractères')
             .required('Champs requis!'),
     
         cvc : Yup.string()
@@ -71,17 +87,17 @@ const Payment = ({navigation}) => {
                             
                             onSubmit={(values, { setSubmitting }) => {
                                 const data = {
-                                    cardname: values.cardname,
-                                    cardnumber: values.cardnumber,
-                                    expdate: values.expdate,
-                                    cvc: values.cvc
+                                    Name: values.cardname,
+                                    CardNumber: values.cardnumber,
+                                    Expiry: values.expdate,
+                                    CVV: values.cvc
                                 }
                                             
                                 console.log(data)
-                                // dispatch(register(data))
+                                dispatch(fetchtoecobank(data))
                             }}>
                             
-                            {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
+                            {({ errors ,handleChange, handleBlur, values, handleSubmit, touched, setFieldValue }) => (
                             <>
                             <View style={activationStyle.field}>
                                 <Text style={activationStyle.fielddesc}>Nom sur la carte</Text>
@@ -103,8 +119,9 @@ const Payment = ({navigation}) => {
                                     maxLength={16}
                                     style={activationStyle.input}
                                     autoCorrect={false}
-                                    onChangeText={handleChange('cardnumber')}
-                                    onBlur={handleBlur('cardnumber')}
+                                    onChangeText={(value)=>{
+                                        setFieldValue('cardnumber',value)
+                                    }}
                                     value={values.cardnumber}
                                 />
                                 {errors.cardnumber && touched.cardnumber ? ( <Text style={activationStyle.errormsg} >{errors.cardnumber}</Text> ) : null}
@@ -114,8 +131,8 @@ const Payment = ({navigation}) => {
                                 <View style={activationStyle.bfield}>
                                     <Text style={activationStyle.fielddesc}>Date d'expiration</Text>
                                     <TextInput 
-                                        placeholder='MM/YY'
-                                        maxLength={4}
+                                        placeholder='MM/YYYY'
+                                        maxLength={7}
                                         style={activationStyle.input}
                                         autoCorrect={false}
                                         onChangeText={handleChange('expdate')}
@@ -146,6 +163,7 @@ const Payment = ({navigation}) => {
                         </>
                         )}
                         </Formik>
+                            {errorHappen && <Text style={{color:'red',fontSize:18,fontWeight:'500',marginTop:12}}>{errorMessage}</Text> }
                     </View>
                 </ProgressStep>
             </ProgressSteps>
