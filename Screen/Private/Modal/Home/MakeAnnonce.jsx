@@ -1,12 +1,8 @@
 import React,{ useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Modal, TextInput, Keyboard } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons';
 import { makeAnnonceStyle } from '../../styles.home/makeAnnonce.style'
 import { annonceSelector, annoncecreate } from "../../../../reduxSlices/AnnonceSlice";
-import { Picker } from '@react-native-picker/picker'
 import { useDispatch, useSelector } from "react-redux";
-import CheckBox from "../../../../customComponent/CheckBox";
-import AddAnnonceStatus from './AddAnnonceStatus'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -45,43 +41,50 @@ const MakeAnnonce = ({route, navigation}) =>{
       {label: 'Chaque 3 mois', value: 3},
     ]);
 
+    const [error, setError] = useState(null)
+
     const makeAnnonceSchema = Yup.object().shape({
-        pourcentage : Yup.number() // dont forget take percent to divided by 100 before send data to API
-          .typeError('Format invalide')
-          .min(10,'Veuillez choisir un pourcentage entre 10 et 80')
-          .max(80,'Veuillez choisir un pourcentage entre 10 et 80')
-          .required('Champs requis!'),
-  
-        montant : Yup.number()
+          montant : Yup.number()
             .typeError('Format invalide')
             .required('Champs requis')
+            .min(10000,'Le montant est trop petit minimum 10k')
+            .max(5000000,'Le montant est trop grand maximum 5M')
     });
-    
+ 
     return(
         <View style={makeAnnonceStyle.container} onTouchStart={() => Keyboard.dismiss()}>
+          {error && <Text style={makeAnnonceStyle.errormsg} >{error}</Text> }
             <Formik
                     initialValues={{ 
-                        pourcentage: 0, 
-                        montant : 0
+                        types: valueType, 
+                        duree : valueDuree,
+                        modalitePaiement: valueModa, 
+                        montant: 0
                     }}
                   
                     validationSchema = {makeAnnonceSchema}
                     
                     onSubmit={ async (values, { setSubmitting }) => {
                         const data = {
-                            type : type,
-                            duree : selectedDuree,
-                            pourcentage: (values.pourcentage/100),
+                            types : valueType,
+                            duree : valueDuree,
+                            modalitePaiement: valueModa,
                             montant: parseInt(values.montant)
                         }
-                        console.log(data)
+
+                        if(!data.types || !data.duree || !data.modalitePaiement){
+                          setError('Impossible de soumettre l\'annonce')
+                        }else{
                         // make annonce
-                      // dispatch(annoncecreate(data))
+                        setError(null)
+                        //dispatch(annoncecreate(data))
+                        }
                     }}>
                     
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
                       <View style={makeAnnonceStyle.main}>
                         
+                        <Text>Je publie une annonce de</Text>
                         <DropDownPicker open={openType} value={valueType}
                           zIndex={2000}
                           placeholder="Type d'annonce"
@@ -105,7 +108,8 @@ const MakeAnnonce = ({route, navigation}) =>{
                           items={type} setOpen={setOpenType} setValue={setValueType}
                           setItems={setType}
                         />
-
+                        
+                        <Text>D'une durée de</Text>
                         <DropDownPicker open={openDuree} value={valueDuree}
                           zIndex={1000}
                           placeholder="Durée"
@@ -127,6 +131,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                           setItems={setDuree}
                         />
 
+                        <Text>A remboursser</Text>
                         <DropDownPicker open={openModa} value={valueModa}
                           zIndex={500}
                           placeholder="Modalité de rembourssement"
@@ -148,9 +153,13 @@ const MakeAnnonce = ({route, navigation}) =>{
                           setItems={setModa}
                         />
 
+                        <Text>D'un montant de</Text>
                         <View style={{display:'flex', flexDirection:'row', alignItems: 'center',width:'100%'}}>
                           <TextInput
                             placeholder="Montant"
+                            onChangeText={handleChange('montant')}
+                            onBlur={handleBlur('montant')}
+                            value={values.montant}
                             style={{
                               height : 50,
                               borderColor : 'black',
@@ -165,8 +174,13 @@ const MakeAnnonce = ({route, navigation}) =>{
                           />
                           <Text style={{fontSize : 20,fontWeight : '600'}}>FCFA</Text>
                         </View>
+                        {errors.montant && touched.montant ? ( <Text style={makeAnnonceStyle.errormsg} >{errors.montant}</Text> ) : null}
+                        <TouchableOpacity style={makeAnnonceStyle.submit} onPress={handleSubmit}>
+                          <Text style={makeAnnonceStyle.submitTxt}>Publier</Text>
+                        </TouchableOpacity>
                       </View>
                     )}
+                 
               </Formik>
         </View>
     )

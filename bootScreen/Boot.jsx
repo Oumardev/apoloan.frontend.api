@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const Boot = ({navigation}) => {
   
-  const { errorHappen, user } = useSelector(userSelector);
+  const { errorHappen, user, loginSuccess } = useSelector(userSelector);
   const [animating, setAnimating] = useState(true);
 
   console.log('error happen ',errorHappen)
@@ -24,6 +24,7 @@ const Boot = ({navigation}) => {
               else
                 navigation.replace('Payment')
             } catch (error) {
+              console.log('error: ',error)
               AsyncStorage.removeItem('token')
               AsyncStorage.removeItem('isLogin')
               navigation.replace('Auth')

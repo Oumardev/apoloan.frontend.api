@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { ActivityIndicator, View, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userget, userSelector } from './reduxSlices/UserSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { userget } from './reduxSlices/UserSlice';
+import { useDispatch } from 'react-redux';
 
 const SplashScreen = ({navigation}) => {
   

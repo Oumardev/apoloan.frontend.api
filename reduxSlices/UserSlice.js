@@ -50,9 +50,10 @@ export const register = createAsyncThunk(
 export const userget = createAsyncThunk(
     'users/userget',
     async (thunkAPI) => {
+        
+    try {
         const token = await AsyncStorage.getItem('token')
 
-    try {
         const response = await apiInstance.get(USER_GET_URL,{ 
             headers: { Authorization: `Bear ${token}` },
         });
