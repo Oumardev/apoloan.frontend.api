@@ -1,46 +1,47 @@
 import React, {useEffect} from 'react';
 import { Text, View, ScrollView, TouchableOpacity, RefreshControl, Image,StyleSheet } from 'react-native';
-import { annonceSelector, postlist, clearState } from '../../reduxSlices/AnnonceSlice'
-import { demandestyles } from './styles.home/demande.style';
+import { propositionSelector, listproposition, clearState } from '../../../../reduxSlices/PropositionSlice'
+import { demandestyles } from '../../styles.home/demande.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { contributeurstyles } from './styles.home/contributeur.style';
-import emptylist from "../../assets/__empty.png"
-import send from "../../assets/send.png"
+import { contributeurstyles } from '../../styles.home/contributeur.style';
+import emptylist from "../../../../assets/__empty.png"
+import send from "../../../../assets/send.png"
 
-export default function Post({navigation}) {
+export default function ListProposition({route, navigation}) {
+
+  const { IDANNONCE } = route.params;
 
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
 
   const dispatch = useDispatch();
-  const { errorHappen, post, isFetching } = useSelector(annonceSelector);
+  const { errorHappen, proposition, isFetching } = useSelector(propositionSelector);
   const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(()=>{
-    dispatch(postlist())
-    console.log(post)
+    dispatch(listproposition({'IDANNONCE': IDANNONCE}))
+
   },[])
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    dispatch(postlist())
+    dispatch(listproposition(IDANNONCE))
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   var lsempty = false
   try {
-    lsempty = post.list.length == 0
+    lsempty = proposition.list.length == 0
   } catch (error) {}
   
-  console.log(post)
   return (
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
 
           <View style={demandestyles.view}>
-            <Text style={demandestyles.title}>Postes</Text>
+            <Text style={demandestyles.title}>Proposition</Text>
               <View style={demandestyles.scroll}>
                 <ScrollView 
                 refreshControl={
@@ -53,21 +54,19 @@ export default function Post({navigation}) {
                 showsHorizontalScrollIndicator={false}
                 >
                   {
-                    post.list && post.list.map(item => (
+                    proposition.list && proposition.list.map(item => (
                         <React.Fragment>
                             <TouchableOpacity 
-                              onPress={()=> navigation.navigate('ListProposition', {IDANNONCE: item.id})} 
+                              onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                               style={demandestyles.item}
                               key={item.id}
                             >
                             <View style={demandestyles.leftInfo}>
                               <Image source={send} style={{height:70, width:70}}/>
                               <View style={demandestyles.info}>
-                                <Text style={demandestyles.itemName}>{item.type == 'EMPRUNT' ? 'Demande de ': 'Pret de '} {item.montant} FR</Text>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Avec pourcentage de {item.pourcentage}%</Text>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Pour une durée de {item.duree} Mois</Text>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>A remboursser chaque {item.modalitePaiement} Mois</Text>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Status: <Text style={item.isVisible ? styles.online : styles.offline}>{item.isVisible ? 'en ligne' : 'hors ligne' }</Text></Text>
+                                <Text style={demandestyles.itemName}>{item.User.prenom} {item.User.nom} </Text>
+                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>{item.numero}</Text>
+                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Status: <Text style={styles.online}>{item.status}</Text></Text>
                               </View>
                             </View>
                           </TouchableOpacity>

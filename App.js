@@ -16,6 +16,7 @@ import Profile from './Screen/Private/Profile'
 import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
+import ListProposition from './Screen/Private/Modal/Post/ListProposition';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
@@ -224,6 +225,18 @@ const headerInfoHistorique = {
   }
 }
 
+const headerListProposition = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Propositions</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -241,13 +254,15 @@ export default function App() {
             <Stack.Screen name="EditProfile" component={EditProfile} options={headerEditProfile} />
             {/** Info screen : EditPassword */}
             <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
+            {/** Info screen : ListProposition */}
+            <Stack.Screen name="ListProposition" component={ListProposition} options={headerListProposition} />
             {/** Info screen : Refil */}
             <Stack.Screen name="Refil" component={Refil} options={headerRefil} />
             {/** Info screen : InfoHistory */}
             <Stack.Screen name="InfoHistorique" component={InfoHistorique} options={headerInfoHistorique} />
             {/** Info screen : Payment */}
             <Stack.Screen name="Payment" options={{headerShown : false}} component={Payment}/>
-            {/** Info screen : Payment */}
+            {/** Info screen : Boot */}
             <Stack.Screen name="Boot" options={{headerShown : false}} component={Boot}/>
 
         </Stack.Navigator>
