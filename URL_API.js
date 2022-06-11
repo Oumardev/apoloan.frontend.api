@@ -20,7 +20,7 @@ export const RES_TO_PROPOSE_URL = "/apoloanapi/annonce/restopropose";
 // -- Annonce
 export const ANNONCE_CREATE_URL = "/apoloanapi/annonce/create";
 export const ANNONCE_LIST_URL = "/apoloanapi/annonce/list";
-export const POST_LIST_URL = "/apoloanapi/annonce/list";
+export const POST_LIST_URL = "/apoloanapi/post/list";
 export const ANNONCE_EDIT_URL = "/apoloanapi/annonce";
 export const ANNONCE_DELETE_URL = "/apoloanapi/annonce";
 // -- Pret et Emprunt

@@ -33,6 +33,7 @@ export default function Refund({navigation}) {
     lsempty = post.list.length == 0
   } catch (error) {}
   
+  console.log(post)
   return (
     !lsempty ?(
       isFetching == false &&
