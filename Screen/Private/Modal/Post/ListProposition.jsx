@@ -5,9 +5,10 @@ import { demandestyles } from '../../styles.home/demande.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { contributeurstyles } from '../../styles.home/contributeur.style';
 import emptylist from "../../../../assets/__empty.png"
-import send from "../../../../assets/send.png"
+import send from "../../../../assets/show.png"
 import del from "../../../../assets/del.png"
 import accept from "../../../../assets/accept.png"
+import ConfirmModal from '../Home/ConfirmModal';
 
 export default function ListProposition({route, navigation}) {
 
@@ -18,17 +19,25 @@ export default function ListProposition({route, navigation}) {
   }
 
   const dispatch = useDispatch();
-  const { errorHappen, proposition, isFetching } = useSelector(propositionSelector);
+  const { errorHappen, proposition, isFetching, update } = useSelector(propositionSelector);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [visible, setVisible] = React.useState(false)
+  const [id, setId] = React.useState(null)
 
   useEffect(()=>{
     dispatch(listproposition({'IDANNONCE': IDANNONCE}))
-
   },[])
+
+  useEffect(()=>{
+    if(update){
+      dispatch(listproposition({'IDANNONCE': IDANNONCE}))
+      dispatch(clearState())
+    }
+  },[update])
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    dispatch(listproposition(IDANNONCE))
+    dispatch(listproposition({'IDANNONCE': IDANNONCE}))
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
@@ -41,7 +50,7 @@ export default function ListProposition({route, navigation}) {
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
-
+        <ConfirmModal visible={visible} setVisible={setVisible} id={id} type={'Pr'} />
           <View style={demandestyles.view}>
             <Text style={demandestyles.title}>Propositions</Text>
               <View style={demandestyles.scroll}>
@@ -70,7 +79,13 @@ export default function ListProposition({route, navigation}) {
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>{item.User.numero}</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Status: <Text style={styles.online}>{item.status}</Text></Text>
                               </View>
-                              <TouchableOpacity style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}>
+                              <TouchableOpacity 
+                                style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
+                                onPress={()=>{
+                                  setVisible(true)
+                                  setId(item.id)
+                                }}
+                              >
                                 <Image source={del} style={{height:25, width:25}}/>
                               </TouchableOpacity>
 

@@ -15,7 +15,7 @@ export const SHOW_PAYMENT_URL = "/apoloanapi/annonce/showpayment";
 // -- Proposition
 export const PROPOSITION_LIST_URL = "/apoloanapi/listproposition";
 export const TO_PROPOSE_URL = "/apoloanapi/annonce/topropose";
-export const DELETE_PROPOSITION_URL = "/apoloanapi/annonce/deleteproposition";
+export const DELETE_PROPOSITION_URL = "/apoloanapi/deleteproposition";
 export const RES_TO_PROPOSE_URL = "/apoloanapi/annonce/restopropose";
 // -- Annonce
 export const ANNONCE_CREATE_URL = "/apoloanapi/annonce/create";

@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
-import { annoncedelete, clearState } from '../../../../reduxSlices/AnnonceSlice'
+import { annoncedelete } from '../../../../reduxSlices/AnnonceSlice'
+import { deleteproposition } from '../../../../reduxSlices/PropositionSlice'
 import { useDispatch } from "react-redux";
 import { confirmModal } from '../../styles.home/confirmModal.style'
 
@@ -15,12 +16,13 @@ const ModalPoup = ({visible, children}) =>{
       )
 }
 
-const ConfirmModal = ({visible, setVisible, idAnnonce}) =>{
+const ConfirmModal = ({visible, setVisible, id, type}) =>{
 
     const dispatch = useDispatch();
-    
     const handleSendRequest = ()=>{
-      dispatch(annoncedelete({idAnnonce : idAnnonce}))
+      if(type == 'Ps') dispatch(annoncedelete({idAnnonce : id}))
+      if(type == 'Pr') dispatch(deleteproposition({IDPROPOSITION : id}))
+
       setVisible(false)
     }
 
@@ -29,7 +31,7 @@ const ConfirmModal = ({visible, setVisible, idAnnonce}) =>{
           <ModalPoup visible={visible}>
               <View>
                 <View style={confirmModal.header}>
-                  <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>Voulez vous vraiment supprimer ce post ?</Text>
+                  <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>Voulez vous vraiment supprimer {type == 'Ps' ? 'ce post' : 'cette proposition'} ?</Text>
                   <AntDesign onPress={()=> setVisible(false)} color={'red'} name="close" size={20}/>
                 </View>
                 <View style={confirmModal.buttonSection}>

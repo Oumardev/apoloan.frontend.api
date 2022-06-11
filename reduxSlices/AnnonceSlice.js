@@ -57,8 +57,9 @@ export const annoncedelete = createAsyncThunk(
         const token = await AsyncStorage.getItem('token')
 
     try {
-        const response = await apiInstance.post(ANNONCE_DELETE_URL,values,{ 
+        const response = await apiInstance.delete(ANNONCE_DELETE_URL,{ 
             headers: { Authorization: `Bear ${token}` },
+            data: values
         });
 
         let data = response.data

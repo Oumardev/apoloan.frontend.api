@@ -20,14 +20,17 @@ export default function Post({navigation}) {
   const { errorHappen, post, isFetching, isEdited } = useSelector(annonceSelector);
   const [refreshing, setRefreshing] = React.useState(false);
   const [visible, setVisible] = React.useState(false)
-  const [idAnnonce, setIdAnnonce] = React.useState(null)
+  const [id, setId] = React.useState(null)
 
   useEffect(()=>{
     dispatch(postlist())
   },[])
 
   useEffect(()=>{
-    if(isEdited) dispatch(postlist())
+    if(isEdited) {
+      dispatch(postlist())
+      dispatch(clearState())
+    }
   },[isEdited])
 
   const onRefresh = React.useCallback(() => {
@@ -39,13 +42,13 @@ export default function Post({navigation}) {
   var lsempty = false
   try {
     lsempty = post.list.length == 0
-  } catch (error) {}
+  }catch (error) {}
   
   return (
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
-        <ConfirmModal visible={visible} setVisible={setVisible} idAnnonce={idAnnonce} />
+        <ConfirmModal visible={visible} setVisible={setVisible} id={id} type={'Ps'}/>
           <View style={demandestyles.view}>
             <Text style={demandestyles.title}>Postes</Text>
               <View style={demandestyles.scroll}>
@@ -79,7 +82,7 @@ export default function Post({navigation}) {
                               <TouchableOpacity 
                                 onPress={()=> {
                                   setVisible(true)
-                                  setIdAnnonce(item.id)
+                                  setId(item.id)
                                 }}
                                 style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
                               >
