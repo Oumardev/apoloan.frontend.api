@@ -1,5 +1,5 @@
 import apiInstance from "../axios.config";
-import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND, POST_LIST_URL } from '../URL_API'
+import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND, POST_LIST_URL, ANNONCE_EDIT_URL, ANNONCE_DELETE_URL } from '../URL_API'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,6 +10,54 @@ export const annoncelist = createAsyncThunk(
 
     try {
         const response = await apiInstance.get(ANNONCE_LIST_URL,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+export const annonceedit = createAsyncThunk(
+    'annonce/edit',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.patch(ANNONCE_EDIT_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+export const annoncedelete = createAsyncThunk(
+    'annonce/delete',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.post(ANNONCE_DELETE_URL,values,{ 
             headers: { Authorization: `Bear ${token}` },
         });
 
@@ -129,6 +177,7 @@ export const annonceSlice = createSlice({
             errorMessage: '',
             transactStatus : 'none',
             addStatus : 'none',
+            isEdited : false,
             errorHappened : false,
             annonce: {},
             post : {}
@@ -137,6 +186,7 @@ export const annonceSlice = createSlice({
         reducers: {
             clearState: (state) => {
                 state.isFetching = false;
+                state.isEdited = false;
                 state.errorMessage = '';
                 state.transactStatus = 'none'
                 state.addStatus = 'none'
@@ -201,6 +251,34 @@ export const annonceSlice = createSlice({
             state.addStatus = 'rejected'
         },
         [annoncecreate.pending]: (state) => {
+            state.addStatus = 'pending'
+        },
+
+        [annonceedit.fulfilled]: (state, { payload }) => {
+            state.isEdited = true
+            return state;
+        },
+        
+        [annonceedit.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+            state.addStatus = 'rejected'
+        },
+        [annonceedit.pending]: (state) => {
+            state.addStatus = 'pending'
+        },
+
+        [annoncedelete.fulfilled]: (state, { payload }) => {
+            state.isEdited = true
+            return state;
+        },
+        
+        [annoncedelete.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+            state.addStatus = 'rejected'
+        },
+        [annoncedelete.pending]: (state) => {
             state.addStatus = 'pending'
         },
 

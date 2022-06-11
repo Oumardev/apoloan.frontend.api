@@ -4,6 +4,7 @@ import { annonceSelector, postlist, clearState } from '../../reduxSlices/Annonce
 import { demandestyles } from './styles.home/demande.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { contributeurstyles } from './styles.home/contributeur.style';
+import ConfirmModal from './Modal/Home/ConfirmModal'
 import emptylist from "../../assets/__empty.png"
 import send from "../../assets/send.png"
 import del from "../../assets/del.png"
@@ -16,13 +17,18 @@ export default function Post({navigation}) {
   }
 
   const dispatch = useDispatch();
-  const { errorHappen, post, isFetching } = useSelector(annonceSelector);
+  const { errorHappen, post, isFetching, isEdited } = useSelector(annonceSelector);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [visible, setVisible] = React.useState(false)
+  const [idAnnonce, setIdAnnonce] = React.useState(null)
 
   useEffect(()=>{
     dispatch(postlist())
-    console.log(post)
   },[])
+
+  useEffect(()=>{
+    if(isEdited) dispatch(postlist())
+  },[isEdited])
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -35,12 +41,11 @@ export default function Post({navigation}) {
     lsempty = post.list.length == 0
   } catch (error) {}
   
-  console.log(post)
   return (
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
-
+        <ConfirmModal visible={visible} setVisible={setVisible} idAnnonce={idAnnonce} />
           <View style={demandestyles.view}>
             <Text style={demandestyles.title}>Postes</Text>
               <View style={demandestyles.scroll}>
@@ -56,7 +61,7 @@ export default function Post({navigation}) {
                 >
                   {
                     post.list && post.list.map(item => (
-                        <React.Fragment>
+                        <React.Fragment  key={item.id}>
                             <TouchableOpacity 
                               onPress={()=> navigation.navigate('ListProposition', {IDANNONCE: item.id})} 
                               style={demandestyles.item}
@@ -71,10 +76,19 @@ export default function Post({navigation}) {
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Modalité: {item.modalitePaiement} Mois</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Status: <Text style={item.isVisible ? styles.online : styles.offline}>{item.isVisible ? 'en ligne' : 'hors ligne' }</Text></Text>
                               </View>
-                              <TouchableOpacity style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}>
+                              <TouchableOpacity 
+                                onPress={()=> {
+                                  setVisible(true)
+                                  setIdAnnonce(item.id)
+                                }}
+                                style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
+                              >
                                 <Image source={del} style={{height:25, width:25}}/>
                               </TouchableOpacity>
-                              <TouchableOpacity style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}>
+                              <TouchableOpacity 
+                                onPress={()=> navigation.navigate('EditAnnonce', {IDANNONCE:item.id, DUREE:item.duree, TYPE:item.type, MODALITEPAIEMENT:item.modalitePaiement, MONTANT: item.montant})}
+                                style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
+                              >
                                 <Image source={edit} style={{height:25, width:25}}/>
                               </TouchableOpacity>
                             </View>

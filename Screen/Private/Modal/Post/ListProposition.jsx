@@ -57,7 +57,7 @@ export default function ListProposition({route, navigation}) {
                 >
                   {
                     proposition.list && proposition.list.map(item => (
-                        <React.Fragment>
+                        <React.Fragment key={item.id}>
                             <TouchableOpacity 
                              // onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                               style={demandestyles.item}

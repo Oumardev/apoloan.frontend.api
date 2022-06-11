@@ -18,6 +18,7 @@ import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
 import EditProfile from './Screen/Private/Modal/Profile/EditProfile';
 import ListProposition from './Screen/Private/Modal/Post/ListProposition';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
+import EditAnnonce from './Screen/Private/Modal/Post/EditAnnonce';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
 import Payment from "./Screen/Auth/Payment"
@@ -201,6 +202,18 @@ const headerEditProfile = {
   }
 }
 
+const headerEditAnnonce = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'black'}}>Modifier annonce</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'black'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'white'
+  }
+}
+
 const headerRefil = {
   headerShown: true,
   headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'black'}}>Rechargement</Text>
@@ -254,6 +267,8 @@ export default function App() {
             <Stack.Screen name="EditProfile" component={EditProfile} options={headerEditProfile} />
             {/** Info screen : EditPassword */}
             <Stack.Screen name="EditPassword" component={EditPassword} options={headerEditProfile} />
+             {/** Info screen : EditAnnonce */}
+             <Stack.Screen name="EditAnnonce" component={EditAnnonce} options={headerEditAnnonce} />
             {/** Info screen : ListProposition */}
             <Stack.Screen name="ListProposition" component={ListProposition} options={headerListProposition} />
             {/** Info screen : Refil */}

@@ -1,7 +1,8 @@
-import React,{ useEffect } from "react";
+import React from "react";
 import { Text, View, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
-import { useDispatch, useSelector } from "react-redux";
+import { annoncedelete, clearState } from '../../../../reduxSlices/AnnonceSlice'
+import { useDispatch } from "react-redux";
 import { confirmModal } from '../../styles.home/confirmModal.style'
 
 const ModalPoup = ({visible, children}) =>{
@@ -14,10 +15,12 @@ const ModalPoup = ({visible, children}) =>{
       )
 }
 
-const ConfirmModal = ({data, visible, setVisible, setResponse}) =>{
+const ConfirmModal = ({visible, setVisible, idAnnonce}) =>{
 
+    const dispatch = useDispatch();
+    
     const handleSendRequest = ()=>{
-      setResponse(true)
+      dispatch(annoncedelete({idAnnonce : idAnnonce}))
       setVisible(false)
     }
 
@@ -26,13 +29,9 @@ const ConfirmModal = ({data, visible, setVisible, setResponse}) =>{
           <ModalPoup visible={visible}>
               <View>
                 <View style={confirmModal.header}>
-                  <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>{data.type == "EMPRUNT" ? "Voulez vous vraiment financer cette annonce ?" : "Voulez vous vraiment effectuer cet pret ?"}</Text>
-                  <AntDesign onPress={() => {
-                    setVisible(false)
-                    setResponse(false)
-                  } } color={'red'} name="close" size={25}/>
+                  <Text style={{fontSize : 20, fontWeight :'500', color:'red'}}>Voulez vous vraiment supprimer ce post ?</Text>
+                  <AntDesign onPress={()=> setVisible(false)} color={'red'} name="close" size={20}/>
                 </View>
-                <Text style={confirmModal.textInfo}>NB: Après confirmation vous n'aurez que 38H pour l'annuler</Text>
                 <View style={confirmModal.buttonSection}>
                   <TouchableOpacity style={confirmModal.button} onPress={() => handleSendRequest()}>
                     <Text style={confirmModal.buttonText}>Confirmer</Text>

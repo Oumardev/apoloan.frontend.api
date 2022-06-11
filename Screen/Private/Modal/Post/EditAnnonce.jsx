@@ -1,23 +1,20 @@
 import React,{ useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Modal, TextInput, Keyboard } from 'react-native';
 import { makeAnnonceStyle } from '../../styles.home/makeAnnonce.style'
-import { annonceSelector, annoncecreate } from "../../../../reduxSlices/AnnonceSlice";
+import { annonceSelector, annonceedit } from "../../../../reduxSlices/AnnonceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const EditAnnonce = ({route, navigation}) =>{
+    const { IDANNONCE, DUREE, TYPE, MODALITEPAIEMENT, MONTANT } = route.params;
 
     const { errorMessage } = useSelector(annonceSelector);
     const dispatch = useDispatch();
 
-    const [openType, setOpenType] = useState(false);
-    const [valueType, setValueType] = useState(null);
-    const [type, setType] = useState([ {label: 'PRET', value: 'PRET'}, {label: 'EMPRUNT', value: 'EMPRUNT'}]);
-
     const [openDuree, setOpenDuree] = useState(false);
-    const [valueDuree, setValueDuree] = useState(null);
+    const [valueDuree, setValueDuree] = useState(DUREE);
     const [duree, setDuree] = useState([ 
       {label: '1 Mois', value: 1}, 
       {label: '2 Mois', value: 2}, 
@@ -34,7 +31,7 @@ const EditAnnonce = ({route, navigation}) =>{
     ]);
 
     const [openModa, setOpenModa] = useState(false);
-    const [valueModa, setValueModa] = useState(null);
+    const [valueModa, setValueModa] = useState(MODALITEPAIEMENT);
     const [modalite, setModa] = useState([ 
       {label: 'Chaque 1 mois', value: 1}, 
       {label: 'Chaque 2 mois', value: 2}, 
@@ -57,59 +54,34 @@ const EditAnnonce = ({route, navigation}) =>{
           {error && <Text style={makeAnnonceStyle.errormsg} >{error}</Text> }
             <Formik
                     initialValues={{ 
-                        types: valueType, 
+                        idAnnonce: IDANNONCE, 
                         duree : valueDuree,
                         modalitePaiement: valueModa, 
-                        montant: 0
+                        montant: String(MONTANT)
                     }}
                   
                     validationSchema = {makeAnnonceSchema}
                     
                     onSubmit={ async (values, { setSubmitting }) => {
                         const data = {
-                            type : valueType,
+                            idAnnonce : IDANNONCE,
                             duree : valueDuree,
                             modalitePaiement: valueModa,
                             montant: parseInt(values.montant)
                         }
 
-                        if(!data.type || !data.duree || !data.modalitePaiement){
+                        if(!data.idAnnonce || !data.duree || !data.modalitePaiement){
                           setError('Impossible de soumettre l\'annonce')
                         }else{
                         // edit annonce
                         setError(null)
-                        //dispatch(annoncecreate(data))
+                        dispatch(annonceedit(data))
                         }
                     }}>
                     
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
                       <View style={makeAnnonceStyle.main}>
-                        
-                        <Text>Je publie une annonce de</Text>
-                        <DropDownPicker open={openType} value={valueType}
-                          zIndex={2000}
-                          placeholder="Type d'annonce"
-                          placeholderStyle={{
-                            color: "grey",
-                            fontWeight: "bold",
-                            fontSize: 18
-                          }}
-                          labelStyle={{
-                            fontWeight: "bold"
-                          }}
-                          style={{
-                            backgroundColor: "white",
-                            borderColor : 'grey',
-                            borderWidth : 2,
-                            marginBottom : 20
-                          }}
-                          containerStyle={{
-                             borderColor : 'grey',
-                          }}
-                          items={type} setOpen={setOpenType} setValue={setValueType}
-                          setItems={setType}
-                        />
-                        
+                        <Text style={{fontSize: 23, fontWeight: '600',margin: 20,textAlign:'center'}}>{TYPE}</Text>
                         <Text>D'une durée de</Text>
                         <DropDownPicker open={openDuree} value={valueDuree}
                           zIndex={1000}
@@ -177,7 +149,7 @@ const EditAnnonce = ({route, navigation}) =>{
                         </View>
                         {errors.montant && touched.montant ? ( <Text style={makeAnnonceStyle.errormsg} >{errors.montant}</Text> ) : null}
                         <TouchableOpacity style={makeAnnonceStyle.submit} onPress={handleSubmit}>
-                          <Text style={makeAnnonceStyle.submitTxt}>Publier</Text>
+                          <Text style={makeAnnonceStyle.submitTxt}>Modifier</Text>
                         </TouchableOpacity>
                       </View>
                     )}
