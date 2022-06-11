@@ -43,6 +43,7 @@ export default function Home({navigation}){
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    dispatch(annoncelist())
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
@@ -69,7 +70,7 @@ export default function Home({navigation}){
 
   var lsempty = false
   try {
-    lsempty = annonce.emprunt.length == 0 && annonce.pret.length == 0
+    lsempty = annonce.list.length == 0
   } catch (error) {}
 
     return (
@@ -92,47 +93,25 @@ export default function Home({navigation}){
                   showsHorizontalScrollIndicator={false}
                   >
                     {
+                      annonce.list && annonce.list.map(item => (
                           <React.Fragment>
                               <TouchableOpacity 
-                                onPress={()=> navigation.navigate('InfoAnnonce', {data: null})} 
+                                onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                                 style={demandestyles.item}
-                                //key={item.id}
+                                key={item.id}
                               >
-                              <View style={demandestyles.leftInfo} >
-                                <Image source={reqmoney} style={{height:80, width:80}}/>
+                              <View style={demandestyles.leftInfo}>
+                                <Image source={item.type == 'EMPRUNT' ? reqmoney: sendmoney} style={{height:80, width:80}}/>
                                 <View style={demandestyles.info}>
-                                  <Text style={demandestyles.itemName}>Demande de </Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de </Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>pour une durée de </Text>
+                                  <Text style={demandestyles.itemName}>{item.type == 'EMPRUNT' ? 'Demande de ': 'Pret de '} {item.montant} FR</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de {item.pourcentage}%</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Pour une durée de {item.duree} Mois</Text>
+                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>A remboursser chaque {item.modalitePaiement} Mois</Text>
                                 </View>
-                              </View>
-
-                              <View style={demandestyles.date}>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'300',fontSize:15}}>12/11/2000</Text>
-                                <AntDesign size={30} name={'pushpino'} />
-                              </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity 
-                                onPress={()=> navigation.navigate('InfoAnnonce', {data: null})} 
-                                style={demandestyles.item}
-                                //key={item.id}
-                              >
-                              <View style={demandestyles.leftInfo} >
-                                <Image source={sendmoney} style={{height:60, width:60}}/>
-                                <View style={demandestyles.info}>
-                                  <Text style={demandestyles.itemName}>Pret de </Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de </Text>
-                                  <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>pour une durée de </Text>
-                                </View>
-                              </View>
-
-                              <View style={demandestyles.date}>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'300',fontSize:15}}>12/11/2000</Text>
-                                <AntDesign size={30} name={'pushpino'} />
                               </View>
                             </TouchableOpacity>
                           </React.Fragment>
+                      ))
                     }
                   </ScrollView>
               </View>

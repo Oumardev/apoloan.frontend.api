@@ -9,7 +9,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeAnnonce = ({route, navigation}) =>{
 
-    const { addStatus } = useSelector(annonceSelector);
+    const { errorMessage } = useSelector(annonceSelector);
     const dispatch = useDispatch();
 
     const [openType, setOpenType] = useState(false);
@@ -53,6 +53,7 @@ const MakeAnnonce = ({route, navigation}) =>{
  
     return(
         <View style={makeAnnonceStyle.container} onTouchStart={() => Keyboard.dismiss()}>
+          <Text style={makeAnnonceStyle.errormsg} >{errorMessage}</Text>
           {error && <Text style={makeAnnonceStyle.errormsg} >{error}</Text> }
             <Formik
                     initialValues={{ 
@@ -66,18 +67,18 @@ const MakeAnnonce = ({route, navigation}) =>{
                     
                     onSubmit={ async (values, { setSubmitting }) => {
                         const data = {
-                            types : valueType,
+                            type : valueType,
                             duree : valueDuree,
                             modalitePaiement: valueModa,
                             montant: parseInt(values.montant)
                         }
 
-                        if(!data.types || !data.duree || !data.modalitePaiement){
+                        if(!data.type || !data.duree || !data.modalitePaiement){
                           setError('Impossible de soumettre l\'annonce')
                         }else{
                         // make annonce
                         setError(null)
-                        //dispatch(annoncecreate(data))
+                        dispatch(annoncecreate(data))
                         }
                     }}>
                     
