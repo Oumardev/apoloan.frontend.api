@@ -3,7 +3,7 @@ import { View, Text, TextInput , StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import {MaterialCommunityIcons, AntDesign, MaterialIcons,FontAwesome,Ionicons } from 'react-native-vector-icons';
+import {MaterialCommunityIcons, AntDesign, MaterialIcons,FontAwesome,Ionicons, Feather } from 'react-native-vector-icons';
 import store from './store'
 import { Provider } from 'react-redux';
 import SplashScreen from './SplashScreen';
@@ -99,12 +99,12 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <Ionicons name={'ios-chatbubbles-outline'} size={25} color={focused ? 'blue' : 'gray'} />
-              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Remb</Text>
+              <Feather name={'send'} size={25} color={focused ? 'blue' : 'gray'} />
+              <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Poste</Text>
             </View>)
           },
           headerTitle : ()=>(
-            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Code promo</Text>
+            <Text style={{color : 'white', fontSize: 20, fontWeight : '500'}}>Poste</Text>
           ),
           headerStyle :{
             backgroundColor : 'black',

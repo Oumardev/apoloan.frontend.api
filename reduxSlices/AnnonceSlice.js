@@ -1,5 +1,5 @@
 import apiInstance from "../axios.config";
-import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND } from '../URL_API'
+import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND, POST_LIST_URL } from '../URL_API'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,6 +10,30 @@ export const annoncelist = createAsyncThunk(
 
     try {
         const response = await apiInstance.get(ANNONCE_LIST_URL,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
+export const postlist = createAsyncThunk(
+    'post/list',
+    async (thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.get(POST_LIST_URL,{ 
             headers: { Authorization: `Bear ${token}` },
         });
 
@@ -106,7 +130,8 @@ export const annonceSlice = createSlice({
             transactStatus : 'none',
             addStatus : 'none',
             errorHappened : false,
-            annonce: {}
+            annonce: {},
+            post : {}
         },
   
         reducers: {
@@ -116,6 +141,7 @@ export const annonceSlice = createSlice({
                 state.transactStatus = 'none'
                 state.addStatus = 'none'
                 state.annonce = {};
+                state.post = {};
                 state.errorHappened = false;
 
                 return state;
@@ -175,6 +201,20 @@ export const annonceSlice = createSlice({
             state.addStatus = 'rejected'
         },
         [annoncecreate.pending]: (state) => {
+            state.addStatus = 'pending'
+        },
+
+        [postlist.fulfilled]: (state, { payload }) => {
+            state.post = payload
+            return state;
+        },
+        
+        [postlist.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.errorMessage = payload ? payload.error: '';
+            state.addStatus = 'rejected'
+        },
+        [postlist.pending]: (state) => {
             state.addStatus = 'pending'
         },
     },
