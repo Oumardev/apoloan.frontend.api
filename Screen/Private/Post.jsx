@@ -7,7 +7,7 @@ import { contributeurstyles } from './styles.home/contributeur.style';
 import emptylist from "../../assets/__empty.png"
 import send from "../../assets/send.png"
 
-export default function Refund({navigation}) {
+export default function Post({navigation}) {
 
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -58,10 +58,10 @@ export default function Refund({navigation}) {
                             <TouchableOpacity 
                               onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
                               style={demandestyles.item}
-                              key={item.id}d
+                              key={item.id}
                             >
                             <View style={demandestyles.leftInfo}>
-                              <Image source={send} style={{height:80, width:80}}/>
+                              <Image source={send} style={{height:70, width:70}}/>
                               <View style={demandestyles.info}>
                                 <Text style={demandestyles.itemName}>{item.type == 'EMPRUNT' ? 'Demande de ': 'Pret de '} {item.montant} FR</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:17}}>Avec pourcentage de {item.pourcentage}%</Text>

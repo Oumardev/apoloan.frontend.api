@@ -11,7 +11,7 @@ import Register from './Screen/Auth/Register';
 import Login from './Screen/Auth/Login'
 import Historical from './Screen/Private/Historical'
 import Home from './Screen/Private/Home'
-import Refund from './Screen/Private/Refund'
+import Post from './Screen/Private/Post'
 import Profile from './Screen/Private/Profile'
 import InfoAnnonce  from "./Screen/Private/Info/Home/InfoAnnonce"
 import MakeAnnonce from './Screen/Private/Modal/Home/MakeAnnonce';
@@ -94,7 +94,7 @@ const PrivateScreen = ({navigation}) =>{
         }}
       />
 
-      <Tab.Screen name="Refund" component={Refund} 
+      <Tab.Screen name="Post" component={Post} 
         options={{
           tabBarIcon: ({focused}) =>{
             return(
