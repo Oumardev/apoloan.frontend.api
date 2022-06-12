@@ -89,7 +89,10 @@ export default function ListProposition({route, navigation}) {
                                 <Image source={del} style={{height:25, width:25}}/>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}>
+                              <TouchableOpacity 
+                                onPress={()=> navigation.navigate('Scanner',{proposition: item})}
+                                style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
+                              >
                                 <Image source={accept} style={{height:25, width:25}}/>
                               </TouchableOpacity>
                              

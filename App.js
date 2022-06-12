@@ -20,6 +20,7 @@ import ListProposition from './Screen/Private/Modal/Post/ListProposition';
 import EditPassword from './Screen/Private/Modal/Profile/EditPassword';
 import EditAnnonce from './Screen/Private/Modal/Post/EditAnnonce';
 import Refil from './Screen/Private/Modal/Profile/Refil';
+import Scanner from './Screen/Scanner/Scanner';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
 import Payment from "./Screen/Auth/Payment"
 import Boot from './bootScreen/Boot'
@@ -238,6 +239,18 @@ const headerInfoHistorique = {
   }
 }
 
+const headerScanner = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Scanner</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 const headerListProposition = {
   headerShown: true,
   headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Propositions</Text>
@@ -279,6 +292,8 @@ export default function App() {
             <Stack.Screen name="Payment" options={{headerShown : false}} component={Payment}/>
             {/** Info screen : Boot */}
             <Stack.Screen name="Boot" options={{headerShown : false}} component={Boot}/>
+            {/** Info screen : Scanner */}
+            <Stack.Screen name="Scanner" options={{headerShown : false}} component={Scanner}/>
 
         </Stack.Navigator>
       </NavigationContainer>
