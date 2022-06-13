@@ -16,7 +16,7 @@ const ModalPoup = ({visible, children}) =>{
       )
 }
 
-const ConfirmModal = ({visible, setVisible, id, type}) =>{
+const ModalPost = ({visible, setVisible, id, type}) =>{
 
     const dispatch = useDispatch();
     const handleSendRequest = ()=>{
@@ -50,4 +50,4 @@ const ConfirmModal = ({visible, setVisible, id, type}) =>{
         </View>
     )
 }
-export default ConfirmModal
+export default ModalPost

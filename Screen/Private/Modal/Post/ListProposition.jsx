@@ -8,7 +8,7 @@ import emptylist from "../../../../assets/__empty.png"
 import send from "../../../../assets/show.png"
 import del from "../../../../assets/del.png"
 import accept from "../../../../assets/accept.png"
-import ConfirmModal from '../Home/ConfirmModal';
+import ModalPost from '../Home/ModalPost';
 
 export default function ListProposition({route, navigation}) {
 
@@ -50,7 +50,7 @@ export default function ListProposition({route, navigation}) {
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
-        <ConfirmModal visible={visible} setVisible={setVisible} id={id} type={'Pr'} />
+        <ModalPost visible={visible} setVisible={setVisible} id={id} type={'Pr'} />
           <View style={demandestyles.view}>
             <Text style={demandestyles.title}>Propositions</Text>
               <View style={demandestyles.scroll}>

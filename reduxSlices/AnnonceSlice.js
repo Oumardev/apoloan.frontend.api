@@ -1,5 +1,5 @@
 import apiInstance from "../axios.config";
-import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND, POST_LIST_URL, ANNONCE_EDIT_URL, ANNONCE_DELETE_URL } from '../URL_API'
+import { ANNONCE_LIST_URL, ANNONCE_CREATE_URL, ACCOUNT_DEBIT_URL, ACCOUNT_REFOUND, POST_LIST_URL, ANNONCE_EDIT_URL, ANNONCE_DELETE_URL, TO_PROPOSE_URL} from '../URL_API'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -100,6 +100,30 @@ export const postlist = createAsyncThunk(
     }
 );
 
+export const topropose = createAsyncThunk(
+    'proposition/topropose',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+
+    try {
+        const response = await apiInstance.post(TO_PROPOSE_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+
+        let data = response.data
+
+        if(response.status === 200){
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
 export const annoncedebit = createAsyncThunk(
     'annonce/debit',
     async (values,thunkAPI) => {
@@ -175,10 +199,13 @@ export const annonceSlice = createSlice({
   
         initialState: {
             isFetching: false,
+            errorsignMsg: null,
+            hideModal : false,
             errorMessage: '',
             transactStatus : 'none',
             addStatus : 'none',
             isEdited : false,
+            successMsg : '',
             errorHappened : false,
             annonce: {},
             post : {}
@@ -188,12 +215,13 @@ export const annonceSlice = createSlice({
             clearState: (state) => {
                 state.isFetching = false;
                 state.isEdited = false;
+                state.hideModal = false;
                 state.errorMessage = '';
+                state.successMsg = '';
                 state.transactStatus = 'none'
                 state.addStatus = 'none'
-                state.annonce = {};
-                state.post = {};
                 state.errorHappened = false;
+                state.errorsignMsg = null;
 
                 return state;
             },
@@ -280,6 +308,26 @@ export const annonceSlice = createSlice({
             state.addStatus = 'rejected'
         },
         [annoncedelete.pending]: (state) => {
+            state.addStatus = 'pending'
+        },
+
+        [topropose.fulfilled]: (state, { payload }) => {
+            state.successMsg = payload.success
+            state.hideModal = true;
+            return state;
+        },
+        
+        [topropose.rejected]: (state, { payload }) => {
+            state.errorHappened = true;
+            state.hideModal = false;
+
+            if(payload.errorsign)
+                state.errorsignMsg = payload ? payload.errorsign: '';
+
+            state.errorMessage = payload ? payload.error: '';
+            state.addStatus = 'rejected'
+        },
+        [topropose.pending]: (state) => {
             state.addStatus = 'pending'
         },
 

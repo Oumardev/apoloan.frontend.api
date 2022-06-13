@@ -7,6 +7,7 @@ import { userSelector, userget } from '../../reduxSlices/UserSlice'
 import { annonceSelector, annoncelist } from '../../reduxSlices/AnnonceSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ModalHome from './Modal/Home/ModalHome';
 import reqmoney from "../../assets/__1.webp"
 import sendmoney from "../../assets/__2.webp"
 import emptylist from "../../assets/__empty.png"
@@ -40,6 +41,8 @@ export default function Home({navigation}){
   const { isFetching ,annonce } = useSelector(annonceSelector);
 
   const [refreshing, setRefreshing] = React.useState(false);
+  const [visible, setVisible] = React.useState(false)
+  const [id, setId] = React.useState(null)
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -78,7 +81,7 @@ export default function Home({navigation}){
       (
         isFetching == false &&
         <View style={contributeurstyles.container}>
-
+            <ModalHome visible={visible} setVisible={setVisible} id={id} navigation={navigation} />
             <View style={demandestyles.view}>
               <Text style={demandestyles.title}>Annonces</Text>
                 <View style={demandestyles.scroll}>
@@ -96,14 +99,17 @@ export default function Home({navigation}){
                       annonce.list && annonce.list.map(item => (
                           <React.Fragment>
                               <TouchableOpacity 
-                                onPress={()=> navigation.navigate('InfoAnnonce', {data: item})} 
+                                onPress={()=> {
+                                  setVisible(true)
+                                  setId(item.id)
+                                }}
                                 style={demandestyles.item}
                                 key={item.id}
                               >
                               <View style={demandestyles.leftInfo}>
                                 <Image source={item.type == 'EMPRUNT' ? reqmoney: sendmoney} style={{height:80, width:80}}/>
                                 <View style={demandestyles.info}>
-                                  <Text style={demandestyles.itemName}>{item.type == 'EMPRUNT' ? 'Demande de ': 'Pret de '} {item.montant} FR</Text>
+                                  <Text style={demandestyles.itemName}>{item.type == 'EMPRUNT' ? 'Demande de ': 'Pret de '} {nFormatter(item.montant)} FR</Text>
                                   <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Avec pourcentage de {item.pourcentage}%</Text>
                                   <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>Pour une durée de {item.duree} Mois</Text>
                                   <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400'}}>A remboursser chaque {item.modalitePaiement} Mois</Text>

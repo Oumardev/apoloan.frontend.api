@@ -4,7 +4,7 @@ import { annonceSelector, postlist, clearState } from '../../reduxSlices/Annonce
 import { demandestyles } from './styles.home/demande.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { contributeurstyles } from './styles.home/contributeur.style';
-import ConfirmModal from './Modal/Home/ConfirmModal'
+import ModalPost from './Modal/Home/ModalPost'
 import emptylist from "../../assets/__empty.png"
 import send from "../../assets/send.png"
 import del from "../../assets/del.png"
@@ -48,7 +48,7 @@ export default function Post({navigation}) {
     !lsempty ?(
       isFetching == false &&
       <View style={contributeurstyles.container}>
-        <ConfirmModal visible={visible} setVisible={setVisible} id={id} type={'Ps'}/>
+        <ModalPost visible={visible} setVisible={setVisible} id={id} type={'Ps'}/>
           <View style={demandestyles.view}>
             <Text style={demandestyles.title}>Postes</Text>
               <View style={demandestyles.scroll}>
