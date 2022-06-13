@@ -21,6 +21,7 @@ import EditAnnonce from './Screen/Private/Modal/Post/EditAnnonce';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import Scanner from './Screen/Scanner/Scanner';
 import Versement from "./Screen/Private/Modal/Historique/Versement"
+import Rembourssement from "./Screen/Private/Modal/Historique/Rembourssement"
 import Payment from "./Screen/Auth/Payment"
 import Boot from './bootScreen/Boot'
 import SaveSignature from './Screen/Private/Modal/Home/SaveSignature'
@@ -263,6 +264,18 @@ const headerVersement = {
   }
 }
 
+const headerRemboussement = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Rembourssement</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -294,6 +307,8 @@ export default function App() {
              <Stack.Screen name="SaveSignature" options={{headerShown : false}} component={SaveSignature}/>
             {/** Info screen : Versement */}
             <Stack.Screen name="Versement" options={headerVersement} component={Versement}/>
+            {/** Info screen : Rembourssement */}
+            <Stack.Screen name="Rembourssement" options={headerRemboussement} component={Rembourssement}/>
 
         </Stack.Navigator>
       </NavigationContainer>

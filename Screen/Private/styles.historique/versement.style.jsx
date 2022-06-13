@@ -45,7 +45,7 @@ export const VersementStyle = StyleSheet.create({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      flexDirection : 'row'
+      flexDirection : 'column'
     },
   
     info:{
@@ -59,5 +59,23 @@ export const VersementStyle = StyleSheet.create({
       flexDirection : 'column',
       justifyContent : 'center',
       alignItems : 'center'
-    }
+    },
+
+    submit:{
+      display: 'flex',
+      flexDirection : 'row',
+      justifyContent: 'center',
+      alignContent:'center',
+      backgroundColor : '#F46D76',
+      margin: 50,
+      width: 200,
+      padding:20,
+      borderRadius: 10
+    },
+
+  detailsTarget:{
+    textAlign: 'center',
+    fontSize : 20,
+    fontWeight : '600'
+},
 });

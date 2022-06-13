@@ -69,7 +69,7 @@ export default function Historical({navigation}) {
       return(
         emprunt.success && emprunt.success.map((item,key)=>(
             <React.Fragment key={key}>
-              <TouchableOpacity style={historiquestyles.item} onPress={() => item.statut == 'en cour' && navigation.navigate('InfoHistorique', {data: item})}>
+              <TouchableOpacity style={historiquestyles.item} onPress={() => navigation.navigate('Rembourssement', {idTransaction: item.id})}>
                 <View style={historiquestyles.leftInfo} >
                   <View style={historiquestyles.pret}>
                     <MaterialCommunityIcons name={'arrow-collapse-down'} size={35} color={'red'}/> 
