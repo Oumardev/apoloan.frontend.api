@@ -34,10 +34,7 @@ const PrivateScreen = ({navigation}) =>{
   return (
     <Tab.Navigator tabBarOptions={
       { 
-        showLabel : false,
-        tabStyle: {
-          width: 100,    
-        },
+        showLabel : false
       }
     }>
        
