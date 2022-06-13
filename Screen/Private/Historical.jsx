@@ -77,8 +77,8 @@ export default function Historical({navigation}) {
     
                     <View style={historiquestyles.info}>
                       <Text style={historiquestyles.itemName}>{item.Annonce.montant} F</Text>
-                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {item.Annonce.pourcentage}</Text>
-                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {(item.Annonce.montant*item.Annonce.pourcentage) +item.Annonce.montant } F</Text>
+                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {parseFloat(item.Annonce.pourcentage).toFixed(2)}</Text>
+                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {parseFloat(item.Annonce.montant*item.Annonce.pourcentage).toFixed(2)} FR</Text>
                     </View>
                   </View>
     
