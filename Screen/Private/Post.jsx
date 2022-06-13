@@ -74,7 +74,7 @@ export default function Post({navigation}) {
                               <Image source={send} style={{height:50, width:50}}/>
                               <View style={demandestyles.info}>
                                 <Text style={demandestyles.itemName}>Montant: {item.montant} FR</Text>
-                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Pourcentage: {item.pourcentage}%</Text>
+                                <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Pourcentage: {parseFloat(item.pourcentage).toFixed(2)}%</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Durée: {item.duree} Mois</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Modalité: {item.modalitePaiement} Mois</Text>
                                 <Text style={{...demandestyles.itemName, color:'gray',fontWeight:'400',fontSize:14}}>Status: <Text style={item.isVisible ? styles.online : styles.offline}>{item.isVisible ? 'en ligne' : 'hors ligne' }</Text></Text>
@@ -88,12 +88,15 @@ export default function Post({navigation}) {
                               >
                                 <Image source={del} style={{height:25, width:25}}/>
                               </TouchableOpacity>
-                              <TouchableOpacity 
+
+                              {item.isVisible &&
+                                <TouchableOpacity 
                                 onPress={()=> navigation.navigate('EditAnnonce', {IDANNONCE:item.id, DUREE:item.duree, TYPE:item.type, MODALITEPAIEMENT:item.modalitePaiement, MONTANT: item.montant})}
                                 style={{backgroundColor:'whitesmoke', padding:10,margin:2,borderRadius:12}}
-                              >
+                                  >
                                 <Image source={edit} style={{height:25, width:25}}/>
-                              </TouchableOpacity>
+                             </TouchableOpacity>
+                              }
                             </View>
                           </TouchableOpacity>
                         </React.Fragment>

@@ -10,11 +10,11 @@ export const GET_BANK_ACCOUNT_URL = "/apoloanapi/getbankaccount";
 export const ACCOUNT_REFIL_URL = "/apoloanapi/useraccount/refil";
 export const BANK_ACCOUNT_REFIL_URL = "/apoloanapi/useraccount/refilbankaccount";
 // -- Versement
-export const MAKE_PAYMENT_URL = "/apoloanapi/annonce/makepayment";
-export const SHOW_PAYMENT_URL = "/apoloanapi/annonce/showpayment";
+export const MAKE_PAYMENT_URL = "/apoloanapi/makepayment";
+export const SHOW_PAYMENT_URL = "/apoloanapi/showpayment";
 // -- Proposition
 export const PROPOSITION_LIST_URL = "/apoloanapi/listproposition";
-export const TO_PROPOSE_URL = "/apoloanapi/annonce/topropose";
+export const TO_PROPOSE_URL = "/apoloanapi/topropose";
 export const DELETE_PROPOSITION_URL = "/apoloanapi/deleteproposition";
 export const RES_TO_PROPOSE_URL = "/apoloanapi/annonce/restopropose";
 // -- Annonce

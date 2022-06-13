@@ -6,11 +6,9 @@ import { empruntSelector, empruntlist } from '../../reduxSlices/EmpruntSlice'
 import { userget } from '../../reduxSlices/UserSlice'
 import { pretSelector, pretlist } from '../../reduxSlices/PretSlice'
 import { historiquestyles } from './styles.historique/historique.style';
+import dateFormat from "dateformat"
 
-/**
- * Cet écrant sera l'écrant d'historique
- * Il répectorie La liste des emprunts et prets du user en cour ...
-*/
+
 export default function Historical({navigation}) {
     const dispatch = useDispatch();
     const { emprunt } = useSelector(empruntSelector);
@@ -44,7 +42,7 @@ export default function Historical({navigation}) {
       return(
         pret.success && pret.success.map((item,key)=>(
             <React.Fragment key={key}>
-              <TouchableOpacity style={historiquestyles.item}>
+              <TouchableOpacity style={historiquestyles.item} onPress={() => navigation.navigate('Versement', {idTransaction: item.id})}>
                 <View style={historiquestyles.leftInfo} >
                   <View style={historiquestyles.pret}>
                     <MaterialCommunityIcons name={'arrow-collapse-up'} size={35} color={'green'}/> 
@@ -52,13 +50,13 @@ export default function Historical({navigation}) {
     
                     <View style={historiquestyles.info}>
                       <Text style={historiquestyles.itemName}>{item.Annonce.montant} F</Text>
-                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {item.Annonce.pourcentage}</Text>
-                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {(item.Annonce.montant*item.Annonce.pourcentage) +item.Annonce.montant } F</Text>
+                      <Text style={{...historiquestyles.itemName, color:'gray',fontWeight:'400'}}>Pourcentage: {parseFloat(item.Annonce.pourcentage).toFixed(2)}</Text>
+                      <Text style={{...historiquestyles.itemName, color:'green',fontWeight:'400'}}>Total: {parseFloat(item.Annonce.montant*item.Annonce.pourcentage).toFixed(2)} F</Text>
                     </View>
                   </View>
     
                 <View style={historiquestyles.date}>
-                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
+                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration {dateFormat(new Date(item.Contrat.dateEcheance), "dd/mm/yyyy")}</Text>
                   <Text style={{color:'gray'}}>{ item.statut } ...</Text>
                 </View>
               </TouchableOpacity>
@@ -85,7 +83,7 @@ export default function Historical({navigation}) {
                   </View>
     
                 <View style={historiquestyles.date}>
-                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration 12-11-2000</Text>
+                  <Text style={{...historiquestyles.itemName, color:'red',fontWeight:'400',fontSize:16}}>Expiration {dateFormat(new Date(item.Contrat.dateEcheance), "dd/mm/yyyy")}</Text>
                   <Text style={{color:'gray'}}>{ item.statut } ...</Text>
                 </View>
               </TouchableOpacity>

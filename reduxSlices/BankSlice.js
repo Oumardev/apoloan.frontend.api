@@ -1,5 +1,5 @@
 import apiInstance from "../axios.config";
-import { ENABLE_ACCOUNT_URL } from '../URL_API'
+import { ENABLE_ACCOUNT_URL, SHOW_PAYMENT_URL } from '../URL_API'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -26,6 +26,30 @@ export const fetchtoecobank = createAsyncThunk(
     }
 );
 
+export const showpayment = createAsyncThunk(
+    'payment/showpayment',
+    async (values,thunkAPI) => {
+        const token = await AsyncStorage.getItem('token')
+    try {
+        const response = await apiInstance.post(SHOW_PAYMENT_URL,values,{ 
+            headers: { Authorization: `Bear ${token}` },
+        });
+        let data = response.data
+         
+        console.log('le pere',data)
+        if(response.status === 200){
+            console.log(data)
+            return data;
+        } else {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+    } catch(e){
+        return thunkAPI.rejectWithValue(e.response.data);
+      }
+    }
+);
+
 export const bankSlice = createSlice({
     name: "bank",
   
@@ -33,7 +57,8 @@ export const bankSlice = createSlice({
             isFetching : false,
             errorHappen : false,
             errorMessage : '',
-            activated: false
+            activated: false,
+            payment : {}
         },
   
         reducers: {
@@ -42,6 +67,7 @@ export const bankSlice = createSlice({
                 state.errorHappen = false;
                 state.errorMessage = '';
                 state.activated = false;
+                state.payment = {}
 
                 return state;
             }
@@ -60,6 +86,21 @@ export const bankSlice = createSlice({
             state.errorMessage = payload ? payload.error: '';
         },
         [fetchtoecobank.pending]: (state) => {
+            state.isFetching = true;
+        },
+
+        [showpayment.fulfilled]: (state, { payload }) => {
+            state.isFetching = false;
+            state.errorHappen = false
+            state.payment = payload;
+            return state;
+        },
+        [showpayment.rejected]: (state, { payload }) => {
+            state.isFetching = false;
+            state.errorHappen = true;
+            state.errorMessage = payload ? payload.error: '';
+        },
+        [showpayment.pending]: (state) => {
             state.isFetching = true;
         },
     },

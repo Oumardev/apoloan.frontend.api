@@ -22,6 +22,7 @@ import EditAnnonce from './Screen/Private/Modal/Post/EditAnnonce';
 import Refil from './Screen/Private/Modal/Profile/Refil';
 import Scanner from './Screen/Scanner/Scanner';
 import InfoHistorique from "./Screen/Private/Info/Historique/InfoHistorique"
+import Versement from "./Screen/Private/Modal/Historique/Versement"
 import Payment from "./Screen/Auth/Payment"
 import Boot from './bootScreen/Boot'
 
@@ -263,6 +264,18 @@ const headerListProposition = {
   }
 }
 
+const headerVersement = {
+  headerShown: true,
+  headerTitle: () => <Text style={{fontSize:25, fontWeight:'600', color: 'white'}}>Versement</Text>
+  ,
+  headerLeft: () =>(
+    <MaterialIcons name="arrow-back-ios" color={'white'} size={25} style={{paddingLeft : 12}} />
+  ),
+  headerStyle :{
+    backgroundColor : 'black'
+  }
+}
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -294,6 +307,8 @@ export default function App() {
             <Stack.Screen name="Boot" options={{headerShown : false}} component={Boot}/>
             {/** Info screen : Scanner */}
             <Stack.Screen name="Scanner" options={{headerShown : false}} component={Scanner}/>
+            {/** Info screen : Versement */}
+            <Stack.Screen name="Versement" options={headerVersement} component={Versement}/>
 
         </Stack.Navigator>
       </NavigationContainer>
