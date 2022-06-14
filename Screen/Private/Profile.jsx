@@ -32,14 +32,16 @@ export default function Profile({navigation}) {
   return (
     (isFetching == false) &&
     <View style={profilestyle.container}>
+      
       <TouchableOpacity style={profilestyle.head} onPress={()=> navigation.navigate('EditProfile', {data: user})}>
         <Image style={profilestyle.image} source={profileimg} />
         <View style={profilestyle.edit}>
           <Text style={profilestyle.fullname}>{user.user.prenom} {user.user.nom}</Text>
           <Text style={profilestyle.job}>{user.user.fonction}</Text>
         </View>
-        <AntDesign name="edit" color={'gray'} size={27}/>
+  
       </TouchableOpacity>
+          <Text onPress={()=> navigation.navigate('SaveSignature')} style={{...profilestyle.refiltext,color:'grey',fontSize:18}}>Ajouter une signature <AntDesign name="edit" color={'gray'} size={18}/></Text>
 
       <View style={profilestyle.solde}>
         <Text style={profilestyle.title}>Solde</Text>

@@ -39,8 +39,8 @@ export default function SaveSignature({navigation}) {
     return (
       <View style={styles.container}>
         <View style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
-          <Text style={{fontWeight: '500',fontSize:24,color:'red', textAlign:'center'}}>Vous devez enregistrer une signature avant d'éffectuer cette proposition</Text>
-          <Text>Allez sur le site: 192.168.1.6:1000/apoloanapi/signature et scanner le code Qr</Text>
+          <Text style={{fontWeight: '500',fontSize:24,color:'red', textAlign:'center'}}>Enregistrer votre signature</Text>
+          <Text style={{fontWeight: '400',fontSize:17, textAlign:'center'}}>Allez sur le site: https://api.oumardev.com/apoloanapi/signature et scanner le qrCode</Text>
         </View>
        
         <BarCodeScanner
@@ -49,7 +49,7 @@ export default function SaveSignature({navigation}) {
         />
         {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
         
-        <TouchableOpacity style={{padding : 10, borderRadius: 10, backgroundColor : 'red'}}
+        <TouchableOpacity style={{padding : 10, borderRadius: 10, backgroundColor : 'tomato',margin:20}}
           onPress={()=>{
             dispatch(clearState())
             navigation.navigate('Home')

@@ -9,13 +9,12 @@ export const profilestyle = StyleSheet.create({
       head:{
         display : 'flex',
         flexDirection : 'row',
-        alignItems : 'center'
+        alignItems : 'center',
       },
     
       image :{
         height : 130,
         width : 130,
-        borderRadius : 30
       },
     
       fullname:{

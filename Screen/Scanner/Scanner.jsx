@@ -7,6 +7,7 @@ import io from "socket.io-client";
 export default function Scanner({route, navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [errormsg, setErrorMsg] = useState(null)
     const { proposition } = route.params;
     
     useEffect(() => {
@@ -34,15 +35,15 @@ export default function Scanner({route, navigation}) {
     return (
       <View style={styles.container}>
         <View style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+          {errormsg && <Text style={{color:'red',fontSize:20}}>{errormsg}</Text>}
           <Text style={{fontWeight: '500',fontSize:24,color:'red', textAlign:'center'}}>Scanner le QrCode pour accepter la proposition</Text>
-          <Text>Allez sur le site: 192.168.1.6:1000/apoloanapi/qrcode</Text>
+          <Text style={{fontWeight: '400',fontSize:17, textAlign:'center'}}>Allez sur le site: https://api.oumardev.com/apoloanapi/qrcode</Text>
         </View>
        
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{width:500, height:500}}
         />
-        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       </View>
     );
   }
@@ -55,3 +56,4 @@ export default function Scanner({route, navigation}) {
     },
   });
   
+  // sudo sysctl fs.inotify.max_user_watches=524288
