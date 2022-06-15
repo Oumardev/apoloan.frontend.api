@@ -1,10 +1,18 @@
 {
+  "name": "Apoloan",
+  "displayName": "Apoloan",
   "expo": {
-    "name": "apoloan.frontend.mobile",
-    "slug": "apoloan.frontend.mobile",
+    "name": "Apoloan",
+    "slug": "my-app",
+    "icon": "./assets/icon_app.png",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "ios": {
+      "bundleIdentifier": "com.oumardev.apoloan",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.oumardev.apoloan",
+      "versionCode": 1
+    }
   }
 }

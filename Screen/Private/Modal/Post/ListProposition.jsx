@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import { Text, View, ScrollView, TouchableOpacity, RefreshControl, Image,StyleSheet } from 'react-native';
 import { propositionSelector, listproposition, clearState } from '../../../../reduxSlices/PropositionSlice'
+import { Ionicons } from 'react-native-vector-icons';
 import { demandestyles } from '../../styles.home/demande.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { contributeurstyles } from '../../styles.home/contributeur.style';
-import emptylist from "../../../../assets/__empty.png"
 import send from "../../../../assets/show.png"
 import del from "../../../../assets/del.png"
 import accept from "../../../../assets/accept.png"
@@ -108,8 +108,25 @@ export default function ListProposition({route, navigation}) {
     ):
     (
       isFetching == false &&
-      <View style={{...contributeurstyles.container, backgroundColor:'white',justifyContent:'center'}}>
-        <Image source={emptylist} style={{height:500, width:500}}/>
+      <View style={contributeurstyles.container}>
+            <View style={demandestyles.view}>
+              <Text style={{...demandestyles.title, color:'gray',textAlign:'center'}}>Acune proposition trouvé</Text>
+                <View style={demandestyles.scroll}>
+                  <ScrollView 
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                    horizontal={false} 
+                    showsHorizontalScrollIndicator={false}
+                  >
+
+                  <Ionicons onPress={onRefresh} name="ios-refresh-circle-sharp" size={60}/>
+                </ScrollView>
+                </View>
+            </View>
       </View>
     )
   );

@@ -19,7 +19,7 @@ export default function Scanner({route, navigation}) {
   
     const handleBarCodeScanned = async ({ type, data }) => {
       setScanned(true);
-      const socket = io("http://192.168.1.102:1000")
+      const socket = io("https://api.oumardev.com")
       const token = await AsyncStorage.getItem('token')
 
       socket.emit('qrcode',{qr:data, proposition:proposition, token:token})

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, RefreshControl, Image } from 'react-native';
-import { FontAwesome5, MaterialCommunityIcons, AntDesign, Ionicons } from 'react-native-vector-icons';
+import { Ionicons } from 'react-native-vector-icons';
 import { demandestyles } from './styles.home/demande.style';
 import { contributeurstyles } from './styles.home/contributeur.style';
 import { userSelector, userget } from '../../reduxSlices/UserSlice'
@@ -10,7 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalHome from './Modal/Home/ModalHome';
 import reqmoney from "../../assets/__1.webp"
 import sendmoney from "../../assets/__2.webp"
-import emptylist from "../../assets/__empty.png"
 
 /**
  * Cet écrant sera l'écrant d'acceuil 
@@ -127,8 +126,25 @@ export default function Home({navigation}){
       : 
       (
         isFetching == false &&
-        <View style={{...contributeurstyles.container, backgroundColor:'white',justifyContent:'center'}}>
-          <Image source={emptylist} style={{height:500, width:500}}/>
+        <View style={contributeurstyles.container}>
+            <View style={demandestyles.view}>
+              <Text style={{...demandestyles.title, color:'gray',textAlign:'center'}}>Aucune annonce trouvé</Text>
+                <View style={demandestyles.scroll}>
+                  <ScrollView 
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                    horizontal={false} 
+                    showsHorizontalScrollIndicator={false}
+                  >
+
+                  <Ionicons onPress={onRefresh} name="ios-refresh-circle-sharp" size={60}/>
+                </ScrollView>
+                </View>
+            </View>
         </View>
       )
       
