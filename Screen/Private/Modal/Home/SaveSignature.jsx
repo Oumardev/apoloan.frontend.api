@@ -21,7 +21,7 @@ export default function SaveSignature({navigation}) {
   
     const handleBarCodeScanned = async ({ type, data }) => {
       setScanned(true);
-      const socket = io("http://192.168.1.103:1000")
+      const socket = io("http://192.168.1.102:1000")
       const token = await AsyncStorage.getItem('token')
 
       socket.emit('savesign',{qr:data, token:token})
