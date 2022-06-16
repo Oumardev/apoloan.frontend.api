@@ -30,21 +30,40 @@ import SaveSignature from './Screen/Private/Modal/Home/SaveSignature'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const config = {
+  animation: 'spring',
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
+
 const PrivateScreen = ({navigation}) =>{
     
   return (
-    <Tab.Navigator tabBarOptions={
-      { 
-        showLabel : false
+    <Tab.Navigator screenOptions={{ 
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        paddingVertical: Platform.OS === 'ios' ? 10 : 0,
+        height: 78,
+      }
       }
     }>
        
        <Tab.Screen name="Home" component={Home} 
         options={{
+          transitionSpec: {
+            open: config,
+            close: config,
+          },
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <AntDesign name={'home'} size={25} color={focused ? 'blue' : 'gray'} />
+              <AntDesign name={'home'} size={30} color={focused ? 'blue' : 'gray'} />
               <Text style={{color :  focused ? 'blue' : 'gray', fontSize : 15, fontWeight : '500'}} >Acceuil</Text>
             </View>)
           },
@@ -82,8 +101,7 @@ const PrivateScreen = ({navigation}) =>{
           tabBarIcon: ({focused}) =>{
             return(
             <View style={{alignItems : 'center', justifyContent : 'center'}}>
-              <Ionicons name={'add-circle-sharp'} size={50} color={focused ? 'black' : 'black'} />
-            
+              <Ionicons name={'add-circle-sharp'} size={35} color={'green'} />
             </View>)
           },
           headerTitle : ()=>(

@@ -16,6 +16,7 @@ export const makeAnnonceStyle = StyleSheet.create({
         height : 50,
         justifyContent : 'center',
         alignItems : 'center',
+        flexDirection: 'row',
         borderRadius : 20,
         margin : 18
     },

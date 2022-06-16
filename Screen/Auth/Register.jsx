@@ -46,7 +46,7 @@ const Step1 = ({navigation}) =>{
 return (
   <View style={registersty.container}>
     <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={registersty.scrollStyle}>
-      <KeyboardAvoidingView behavior={'position'}>
+      <KeyboardAvoidingView behavior={Platform.OS != 'android' && 'position'}>
       <Text style={registersty.errormsgheader}>{errorMessageRegister && errorMessageRegister}</Text>
           <Formik
             initialValues={{ 

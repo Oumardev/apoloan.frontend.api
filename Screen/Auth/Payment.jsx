@@ -70,9 +70,9 @@ const Payment = ({navigation}) => {
                 <ProgressStep label="Inscription">
                     <View style={{ alignItems: 'center' }}></View>
                 </ProgressStep>
-                <ProgressStep label="Activation" previousBtnDisabled={true} nextBtnTextStyle={buttonTextStyle} previousBtnText={''} finishBtnText={'Déconnection'} onSubmit={()=> logOut()}>
+                <ProgressStep label="Activation" previousBtnDisabled={true} nextBtnTextStyle={buttonTextStyle} previousBtnText={''} finishBtnText={''} >
                     <View style={{ alignItems: 'center' }}>
-                        <Text style={activationStyle.titledesc}>Pour commencer a utuliser votre compte vous devez faire un premier rechargement d'au moins 2000F.L'activation de votre compte entrainera un prélèvement de cette somme sur votre compte bancaire</Text>
+                        <Text style={activationStyle.titledesc}>Vous devez entrer vos informations bancaire pour activer votre compte Apoloan.</Text>
                         
                         <Formik
                             initialValues={{ 
@@ -164,6 +164,7 @@ const Payment = ({navigation}) => {
                         )}
                         </Formik>
                             {errorHappen && <Text style={{color:'red',fontSize:18,fontWeight:'500',marginTop:12}}>{errorMessage}</Text> }
+                            <Text onPress={()=> logOut()} style={{color:'red',fontSize:18,fontWeight:'500',margin:80}}>Déconnection</Text>
                     </View>
                 </ProgressStep>
             </ProgressSteps>

@@ -124,7 +124,7 @@ export const registersty = StyleSheet.create({
   input:{
     borderColor : 'gray',
     borderBottomWidth : 1,
-    height : 33,
+    height : 53,
     padding :10,
     fontSize : 18,
     fontWeight : '600',
@@ -211,7 +211,7 @@ errormsgheader:{
   inputboth:{
     borderColor : 'gray',
     borderBottomWidth : 1,
-    height : 33,
+    height : 53,
     padding :10,
     fontSize : 18,
     fontWeight : '600',

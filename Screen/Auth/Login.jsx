@@ -38,7 +38,7 @@ const Login = ({navigation}) => {
     return (
     <View style={loginsty.container}>
       <ScrollView keyboardShouldPersistTaps="never" contentContainerStyle={loginsty.scrollStyle}>
-      <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={20}>
+      <KeyboardAvoidingView behavior={Platform.OS != 'android' && "position"} keyboardVerticalOffset={Platform.OS != 'android' && 20}>
       <Text style={{color:'red'}}>{errorMessage && errorMessage}</Text>
           <Formik
             initialValues={{ 

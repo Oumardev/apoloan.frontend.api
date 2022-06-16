@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Modal, TextInput, Keyboard } from 'react-
 import { makeAnnonceStyle } from '../../styles.home/makeAnnonce.style'
 import { annonceSelector, annoncecreate } from "../../../../reduxSlices/AnnonceSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Entypo } from 'react-native-vector-icons';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -14,7 +15,10 @@ const MakeAnnonce = ({route, navigation}) =>{
 
     const [openType, setOpenType] = useState(false);
     const [valueType, setValueType] = useState(null);
-    const [type, setType] = useState([ {label: 'PRET', value: 'PRET'}, {label: 'EMPRUNT', value: 'EMPRUNT'}]);
+    const [type, setType] = useState([ 
+      {label: 'Pret', value: 'PRET'}, 
+      {label: 'Emprunt', value: 'EMPRUNT'},
+    ]);
 
     const [openDuree, setOpenDuree] = useState(false);
     const [valueDuree, setValueDuree] = useState(null);
@@ -85,23 +89,24 @@ const MakeAnnonce = ({route, navigation}) =>{
                     {({ errors ,handleChange, handleBlur, values, handleSubmit, touched }) => (
                       <View style={makeAnnonceStyle.main}>
                         
-                        <Text>Je publie une annonce de</Text>
+                        <Text style={{fontSize:14,fontWeight:'600',margin:10}}>Je publie une annonce de</Text>
                         <DropDownPicker open={openType} value={valueType}
                           zIndex={2000}
-                          placeholder="Type d'annonce"
+                          placeholder="Type Annonce"
                           placeholderStyle={{
-                            color: "grey",
+                            color: "black",
                             fontWeight: "bold",
                             fontSize: 18
                           }}
                           labelStyle={{
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            textAlign:'center',
                           }}
                           style={{
-                            backgroundColor: "white",
+                            backgroundColor: "whitesmoke",
                             borderColor : 'grey',
                             borderWidth : 2,
-                            marginBottom : 20
+                            marginBottom : 80
                           }}
                           containerStyle={{
                              borderColor : 'grey',
@@ -110,7 +115,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                           setItems={setType}
                         />
                         
-                        <Text>D'une durée de</Text>
+                        <Text style={{fontSize:14,fontWeight:'600',margin:10}}>D'une durée de</Text>
                         <DropDownPicker open={openDuree} value={valueDuree}
                           zIndex={1000}
                           placeholder="Durée"
@@ -120,7 +125,8 @@ const MakeAnnonce = ({route, navigation}) =>{
                             fontSize: 18
                           }}
                           labelStyle={{
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            textAlign:'center',
                           }}
                           style={{
                             backgroundColor: "white",
@@ -132,7 +138,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                           setItems={setDuree}
                         />
 
-                        <Text>A remboursser</Text>
+                        <Text style={{fontSize:14,fontWeight:'600',margin:10}}>A remboursser</Text>
                         <DropDownPicker open={openModa} value={valueModa}
                           zIndex={500}
                           placeholder="Modalité de rembourssement"
@@ -142,7 +148,8 @@ const MakeAnnonce = ({route, navigation}) =>{
                             fontSize: 18
                           }}
                           labelStyle={{
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            textAlign:'center',
                           }}
                           style={{
                             backgroundColor: "white",
@@ -154,7 +161,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                           setItems={setModa}
                         />
 
-                        <Text>D'un montant de</Text>
+                        <Text style={{fontSize:14,fontWeight:'600',margin:10}}>D'un montant de</Text>
                         <View style={{display:'flex', flexDirection:'row', alignItems: 'center',width:'100%'}}>
                           <TextInput
                             placeholder="Montant"
@@ -178,6 +185,7 @@ const MakeAnnonce = ({route, navigation}) =>{
                         {errors.montant && touched.montant ? ( <Text style={makeAnnonceStyle.errormsg} >{errors.montant}</Text> ) : null}
                         <TouchableOpacity style={makeAnnonceStyle.submit} onPress={handleSubmit}>
                           <Text style={makeAnnonceStyle.submitTxt}>Publier</Text>
+                          <Entypo name='publish' color='white' style={{marginLeft:15}} size={23} />
                         </TouchableOpacity>
                       </View>
                     )}
